@@ -5,6 +5,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Hello world</h1>
+        <p>lorem dnkgnkdekngkn g golojtoeoj ojeohtohze ohtoheoh</p>
       </header>
     </div>
   );
