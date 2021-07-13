@@ -1,5 +1,9 @@
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './router/Routes';
+
 import './App.css';
 import Button from '@material-ui/core/Button';
+
 
 function App() {
   return (
@@ -11,6 +15,9 @@ function App() {
          Test Material UI
         </Button>
       </header>
+      <BrowserRouter>
+          <Routes/>
+      </BrowserRouter>
     </div>
   );
 }
