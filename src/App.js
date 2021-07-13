@@ -1,4 +1,8 @@
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './router/Routes';
+
 import './App.css';
+
 
 function App() {
   return (
@@ -7,6 +11,9 @@ function App() {
         <h1>Hello world</h1>
         <p>lorem dnkgnkdekngkn g golojtoeoj ojeohtohze ohtoheoh</p>
       </header>
+      <BrowserRouter>
+          <Routes/>
+      </BrowserRouter>
     </div>
   );
 }
