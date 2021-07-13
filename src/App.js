@@ -1,12 +1,13 @@
 import './App.css';
 import Button from '@material-ui/core/Button';
+import Login from './components/Login'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <h1>Hello world</h1>
-        <p>lorem dnkgnkdekngkn g golojtoeoj ojeohtohze ohtoheoh</p>
+        <Login></Login>
         <Button variant="contained" color="primary">
          Test Material UI
         </Button>
