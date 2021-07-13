@@ -4,7 +4,7 @@ import { Route, Switch} from 'react-router-dom';
 function Routes(props) {
     return (
         <Switch>
-            <Route exact path="/" />
+            <Route exact path="/"/>
         </Switch>
     )
 }
