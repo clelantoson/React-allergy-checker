@@ -17,7 +17,7 @@ const Home = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <SearchBar />;
+      <SearchBar />
     </div>
   );
 };

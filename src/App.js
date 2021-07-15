@@ -9,8 +9,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navigation />
         <Routes />
+        <Navigation />
       </BrowserRouter>
     </>
   );
