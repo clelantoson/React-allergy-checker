@@ -1,22 +1,18 @@
-import { BrowserRouter } from 'react-router-dom';
-import Routes from './router/Routes';
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./router/Routes";
+import Navigation from "./components/Navigation";
 
-import './App.css';
-import Login from './components/Login'
-import Navigation from './components/Navigation';
-
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-        <h1>Hello world</h1>
-        <Login></Login>
-
+    <>
       <BrowserRouter>
-          <Navigation/>
-          <Routes/>
+        <Navigation />
+        <Routes />
       </BrowserRouter>
-    </div>
+    </>
   );
 }
 
