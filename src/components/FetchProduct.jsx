@@ -27,7 +27,7 @@ import axios from "axios";
 const FetchProduct = () => {
   const [person, setPerson] = useState(null);
 
-  useEffect(async () => {
+  useEffect(() => {
     console.log("will fetch now");
 
     // const response = await axios.get("https://randomuser.me/api/");
