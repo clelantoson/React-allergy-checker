@@ -18,8 +18,6 @@ const Home = () => {
   return (
     <div className={classes.root}>
       <SearchBar />;
-      <SearchBar />;
-      <SearchBar />;
     </div>
   );
 };
