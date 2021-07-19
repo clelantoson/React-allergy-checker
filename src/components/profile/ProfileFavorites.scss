@@ -1,0 +1,39 @@
+
+@import "../../base.scss";
+
+.favorites-card{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    gap: 1rem;
+    justify-content: center; 
+   
+
+    li{ 
+        background-color: #F7F7F7;
+        padding: 2%;
+        display: inline-block;       
+        border-radius: 10px;
+       
+    }
+
+    img {
+        max-width: 100%;
+        border-radius: 10px;
+      }
+}     
+       
+      
+.favorites-card__content {
+    padding: 1rem 0;
+    h3 {
+        margin: 0;
+        font-size: $size1;
+    }
+    p{
+        font-size: $size1 ;
+    }
+  }
+
+ 
