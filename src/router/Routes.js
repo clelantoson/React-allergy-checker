@@ -4,14 +4,20 @@ import Login from "../components/Login";
 import Home from "../components/Home";
 import ProductDetail from "../components/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
+import Profile from "../components/Profile";
 
 const Routes = () => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
-      {/* <Route path="/profile" component={Profile}/> */}
       <Route path="/product/:id" component={ProductDetail} />
       {/* <Route path="/recents" component={recents}/> */}
+      <Route path="/profile" component={Profile} />
+      {/*
+      <Route path="/profile" component={Favorite}/>
+      <Route path="/history" component={History}/>
+      <Route path="/product" component={ProductList}/> */}
+
       <Route path="/login" component={Login} />
       <Route path="/fetch" component={FetchProduct} />
     </Switch>
