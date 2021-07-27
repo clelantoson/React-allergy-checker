@@ -17,26 +17,25 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
+  const [productNotFound, setProductNotFound] = useState(false);
+  const { id: productId } = useParams();
 
   useEffect(() => {
     console.log("will fetch now");
-
-    // const response = await axios.get("https://randomuser.me/api/");
-    // setproduct(response.data.results[0]);
     axios
-      .get("https://world.openfoodfacts.org/api/v0/product/737628064502.json")
+      .get(`https://world.openfoodfacts.org/api/v0/product/${productId}.json`)
       .then((response) => {
-        setProduct(response.data.product);
+        if (response.data.status === 0) {
+          setProductNotFound(true);
+        } else {
+          setProduct(response.data.product);
+        }
       })
       .catch(() => console.log("il y a eu une erreur"));
-    // const data = await response.json();
-    // console.log("data.results:", data.results);
-    // const [item] = data.results;
-    // console.log("item :", item);
-    // setproduct(item);
   }, []);
   console.log(product);
 
@@ -64,6 +63,8 @@ const ProductDetail = () => {
         </ul>
       </div>
     );
+  } else if (productNotFound) {
+    return <div> not found</div>;
   } else {
     console.log("component is mounted");
     return <div>loading</div>;
