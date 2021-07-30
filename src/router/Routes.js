@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Login from "../components/Login";
 import Home from "../components/Home";
-import ProductDetail from "../components/ProductDetail";
+import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
 
