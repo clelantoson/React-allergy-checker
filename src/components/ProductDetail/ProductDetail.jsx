@@ -78,20 +78,52 @@ const ProductDetail = () => {
   }, []);
   console.log(product);
 
-  function createDataTable(name, data100g) {
-    return { name, data100g };
-  }
+  const createRows = (rows) =>
+    rows
+      .map((row) => {
+        const { data100g, dataPerServing } = row;
+        console.log(typeof row);
+        // eslint-disable-next-line no-debugger
+        if (data100g && dataPerServing) return row;
+        else return null;
+      })
+      .filter(Boolean);
 
   if (product) {
     console.log("component is mounted");
 
-    const rows = [
-      createDataTable("Energy", `${product.nutriscore_data.energy}`),
-      createDataTable("Fiber", `${product.nutriscore_data.fiber}`),
-      createDataTable("Proteins", `${product.nutriscore_data.proteins}`),
-      createDataTable("Sugar ", `${product.nutriscore_data.sugar}`),
-      createDataTable("Sodium", `${product.nutriscore_data.sodium}`),
-    ];
+    const rows = createRows([
+      {
+        name: "Energy",
+        data100g: product.nutriments["energy-kcal_100g"],
+        dataPerServing: product.nutriments["energy-kcal_serving"],
+      },
+      {
+        name: "Fiber",
+        data100g: product.nutriments.fiber_100g,
+        dataPerServing: product.nutriments.fiber_serving,
+      },
+      {
+        name: "Proteins",
+        data100g: product.nutriments.proteins_100g,
+        dataPerServing: product.nutriments.proteins_serving,
+      },
+      {
+        name: "Sugar ",
+        data100g: product.nutriments.sugar_100g,
+        dataPerServing: product.nutriments.sugar_serving,
+      },
+      {
+        name: "Sodium",
+        data100g: product.nutriments.sodium_100g,
+        dataPerServing: product.nutriments.sodium_serving,
+      },
+      {
+        name: "Fat",
+        data100g: product.nutriments.fat_100g,
+        dataPerServing: product.nutriments.fat_serving,
+      },
+    ]);
 
     return (
       <Card className={classes.root}>
@@ -129,10 +161,15 @@ const ProductDetail = () => {
               Allergens: {product.allergens_tags}
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
-                  Nutriscore
+                  Nutritional informations
                 </Typography>
                 <Typography variant="h5" color="primary">
-                  Grade : {product.nutriscore_grade}
+                  <Paper variant="outlined">
+                    <img
+                      src={`https://static.openfoodfacts.org/images/attributes/nutriscore-${product.nutriscore_grade}.svg`}
+                      alt={`nutriscore: ${product.nutriscore_grade}`}
+                    />
+                  </Paper>
                 </Typography>
                 <TableContainer component={Paper}>
                   <Table className={classes.table} aria-label="simple table">
@@ -150,7 +187,9 @@ const ProductDetail = () => {
                             {row.name}
                           </TableCell>
                           <TableCell align="right">{row.data100g}</TableCell>
-                          <TableCell align="right">{row.data100g}</TableCell>
+                          <TableCell align="right">
+                            {row.dataPerServing}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
