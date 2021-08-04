@@ -3,6 +3,11 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core";
 import axios from "axios";
 // import { useParams } from "react-router-dom";
+// const initial_state = {
+//   product: "",
+//   // cuisine: "",
+//   searchResults: [],
+// };
 
 const useStyles = makeStyles({
   root: {
@@ -17,9 +22,13 @@ const useStyles = makeStyles({
 
 // Connecter à l'api avec la bonne UrL
 // affiche les produits qui correspondent à event.target.value
+
 const SearchBar = () => {
-  const [product, setProduct] = useState({ results: [] });
+         //state, setSate
+  const [product, setProduct] = useState();
   // const [filteredData,setFilteredData] = useState(product);
+  // handleSubmit
+  // handleChange
   useEffect(() => {
     const API_URL_SEARCH = `https://fr.openfoodfacts.org/cgi/search.pl?search_simple=1&json=1&search_terms=`;
     // const URL = `https://world.openfoodfacts.org/api/v0/product`;
@@ -34,7 +43,7 @@ const SearchBar = () => {
         console.log('Error getting fake data: ' + error);
       })
     }, []);
-  console.log("product:", product);
+  console.log("test product:", product);
   
   const handleOnChange = (event) => setProduct(event.target.value);
   const handleOnClick = () => {
@@ -46,23 +55,41 @@ const SearchBar = () => {
       handleOnClick();
     }
   };
+
+  // const handleOnClick = () => {
+  //   setProduct([...product]);
+  //   // setFilteredData("");
+  // };
+  // const handleKeyDown = (event) => {
+  //   if (event.key == "Enter") {
+  //     handleOnClick();
+  //   }
+  // };
   const classes = useStyles();
+  // const {searchResults} = product;
+  // const {searchResults} = state;
+
+
   return (
     <div className={classes.root}>
       
       <TextField
         id="outlined-search"
         label="Search a product"
+        //onChange={handleChange}
         onChange={handleOnChange}
-        // value={setProduct}
+        //value={location}
+        // name={product}
+        // value={product}
         onKeyDown={handleKeyDown}
-        type="text"
+        type="search"
         variant="outlined"
         className={classes.searchBar}
       />
       <ul>
-        <li key={product.id}>
-          <p>{product.product_name_en}</p>
+        <li>
+         
+      
         </li>
       </ul>
     </div>
