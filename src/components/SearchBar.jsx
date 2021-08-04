@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 
 const SearchBar = () => {
          //state, setSate
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState("");
   // const [filteredData,setFilteredData] = useState(product);
   // handleSubmit
   // handleChange
@@ -34,16 +34,15 @@ const SearchBar = () => {
     // const URL = `https://world.openfoodfacts.org/api/v0/product`;
     axios
       .get(API_URL_SEARCH)
-      .then(response => {
-      setProduct(response.data);
+      .then((response) => response.data)
+      .then((data) => setProduct(data));
       // setFilteredData(response.data);
           // setProduct(response.data.product);
-      })
-      .catch(error => {
-        console.log('Error getting fake data: ' + error);
-      })
+      // .catch(error => {
+      //   console.log('Error getting fake data: ' + error);
+      // })
     }, []);
-  console.log("test product:", product);
+    console.log("test product:", setProduct);
   
   const handleOnChange = (event) => setProduct(event.target.value);
   const handleOnClick = () => {
