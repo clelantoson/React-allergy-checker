@@ -39,7 +39,7 @@ const Navigation = () => {
       <BottomNavigationAction
         component={Link}
         to="/search"
-        label="SearchProduct"
+        label="Search"
         value="search"
         icon={<SearchProduct htmlColor="#3A6EA5" />}
       />

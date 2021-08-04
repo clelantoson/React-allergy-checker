@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -15,13 +16,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { CardContent } from "@material-ui/core";
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Box from "@material-ui/core/Box";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -82,8 +83,7 @@ const ProductDetail = () => {
     rows
       .map((row) => {
         const { data100g, dataPerServing } = row;
-        console.log(typeof row);
-        // eslint-disable-next-line no-debugger
+        // console.log(typeof row);
         if (data100g && dataPerServing) return row;
         else return null;
       })
@@ -138,7 +138,7 @@ const ProductDetail = () => {
         />
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
+            <FavoriteIcon component={Link} to="/favorite" />
           </IconButton>
           <IconButton aria-label="share">
             <ShareIcon />
@@ -154,11 +154,12 @@ const ProductDetail = () => {
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
+
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>Brand : {product.brands}</Typography>
-            <Typography>
-              Allergens: {product.allergens_tags}
+          <Box pb="2rem">
+            <CardContent>
+              <Typography paragraph>Brand : {product.brands}</Typography>
+              <Typography>Allergens: {product.allergens_tags}</Typography>
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
                   Nutritional informations
@@ -172,43 +173,45 @@ const ProductDetail = () => {
                   </Paper>
                 </Typography>
                 <TableContainer component={Paper}>
-                  <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Nutritional Informations </TableCell>
-                        <TableCell align="right">For 100g</TableCell>
-                        <TableCell align="right">Per portion (g)</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {rows.map((row) => (
-                        <TableRow key={row.name}>
-                          <TableCell component="th" scope="row">
-                            {row.name}
-                          </TableCell>
-                          <TableCell align="right">{row.data100g}</TableCell>
-                          <TableCell align="right">
-                            {row.dataPerServing}
-                          </TableCell>
+                  <TableContainer
+                    className={classes.table}
+                    aria-label="simple table"
+                  >
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Nutritional Informations </TableCell>
+                          <TableCell align="right">For 100g</TableCell>
+                          <TableCell align="right">Per portion (g)</TableCell>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row) => (
+                          <TableRow key={row.name}>
+                            <TableCell component="th" scope="row">
+                              {row.name}
+                            </TableCell>
+                            <TableCell align="right">{row.data100g}</TableCell>
+                            <TableCell align="right">
+                              {row.dataPerServing}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
                 </TableContainer>
               </Paper>
-            </Typography>
-            <Paper className={classes.paperInfoProduct}>
-              <Typography variant="h4" color="primary">
-                Ingredients
-              </Typography>
-              <Typography className={classes.paperText}>
-                {product.ingredients_text}
-              </Typography>
-            </Paper>
-          </CardContent>
-          <br />
-          <br />
-          <br />
+              <Paper className={classes.paperInfoProduct}>
+                <Typography variant="h4" color="primary">
+                  Ingredients
+                </Typography>
+                <Typography className={classes.paperText}>
+                  {product.ingredients_text}
+                </Typography>
+              </Paper>
+            </CardContent>
+          </Box>
         </Collapse>
       </Card>
     );
