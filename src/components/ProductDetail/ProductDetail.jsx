@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -138,7 +137,7 @@ const ProductDetail = () => {
         />
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
-            <FavoriteIcon component={Link} to="/favorite" />
+            <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="share">
             <ShareIcon />
@@ -156,10 +155,11 @@ const ProductDetail = () => {
         </CardActions>
 
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <Box pb="2rem">
+          <Box pb="3rem">
             <CardContent>
               <Typography paragraph>Brand : {product.brands}</Typography>
-              <Typography>Allergens: {product.allergens_tags}</Typography>
+              <Typography>Allergens: {product.allergens}</Typography>
+              <Typography>Traces: {product.traces}</Typography>
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
                   Nutritional informations
