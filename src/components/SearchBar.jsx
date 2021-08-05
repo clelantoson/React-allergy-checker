@@ -13,18 +13,11 @@ const useStyles = makeStyles({
   },
 });
 
-// Connecter à l'api avec la bonne UrL
-// affiche les produits qui correspondent à event.target.value
-
 const SearchBar = () => {
   console.log("in searchbar");
-  //state, setSate
   const [products, setProducts] = useState([]);
   const [productInput, setProductInput] = useState("");
 
-  // const [filteredData,setFilteredData] = useState(product);
-  // handleSubmit
-  // handleChange
   useEffect(() => {
     console.log("start search with", productInput);
     if (productInput.length === 0) {
@@ -32,7 +25,7 @@ const SearchBar = () => {
       return;
     }
     const API_URL_SEARCH = `https://fr.openfoodfacts.org/cgi/search.pl?search_simple=1&json=1&search_terms=${productInput}`;
-    // const URL = `https://world.openfoodfacts.org/api/v0/product`;
+
     axios
       .get(API_URL_SEARCH)
       .then((response) => {
