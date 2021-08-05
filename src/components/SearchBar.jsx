@@ -2,12 +2,6 @@ import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core";
 import axios from "axios";
-// import { useParams } from "react-router-dom";
-// const initial_state = {
-//   product: "",
-//   // cuisine: "",
-//   searchResults: [],
-// };
 
 const useStyles = makeStyles({
   root: {
@@ -25,7 +19,7 @@ const useStyles = makeStyles({
 const SearchBar = () => {
   console.log("in searchbar");
   //state, setSate
-  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
   const [productInput, setProductInput] = useState("");
 
   // const [filteredData,setFilteredData] = useState(product);
@@ -33,44 +27,27 @@ const SearchBar = () => {
   // handleChange
   useEffect(() => {
     console.log("start search with", productInput);
+    if (productInput.length === 0) {
+      setProducts([]);
+      return;
+    }
     const API_URL_SEARCH = `https://fr.openfoodfacts.org/cgi/search.pl?search_simple=1&json=1&search_terms=${productInput}`;
     // const URL = `https://world.openfoodfacts.org/api/v0/product`;
     axios
       .get(API_URL_SEARCH)
       .then((response) => {
-        setProduct(response.data);
-        // setFilteredData(response.data);
-        // setProduct(response.data.product);
+        // // eslint-disable-next-line no-debugger
+        // debugger;
+        setProducts(response.data.products);
       })
       .catch((error) => {
         console.log("Error getting fake data: " + error);
       });
   }, [productInput]);
-  console.log("test product:", product);
 
-  // const handleOnChange = (event) => setProduct(event.target.value);
-  // const handleOnClick = () => {
-  //   setProduct([...product]);
-  //   // setFilteredData("");
-  // };
-  // const handleKeyDown = (event) => {
-  //   if (event.key == "Enter") {
-  //     handleOnClick();
-  //   }
-  // };
+  console.log("products", products);
 
-  // const handleOnClick = () => {
-  //   setProduct([...product]);
-  //   // setFilteredData("");
-  // };
-  // const handleKeyDown = (event) => {
-  //   if (event.key == "Enter") {
-  //     handleOnClick();
-  //   }
-  // };
   const classes = useStyles();
-  // const {searchResults} = product;
-  // const {searchResults} = state;
 
   return (
     <div className={classes.root}>
@@ -78,15 +55,19 @@ const SearchBar = () => {
         id="outlined-search"
         label="Search a product"
         onChange={(event) => setProductInput(event.target.value)}
-        //value={location}
-        // name={product}
         value={productInput}
         type="search"
         variant="outlined"
         className={classes.searchBar}
       />
       <ul>
-        <li></li>
+        {console.log("products to display", products)}
+        {/* {products.map((product) => {
+          return <li key={product.id}>{product.generic_name}</li>;
+        })} */}
+        {products.map((product) => (
+          <li key={product.id}>{product.generic_name}</li>
+        ))}
       </ul>
     </div>
   );
