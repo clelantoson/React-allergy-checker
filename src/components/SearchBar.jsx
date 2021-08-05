@@ -19,41 +19,45 @@ const useStyles = makeStyles({
   },
 });
 
-
 // Connecter à l'api avec la bonne UrL
 // affiche les produits qui correspondent à event.target.value
 
 const SearchBar = () => {
-         //state, setSate
-  const [product, setProduct] = useState("");
+  console.log("in searchbar");
+  //state, setSate
+  const [product, setProduct] = useState([]);
+  const [productInput, setProductInput] = useState("");
+
   // const [filteredData,setFilteredData] = useState(product);
   // handleSubmit
   // handleChange
   useEffect(() => {
-    const API_URL_SEARCH = `https://fr.openfoodfacts.org/cgi/search.pl?search_simple=1&json=1&search_terms=`;
+    console.log("start search with", productInput);
+    const API_URL_SEARCH = `https://fr.openfoodfacts.org/cgi/search.pl?search_simple=1&json=1&search_terms=${productInput}`;
     // const URL = `https://world.openfoodfacts.org/api/v0/product`;
     axios
       .get(API_URL_SEARCH)
-      .then((response) => response.data)
-      .then((data) => setProduct(data));
-      // setFilteredData(response.data);
-          // setProduct(response.data.product);
-      // .catch(error => {
-      //   console.log('Error getting fake data: ' + error);
-      // })
-    }, []);
-    console.log("test product:", setProduct);
-  
-  const handleOnChange = (event) => setProduct(event.target.value);
-  const handleOnClick = () => {
-    setProduct([...product]);
-    // setFilteredData("");
-  };
-  const handleKeyDown = (event) => {
-    if (event.key == "Enter") {
-      handleOnClick();
-    }
-  };
+      .then((response) => {
+        setProduct(response.data);
+        // setFilteredData(response.data);
+        // setProduct(response.data.product);
+      })
+      .catch((error) => {
+        console.log("Error getting fake data: " + error);
+      });
+  }, [productInput]);
+  console.log("test product:", product);
+
+  // const handleOnChange = (event) => setProduct(event.target.value);
+  // const handleOnClick = () => {
+  //   setProduct([...product]);
+  //   // setFilteredData("");
+  // };
+  // const handleKeyDown = (event) => {
+  //   if (event.key == "Enter") {
+  //     handleOnClick();
+  //   }
+  // };
 
   // const handleOnClick = () => {
   //   setProduct([...product]);
@@ -68,28 +72,21 @@ const SearchBar = () => {
   // const {searchResults} = product;
   // const {searchResults} = state;
 
-
   return (
     <div className={classes.root}>
-      
       <TextField
         id="outlined-search"
         label="Search a product"
-        //onChange={handleChange}
-        onChange={handleOnChange}
+        onChange={(event) => setProductInput(event.target.value)}
         //value={location}
         // name={product}
-        // value={product}
-        onKeyDown={handleKeyDown}
+        value={productInput}
         type="search"
         variant="outlined"
         className={classes.searchBar}
       />
       <ul>
-        <li>
-         
-      
-        </li>
+        <li></li>
       </ul>
     </div>
   );
