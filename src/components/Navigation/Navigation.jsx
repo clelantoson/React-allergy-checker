@@ -41,28 +41,28 @@ const Navigation = () => {
         to="/"
         label="Search"
         value="search"
-        icon={<SearchProduct htmlColor="#3A6EA5" />}
+        icon={<SearchProduct />}
       />
       <BottomNavigationAction
         component={Link}
         to="/favorite"
         label="Favorite"
         value="favorite"
-        icon={<Favorite htmlColor="#3A6EA5" />}
+        icon={<Favorite />}
       />
       <BottomNavigationAction
         component={Link}
         to="/history"
         label="History"
         value="history"
-        icon={<History htmlColor="#3A6EA5" />}
+        icon={<History />}
       />
       <BottomNavigationAction
         component={Link}
         to="/profile"
         label="Profile"
         value="profile"
-        icon={<Profile htmlColor="#3A6EA5" />}
+        icon={<Profile />}
       />
     </BottomNavigation>
   );
