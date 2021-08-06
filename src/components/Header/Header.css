@@ -1,0 +1,12 @@
+.logo {
+  width: 3rem;
+  height: 3rem;
+}
+
+.container {
+  margin: 0;
+  justify-content: space-around;
+  flex-direction: row-reverse;
+  display: flex;
+  align-items: center;
+}
