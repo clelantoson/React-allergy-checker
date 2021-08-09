@@ -25,6 +25,7 @@ const theme = createTheme({
       main: "#2DD881",
     },
   },
+  typography: { fontFamily: "'Lato', sans-serif" },
 });
 
 function App() {
