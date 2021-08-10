@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import {
   Avatar,
-  IconButton,
+  // IconButton,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   makeStyles,
+  Grid
 } from "@material-ui/core";
 // import Divider from '@material-ui/core/Divider';
 // import StarIcon from '@material-ui/icons/Star';
@@ -19,7 +20,7 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() =>({
   root: {
     width: "100%",
     top: "100",
@@ -48,7 +49,7 @@ const useStyles = makeStyles({
   paper: {
     width: "100%"
   }
-});
+}));
 
 const SearchBar = () => {
   console.log("in searchbar");
@@ -106,20 +107,23 @@ const SearchBar = () => {
             alignItems="flex-start"
           >
             <Paper className={classes.paper} elevation={19}>
-              <ListItemAvatar>
-                <Avatar src={product.image_front_url} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={product.generic_name}
-                secondary={product.id}
-              />
-              <IconButton
-                type="submit"
-                className={classes.iconButton}
-                aria-label="search"
-              >
-              <CheckCircleOutlineIcon />
-              </IconButton>
+              <Grid container>
+                <Grid item lg={2}>
+                  <ListItemAvatar>
+                    <Avatar src={product.image_front_url} />
+                  </ListItemAvatar>
+                </Grid>
+                <Grid item lg={8}>
+                  <ListItemText
+                    primary={product.generic_name}
+                    secondary={product.id}
+                  />
+                </Grid>
+                <Grid item lg={2}>
+                  <CheckCircleOutlineIcon />
+                </Grid>
+              </Grid>
+
             </Paper>
           </ListItem>
         ))}
