@@ -35,86 +35,17 @@ const AllergensSelection = () => {
       <h1>Which allergens do you want to avoid ?</h1>
       <h2>Allergens or traces</h2>
       <div className={classes.chip}>
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Milk"
-          deleteIcon={<DoneIcon />}
-          //onDelete={handleDelete}
-        />
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Gluten"
-          deleteIcon={<DoneIcon />}
-          // onDelete={handleDelete}
-        />
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Soybeans"
-          deleteIcon={<DoneIcon />}
-          // onDelete={handleDelete}
-        />
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Peanuts"
-          deleteIcon={<DoneIcon />}
-          // onDelete={handleDelete}
-        />
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Nuts"
-          deleteIcon={<DoneIcon />}
-          // onDelete={handleDelete}
-        />
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Eggs"
-          deleteIcon={<DoneIcon />}
-          // onDelete={handleDelete}
-        />
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Mustard"
-          deleteIcon={<DoneIcon />}
-          // onDelete={handleDelete}
-        />
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Molluscs"
-          deleteIcon={<DoneIcon />}
-          // onDelete={handleDelete}
-        />
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Celery"
-          deleteIcon={<DoneIcon />}
-          // onDelete={handleDelete}
-        />
-        <Chip
-          className={classes.styledChips}
-          color="primary"
-          size="small"
-          label="Fish"
-          deleteIcon={<DoneIcon />}
-          // onDelete={handleDelete}
-        />
+        {allergens.map((allergen, index) => (
+          <Chip
+            key={index}
+            className={classes.styledChips}
+            color="primary"
+            size="small"
+            label={allergen}
+            deleteIcon={<DoneIcon />}
+            //onDelete={handleDelete}
+          />
+        ))}
       </div>
     </div>
   );
