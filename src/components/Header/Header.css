@@ -3,7 +3,7 @@
   height: 3rem;
 }
 
-.container {
+.containerHeader {
   margin: 0;
   justify-content: space-around;
   flex-direction: row-reverse;

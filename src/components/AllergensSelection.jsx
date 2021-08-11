@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import Chip from "@material-ui/core/Chip";
-import DoneIcon from "@material-ui/icons/Done";
 import { makeStyles } from "@material-ui/core/styles";
+//import { Link } from "react-router-dom";
+import "./AllergensSelection.css";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(() => ({
-  root: {
+  containerAllergens: {
     textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
   },
-  //   chip: {
-  //     color: theme.palette.text.info,
-  //   },
   selectedChip: {
     margin: "0.1rem",
   },
@@ -48,7 +49,7 @@ const AllergensSelection = () => {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.containerAllergens}>
       <h1>Which allergens do you want to avoid ?</h1>
       <h2>Allergens or traces</h2>
       <div className={classes.chip}>
@@ -61,12 +62,13 @@ const AllergensSelection = () => {
             color="primary"
             size="small"
             label={allergen.name}
-            deleteIcon={<DoneIcon />}
             onClick={handleSelectAllergen}
-            //onDelete={handleDelete}
           />
         ))}
       </div>
+      <Button variant="contained" color="secondary" href="#contained-buttons">
+        Continue
+      </Button>
     </div>
   );
 };
