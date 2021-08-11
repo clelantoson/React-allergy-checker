@@ -35,13 +35,13 @@ const useStyles = makeStyles(() =>({
   },
   list: {
     width: "100%",
-    height: "700px",
+    height: "500px",
     marginBottom: "100px",
   },
   listItem: {
     width: "100%",
     margin: "20px 0 0 0",
-    padding: "0 100px 90px 100px",
+    padding: "0 30px 0 30px",
     // border: "1px solid black",
     borderRadius: "20px",
     // boxShadow: "0px 0.630645px 1.26129px", rgba("97, 97, 97, 0.2")
@@ -52,7 +52,7 @@ const useStyles = makeStyles(() =>({
 }));
 
 const SearchBar = () => {
-  console.log("in searchbar");
+  // console.log("in searchbar");
   const [products, setProducts] = useState([]);
   const [productInput, setProductInput] = useState("");
 
@@ -76,7 +76,7 @@ const SearchBar = () => {
       });
   }, [productInput]);
 
-  console.log("products", products);
+  // console.log("products", products);
 
   const classes = useStyles();
 
@@ -115,7 +115,7 @@ const SearchBar = () => {
                 </Grid>
                 <Grid item lg={8}>
                   <ListItemText
-                    primary={product.generic_name}
+                    primary={product.product_name}
                     secondary={product.id}
                   />
                 </Grid>
