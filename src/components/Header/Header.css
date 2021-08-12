@@ -3,10 +3,10 @@
   height: 3rem;
 }
 
-.container {
+.containerHeader {
   margin: 0;
+  display: flex;
   justify-content: space-around;
   flex-direction: row-reverse;
-  display: flex;
   align-items: center;
 }

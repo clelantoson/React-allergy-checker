@@ -30,7 +30,7 @@ const theme = createTheme({
 
 function App() {
   return (
-    <>
+    <div id="main">
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <CssBaseline />
@@ -39,7 +39,7 @@ function App() {
           <Navigation />
         </BrowserRouter>
       </ThemeProvider>
-    </>
+    </div>
   );
 }
 
