@@ -14,9 +14,9 @@ import "./Navigation.css";
 import React from "react";
 
 const useStyles = makeStyles({
-  root: {
-    position: "fixed",
-    bottom: 0,
+  containerNav: {
+    // position: "fixed",
+    // bottom: 0,
     width: "100%",
   },
 });
@@ -33,7 +33,7 @@ const Navigation = () => {
     <BottomNavigation
       value={value}
       onChange={handleChange}
-      className={classes.root}
+      className={classes.containerNav}
     >
       {/* <BottomNavigationAction label="Barecode" value="barecode" icon={<BareCode />} /> */}
       <BottomNavigationAction
