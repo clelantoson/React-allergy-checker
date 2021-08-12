@@ -12,11 +12,14 @@ const useStyles = makeStyles(() => ({
     flexDirection: "column",
   },
   selectedChip: {
-    margin: "0.1rem",
+    margin: "0.3rem",
   },
   notSelectedChip: {
-    margin: "0.1rem",
+    margin: "0.3rem",
     opacity: "0.3",
+  },
+  containerButton: {
+    // width: "50%",
   },
 }));
 
@@ -40,18 +43,22 @@ const AllergensSelection = () => {
 
   const handleSelectAllergen = (event) => {
     console.log("event", event.target.innerText);
-    const newAllergens = [...allergens];
-    const foundAllergen = newAllergens.find(
-      (allergen) => allergen.name === event.target.innerText
-    );
-    foundAllergen.selected = !foundAllergen.selected;
-    setAllergens(newAllergens);
+    // the best practice is to use a function for the setter to be sure to have the newest state in parameters
+    setAllergens((stateAllergens) => {
+      const newAllergens = [...stateAllergens];
+      const foundAllergen = newAllergens.find(
+        (allergen) => allergen.name === event.target.innerText
+      );
+      //we change it only if we found it
+      if (foundAllergen) foundAllergen.selected = !foundAllergen.selected;
+      return newAllergens;
+    });
   };
 
   return (
     <div className={classes.containerAllergens}>
       <h1>Which allergens do you want to avoid ?</h1>
-      <h2>Allergens or traces</h2>
+      <p>Allergens or traces</p>
       <div className={classes.chip}>
         {allergens.map((allergen, index) => (
           <Chip
@@ -60,15 +67,17 @@ const AllergensSelection = () => {
               allergen.selected ? classes.selectedChip : classes.notSelectedChip
             }
             color="primary"
-            size="small"
+            size="medium"
             label={allergen.name}
             onClick={handleSelectAllergen}
           />
         ))}
       </div>
-      <Button variant="contained" color="secondary" href="#contained-buttons">
-        Continue
-      </Button>
+      <div className={classes.containerButton}>
+        <Button variant="contained" color="secondary" href="#contained-buttons">
+          Continue
+        </Button>
+      </div>
     </div>
   );
 };
