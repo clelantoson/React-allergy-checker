@@ -20,13 +20,16 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 
 
-const useStyles = makeStyles(() =>({
+const useStyles = makeStyles((theme) =>({
   root: {
-    width: "100%",
+    // width: "100%",
+    width: theme.spacing(50),
     top: "100",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    margin: theme.spacing(2),
+    
   },
   searchBar: {
     width: "50%",
@@ -39,8 +42,10 @@ const useStyles = makeStyles(() =>({
     marginBottom: "100px",
   },
   listItem: {
-    width: "100%",
-    margin: "20px 0 0 0",
+    // width: "100%",
+    width: theme.spacing(50),
+    // margin: "20px 0 0 0",
+    margin: theme.spacing(2),
     padding: "0 30px 0 30px",
     // border: "1px solid black",
     borderRadius: "20px",
@@ -91,7 +96,7 @@ const SearchBar = () => {
         variant="outlined"
         className={classes.searchBar}
         InputProps={{
-          startAdornment: (
+          endAdornment: (
             <InputAdornment position="end">
               <SearchIcon />
             </InputAdornment>
@@ -115,6 +120,7 @@ const SearchBar = () => {
                 </Grid>
                 <Grid item lg={8}>
                   <ListItemText
+                    wrap="nowrap"
                     primary={product.product_name}
                     secondary={product.id}
                   />
