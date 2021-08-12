@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
-//import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "./AllergensSelection.css";
 import Button from "@material-ui/core/Button";
 
@@ -75,7 +75,7 @@ const AllergensSelection = () => {
         ))}
       </div>
       <div className={classes.containerButton}>
-        <Button variant="contained" color="secondary" href="#contained-buttons">
+        <Button variant="contained" color="secondary" href="/">
           Continue
         </Button>
       </div>

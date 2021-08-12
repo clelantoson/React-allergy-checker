@@ -21,6 +21,10 @@ body,
   width: 100%;
 }
 
+h1 {
+  color: #426a5a;
+}
+
 /*
 .App {
   text-align: center;
