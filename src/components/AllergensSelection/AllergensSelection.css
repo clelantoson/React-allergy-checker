@@ -1,5 +1,5 @@
 .MuiChip-clickableColorPrimary:focus {
-  background-color: #fcb44d;
+  background-color: #fcb44d !important ;
 }
 
 .MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedSecondary {

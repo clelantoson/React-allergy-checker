@@ -28,18 +28,19 @@ const AllergensSelection = () => {
   const [allergens, setAllergens] = useState([
     { name: "Milk", selected: false },
     { name: "Gluten", selected: false },
-    { name: "Soybeans", selected: false },
-    { name: "Peanuts", selected: false },
-    { name: "Nuts", selected: false },
     { name: "Eggs", selected: false },
-    { name: "Mustard", selected: false },
-    { name: "Molluscs", selected: false },
-    { name: "Celery", selected: false },
+    { name: "Soybeans", selected: false },
+    { name: "Nuts", selected: false },
     { name: "Fish", selected: false },
+    { name: "Mustard", selected: false },
+    { name: "Celery", selected: false },
+    { name: "Sesame seeds", selected: false },
+    { name: "Peanuts", selected: false },
+    { name: "Crustaceans", selected: false },
+    { name: "Molluscs", selected: false },
+    { name: "Avoine", selected: false },
+    { name: "Lupin", selected: false },
   ]);
-
-  //   // eslint-disable-next-line no-debugger
-  //   debugger;
 
   const handleSelectAllergen = (event) => {
     console.log("event", event.target.innerText);
