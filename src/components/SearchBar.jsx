@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 import TextField from "@material-ui/core/TextField";
 import {
   Avatar,
@@ -62,6 +63,8 @@ const SearchBar = () => {
   const [products, setProducts] = useState([]);
   const [productInput, setProductInput] = useState("");
 
+  const [debouncedProductInput] = useDebounce(productInput, 700);
+
   useEffect(() => {
     console.log("start search with", productInput);
     if (productInput.length === 0) {
@@ -80,7 +83,7 @@ const SearchBar = () => {
       .catch((error) => {
         console.log("Error getting fake data: " + error);
       });
-  }, [productInput]);
+  }, [debouncedProductInput]);
 
   // console.log("products", products);
 
