@@ -28,6 +28,7 @@ const useStyles = makeStyles(() => ({
     height: "100%",
     overflowY: "auto",
   },
+  fullWidth: { width: "100%" },
   searchBar: {
     width: "50%",
   },
@@ -35,11 +36,23 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: "4px",
+    marginTop: "1rem",
   },
   list: {},
+  centerItem: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  circleIcon: {
+    marginRight: "4px",
+  },
+  listItemAvatar: {
+    display: "flex",
+    justifyContent: "center",
+  },
   listItem: {
-    padding: "0 30px 0 30px",
+    padding: "0 1rem 0 1rem",
     borderRadius: "20px",
     marginBottom: "4px",
   },
@@ -105,23 +118,23 @@ const SearchBar = () => {
           <ListItem
             className={classes.listItem}
             key={product.id}
-            alignItems="flex-start"
+            alignItems="center"
           >
-            <Paper className={classes.paper} elevation={19}>
+            <Paper className={classes.paper} elevation={1}>
               <Grid wrap="nowrap" container>
-                <Grid item lg={2}>
-                  <ListItemAvatar>
+                <Grid item lg={2} className={classes.centerItem}>
+                  <ListItemAvatar className={classes.listItemAvatar}>
                     <Avatar src={product.image_front_url} />
                   </ListItemAvatar>
                 </Grid>
-                <Grid item lg={8}>
+                <Grid item lg={8} className={classes.fullWidth}>
                   <ListItemText
                     primary={product.product_name}
                     secondary={product.id}
                   />
                 </Grid>
-                <Grid item lg={2}>
-                  <CheckCircleOutlineIcon />
+                <Grid item lg={2} className={classes.centerItem}>
+                  <CheckCircleOutlineIcon className={classes.circleIcon} />
                 </Grid>
               </Grid>
             </Paper>
