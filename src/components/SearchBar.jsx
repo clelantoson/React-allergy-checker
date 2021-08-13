@@ -9,7 +9,7 @@ import {
   ListItemAvatar,
   ListItemText,
   makeStyles,
-  Grid
+  Grid,
 } from "@material-ui/core";
 // import Divider from '@material-ui/core/Divider';
 // import StarIcon from '@material-ui/icons/Star';
@@ -22,41 +22,30 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 // import ProductList from "./ProductList/ProductList";
 
-
-const useStyles = makeStyles((theme) =>({
+const useStyles = makeStyles(() => ({
   root: {
-    // width: "100%",
-    width: theme.spacing(50),
-    top: "100",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    margin: theme.spacing(2),
+    width: "100%",
+    height: "100%",
+    overflowY: "auto",
   },
   searchBar: {
     width: "50%",
-    margin: "0 auto",
-    display: "block",
   },
-  list: {
-    width: "100%",
-    height: "500px",
-    marginBottom: "100px",
+  textField: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: "4px",
   },
+  list: {},
   listItem: {
-    // width: "100%",
-    // width: theme.spacing(50),
-    // margin: "20px 0 0 0",
-    margin: theme.spacing(2),
     padding: "0 30px 0 30px",
-    // border: "1px solid black",
     borderRadius: "20px",
-    // boxShadow: "0px 0.630645px 1.26129px", rgba("97, 97, 97, 0.2")
-    width: "70%",
+    marginBottom: "4px",
   },
   paper: {
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
 const SearchBar = () => {
@@ -92,24 +81,26 @@ const SearchBar = () => {
 
   return (
     <div className={classes.root}>
-      <TextField
-        id="outlined-search"
-        label="Search a product"
-        onChange={(event) => setProductInput(event.target.value)}
-        value={productInput}
-        type="search"
-        variant="outlined"
-        className={classes.searchBar}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
+      <div className={classes.textField}>
+        <TextField
+          id="outlined-search"
+          label="Search a product"
+          onChange={(event) => setProductInput(event.target.value)}
+          value={productInput}
+          type="search"
+          variant="outlined"
+          className={classes.searchBar}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </div>
       <List className={classes.list}>
-      {console.log("products to display2", products)}
+        {console.log("products to display2", products)}
         {products.map((product) => (
           <ListItem
             className={classes.listItem}
@@ -125,7 +116,6 @@ const SearchBar = () => {
                 </Grid>
                 <Grid item lg={8}>
                   <ListItemText
-                    
                     primary={product.product_name}
                     secondary={product.id}
                   />
@@ -134,7 +124,6 @@ const SearchBar = () => {
                   <CheckCircleOutlineIcon />
                 </Grid>
               </Grid>
-
             </Paper>
           </ListItem>
         ))}
