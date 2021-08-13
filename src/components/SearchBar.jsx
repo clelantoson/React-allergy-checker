@@ -16,8 +16,10 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import Paper from "@material-ui/core/Paper";
+
 // import { shadows } from '@material-ui/system';
 import axios from "axios";
+// import ProductList from "./ProductList/ProductList";
 
 
 const useStyles = makeStyles((theme) =>({
@@ -29,7 +31,6 @@ const useStyles = makeStyles((theme) =>({
     flexDirection: "column",
     justifyContent: "center",
     margin: theme.spacing(2),
-    
   },
   searchBar: {
     width: "50%",
@@ -104,7 +105,7 @@ const SearchBar = () => {
         }}
       />
       <List className={classes.list}>
-        {console.log("products to display2", products)}
+      {console.log("products to display2", products)}
         {products.map((product) => (
           <ListItem
             className={classes.listItem}
@@ -112,7 +113,7 @@ const SearchBar = () => {
             alignItems="flex-start"
           >
             <Paper className={classes.paper} elevation={19}>
-              <Grid container>
+              <Grid wrap="nowrap" container>
                 <Grid item lg={2}>
                   <ListItemAvatar>
                     <Avatar src={product.image_front_url} />
@@ -120,7 +121,7 @@ const SearchBar = () => {
                 </Grid>
                 <Grid item lg={8}>
                   <ListItemText
-                    wrap="nowrap"
+                    
                     primary={product.product_name}
                     secondary={product.id}
                   />
