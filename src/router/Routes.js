@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Login from "../components/Login";
+import Register from "../components/Auth/Register";
+import Login from "../components/Auth/Login";
 import Home from "../components/Home";
 import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
@@ -19,7 +20,8 @@ const Routes = () => {
       <Route path="/history" component={History}/>
       <Route path="/product" component={ProductList}/> */}
       <Route path="/allergens" component={AllergensSelection} />
-      <Route path="/login" component={Login} />
+      <Route path="/login" component={Login} exact />
+      <Route path="/Register" component={Register} exact />
       <Route path="/fetch" component={FetchProduct} />
     </Switch>
   );
