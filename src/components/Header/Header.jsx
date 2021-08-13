@@ -5,7 +5,7 @@ import nutLogo from "./nut.png";
 
 const Header = () => {
   return (
-    <div className="container">
+    <div className="containerHeader">
       <h1>Allergy Checker</h1>
       <a href="/">
         <img className="logo" src={nutLogo} alt="Logo de allergy checker" />

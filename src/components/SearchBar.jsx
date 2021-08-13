@@ -45,13 +45,14 @@ const useStyles = makeStyles((theme) =>({
   },
   listItem: {
     // width: "100%",
-    width: theme.spacing(50),
+    // width: theme.spacing(50),
     // margin: "20px 0 0 0",
     margin: theme.spacing(2),
     padding: "0 30px 0 30px",
     // border: "1px solid black",
     borderRadius: "20px",
     // boxShadow: "0px 0.630645px 1.26129px", rgba("97, 97, 97, 0.2")
+    width: "70%",
   },
   paper: {
     width: "100%"

@@ -30,6 +30,9 @@ const ProductDetail = () => {
   const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
+      height: "100%",
+      overflowY: "auto",
+      marginBottom: "1px",
     },
     media: {
       height: 0,
