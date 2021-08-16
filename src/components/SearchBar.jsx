@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import TextField from "@material-ui/core/TextField";
-import {
-  Avatar,
-  // IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  makeStyles,
-  Grid,
-} from "@material-ui/core";
+import { List, makeStyles } from "@material-ui/core";
 // import Divider from '@material-ui/core/Divider';
 // import StarIcon from '@material-ui/icons/Star';
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
-import Paper from "@material-ui/core/Paper";
-
 // import { shadows } from '@material-ui/system';
 import axios from "axios";
+import ProductItem from "./Product/ProductItem";
+//import ProductList from "./Product/ProductList";
 // import ProductList from "./ProductList/ProductList";
 
 const useStyles = makeStyles(() => ({
@@ -112,33 +102,11 @@ const SearchBar = () => {
           }}
         />
       </div>
+      {/* <ProductList key={products.id} products={products} /> */}
       <List className={classes.list}>
         {console.log("products to display2", products)}
         {products.map((product) => (
-          <ListItem
-            className={classes.listItem}
-            key={product.id}
-            alignItems="center"
-          >
-            <Paper className={classes.paper} elevation={1}>
-              <Grid wrap="nowrap" container>
-                <Grid item lg={2} className={classes.centerItem}>
-                  <ListItemAvatar className={classes.listItemAvatar}>
-                    <Avatar src={product.image_front_url} />
-                  </ListItemAvatar>
-                </Grid>
-                <Grid item lg={8} className={classes.fullWidth}>
-                  <ListItemText
-                    primary={product.product_name}
-                    secondary={product.id}
-                  />
-                </Grid>
-                <Grid item lg={2} className={classes.centerItem}>
-                  <CheckCircleOutlineIcon className={classes.circleIcon} />
-                </Grid>
-              </Grid>
-            </Paper>
-          </ListItem>
+          <ProductItem key={product.id} product={product} />
         ))}
       </List>
       {/* <ul> */}
