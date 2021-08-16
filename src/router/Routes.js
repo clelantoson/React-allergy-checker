@@ -7,6 +7,7 @@ import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
+import  NotFound  from "../components/NotFound";
 
 const Routes = () => {
   return (
@@ -23,6 +24,7 @@ const Routes = () => {
       <Route path="/login" component={Login} exact />
       <Route path="/Register" component={Register} exact />
       <Route path="/fetch" component={FetchProduct} />
+      <Route path="*" component={NotFound} />
     </Switch>
   );
 };

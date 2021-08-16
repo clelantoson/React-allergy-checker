@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -13,10 +15,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Loading from "./Loading";
 import ErrorMessage from "../ErrorMessage";
-
+import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 
 import { useHistory } from "react-router-dom";
+
+import Icon from "./Icon";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,20 +43,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
-  const classes = useStyles();
+    const classes = useStyles();
+    const history = useHistory();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
+    
+
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     console.log(userInfo);
 
     if (userInfo) {
-      history.push("/profile");
+      history.push("/");
     }
   }, [history]);
 
@@ -60,27 +66,46 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+    //   const config = {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   };
       setLoading(true);
 
       const { data } = await axios.post(
-        "http://localhost:5000/user/login",
+        "https://api-food-checker.herokuapp.com/user/login",
         { email, password },
-        config
+        // config
       );
       console.log(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
-
+      history.push("/");
       setLoading(false);
     } catch (error) {
       setError(error.response.data.message);
       setLoading(false);
     }
   };
+
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    //const token = res?.tokenId;
+
+    try {
+      console.log(result);
+      localStorage.setItem("userInfo", JSON.stringify(result));
+
+      setLoading(false);
+
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const googleError = () =>
+    alert("Google Sign In was unsuccessful. Try again later");
 
   return (
     <Container component="main" maxWidth="xs">
@@ -132,6 +157,25 @@ export default function Login() {
           >
             Sign In
           </Button>
+          <GoogleLogin
+            clientId="1033365412850-3tdvnij779lcrrjbe78d48a1m5fean29.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <Button
+                className={classes.googleButton}
+                color="primary"
+                fullWidth
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                startIcon={<Icon />}
+                variant="contained"
+              >
+                Google Sign In
+              </Button>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleError}
+            cookiePolicy="single_host_origin"
+          />
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
