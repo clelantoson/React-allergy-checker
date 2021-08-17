@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+
+import {Container,Grid, Button, TextField, Link,Avatar } from "@material-ui/core";
+
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 
 // import { IconButton, Tooltip } from "@material-ui/core";
 // import { PhotoCamera } from "@material-ui/icons";
@@ -43,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Register() {
+const Register = () =>{
   const classes = useStyles();
   //   const history = useHistory();
 
@@ -113,7 +109,6 @@ export default function Register() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -243,3 +238,5 @@ export default function Register() {
     </Container>
   );
 }
+
+export default Register;
