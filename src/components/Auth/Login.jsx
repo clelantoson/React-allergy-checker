@@ -3,7 +3,6 @@ dotenv.config();
 import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+ const Login = () => {
     const classes = useStyles();
     const history = useHistory();
 
@@ -117,7 +116,6 @@ export default function Login() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       {error && <ErrorMessage>{error}</ErrorMessage>}
       {loading && <Loading />}
       <div className={classes.paper}>
@@ -202,3 +200,5 @@ export default function Login() {
     </Container>
   );
 }
+
+export default Login;
