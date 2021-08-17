@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   searchBar: {
-    width: "50%",
+    width: "70%",
   },
 });
 

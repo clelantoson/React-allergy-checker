@@ -1,0 +1,8 @@
+.MuiChip-clickableColorPrimary:focus {
+  background-color: #fcb44d !important ;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedSecondary {
+  margin-top: 3rem;
+  border-radius: 16px;
+}

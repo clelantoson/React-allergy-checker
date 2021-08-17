@@ -14,9 +14,9 @@ import "./Navigation.css";
 import React from "react";
 
 const useStyles = makeStyles({
-  root: {
-    position: "fixed",
-    bottom: 0,
+  containerNav: {
+    // position: "fixed",
+    // bottom: 0,
     width: "100%",
   },
 });
@@ -33,7 +33,7 @@ const Navigation = () => {
     <BottomNavigation
       value={value}
       onChange={handleChange}
-      className={classes.root}
+      className={classes.containerNav}
     >
       {/* <BottomNavigationAction label="Barecode" value="barecode" icon={<BareCode />} /> */}
       <BottomNavigationAction
@@ -41,28 +41,28 @@ const Navigation = () => {
         to="/"
         label="Search"
         value="search"
-        icon={<SearchProduct htmlColor="#3A6EA5" />}
+        icon={<SearchProduct />}
       />
       <BottomNavigationAction
         component={Link}
         to="/favorite"
         label="Favorite"
         value="favorite"
-        icon={<Favorite htmlColor="#3A6EA5" />}
+        icon={<Favorite />}
       />
       <BottomNavigationAction
         component={Link}
         to="/history"
         label="History"
         value="history"
-        icon={<History htmlColor="#3A6EA5" />}
+        icon={<History />}
       />
       <BottomNavigationAction
         component={Link}
         to="/profile"
         label="Profile"
         value="profile"
-        icon={<Profile htmlColor="#3A6EA5" />}
+        icon={<Profile />}
       />
     </BottomNavigation>
   );

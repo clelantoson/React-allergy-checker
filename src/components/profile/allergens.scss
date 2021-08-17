@@ -1,0 +1,27 @@
+
+
+.allergens{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .allergensItem{
+        
+        width: 6rem;
+        height: 6rem;
+        margin: 1rem;
+        border-radius:53% 47% 62% 38% / 33% 29% 71% 67% ;
+        background-color: transparent;
+        box-shadow: inset 1rem 1rem 1rem #dfe8e3;
+
+        &:before{
+            content: attr(data-allergens);
+            position: absolute;
+            font-size: 1.2rem;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+    }
+}
