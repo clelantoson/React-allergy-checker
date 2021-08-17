@@ -5,8 +5,8 @@ import {
   Avatar,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
+  // FormControlLabel,
+  // Checkbox,
   Link,
   Grid,
   Container,
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  MarginTop: {marginTop: theme.spacing(3)},
 }));
 
 const Login = () =>{
@@ -86,7 +87,7 @@ const Login = () =>{
         { email, password }
         // config
       );
-      console.log(data);
+      // console.log(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
       history.push("/");
       setLoading(false);
@@ -120,7 +121,6 @@ const Login = () =>{
 
   return (
     <Container component="main" maxWidth="xs">
-
       {error && <ErrorMessage>{error}</ErrorMessage>}
       {loading && <Loading />}
       <div className={classes.paper}>
@@ -155,10 +155,10 @@ const Login = () =>{
             autoComplete="current-password"
             onChange={(event) => setPassword(event.target.value)}
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
@@ -173,12 +173,11 @@ const Login = () =>{
             render={(renderProps) => (
               <Button
                 className={classes.googleButton}
-                color="primary"
                 fullWidth
+                variant="outlined"
                 onClick={renderProps.onClick}
                 disabled={renderProps.disabled}
                 startIcon={<Icon />}
-                variant="contained"
               >
                 Google Sign In
               </Button>
@@ -188,12 +187,12 @@ const Login = () =>{
             cookiePolicy="single_host_origin"
           />
           <Grid container>
-            <Grid item xs>
+            {/* <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
-            <Grid item>
+            </Grid> */}
+            <Grid item className={classes.MarginTop}>
               <Link href="/register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
@@ -201,7 +200,6 @@ const Login = () =>{
           </Grid>
         </form>
       </div>
-     
     </Container>
   );
 }
