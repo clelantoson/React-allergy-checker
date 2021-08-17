@@ -55,7 +55,6 @@ export default function Login() {
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
-    console.log(userInfo);
 
     if (userInfo) {
       history.push("/");
@@ -64,18 +63,24 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+     if (email === "" || null || undefined) {
+      setError("Email is required");
+    }
+    if (password === "" || null || undefined) {
+      setError("lastName Name is required");
+    }
+    
     try {
-    //   const config = {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   };
+      //   const config = {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   };
       setLoading(true);
 
       const { data } = await axios.post(
         "https://api-food-checker.herokuapp.com/user/login",
-        { email, password },
+        { email, password }
         // config
       );
       console.log(data);
@@ -106,6 +111,9 @@ export default function Login() {
 
   const googleError = () =>
     alert("Google Sign In was unsuccessful. Try again later");
+  
+   
+    
 
   return (
     <Container component="main" maxWidth="xs">
@@ -190,7 +198,7 @@ export default function Login() {
           </Grid>
         </form>
       </div>
-      <div>{error}</div>
+     
     </Container>
   );
 }

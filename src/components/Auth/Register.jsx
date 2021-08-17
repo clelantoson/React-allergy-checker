@@ -67,17 +67,20 @@ export default function Register() {
     let PasswordRegex =
       /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
 
-    if (firstName === "") {
+    if (firstName === "" || null || undefined) {
       setMessage("First Name is required");
-    } else if (lastName === "") {
+    } else if (lastName === "" || null || undefined) {
       setMessage("lastName Name is required");
-    } else if (email === "") {
+    } else if (email === "" || null || undefined) {
       setMessage("Email is required");
     } else if (!email.match(emailRegex)) {
       setMessage("You have entered an invalid email address!");
-    } else if (password === "") {
+    } else if (password === "" || null || undefined) {
       setMessage("Password is required");
-    } else if (password.match(PasswordRegex)) {
+    } else if (passwordConfirm === "" || null || undefined) {
+      setMessage("password Confirm is required");
+    }
+    else if (password.match(PasswordRegex)) {
       setMessage(
         "Input Password and Submit [7 to 15 characters which contain only characters, numeric digits, underscore and first character must be a letter"
       );
@@ -92,7 +95,7 @@ export default function Register() {
 
         const { data } = await axios.post(
           "https://api-food-checker.herokuapp.com/user/register",
-          { firstName, lastName, email, password, /*picµ*/ }
+          { firstName, lastName, email, password /*picµ*/ }
           //   config
         );
         setLoading(false);
@@ -102,7 +105,8 @@ export default function Register() {
 
         // console.log(picMessage, setPicMessage("Successfully registered"));
       } catch (err) {
-        setError(err.response.data.error);
+        setError(err.response.data.message);
+         setLoading(false);
       }
     }
   };
@@ -234,6 +238,7 @@ export default function Register() {
             </Grid>
           </Grid>
         </form>
+
       </div>
     </Container>
   );

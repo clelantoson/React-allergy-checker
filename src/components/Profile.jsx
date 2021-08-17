@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import { useHistory } from "react-router-dom";
 
 import "./profile.scss";
@@ -11,11 +11,11 @@ import { Button,Link, Grid } from "@material-ui/core";
 
 const Profile = () => {
   const history = useHistory();
-  const userInfo = localStorage.getItem("userInfo");
+   const [user] = useState(JSON.parse(localStorage.getItem("userInfo")));
   return (
     <div>
       <Grid container>
-        {!userInfo && (
+        {!user && (
           <Grid item xs>
             <Link href="/login" variant="body2">
               login
@@ -23,7 +23,7 @@ const Profile = () => {
           </Grid>
         )}
 
-        {!userInfo && (
+        {!user && (
           <Grid item>
             <Link href="/register" variant="body2">
               register
@@ -31,19 +31,22 @@ const Profile = () => {
           </Grid>
         )}
 
-        {userInfo && (
+        {user && (
           <Button
             fullWidth
             variant="contained"
             color="primary"
-            onClick={ () => {localStorage.removeItem("userInfo"); history.push("/");}}
+            onClick={() => {
+              localStorage.removeItem("userInfo");
+              history.push("/login");
+            }}
           >
             Logout
           </Button>
         )}
       </Grid>
 
-      <ProfileUser />
+      <ProfileUser user = {user} />
       <h2>Allergens</h2>
       <Allergens />
       <h2>Favorites</h2>
