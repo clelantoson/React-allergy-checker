@@ -41,7 +41,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products = [] }) => {
   const classes = useStyles();
 
   return (
