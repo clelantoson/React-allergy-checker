@@ -13,6 +13,7 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 
 const useStyles = makeStyles(() => ({
   list: {},
+  fullWidth: { width: "100%" },
   centerItem: {
     display: "flex",
     flexDirection: "column",
