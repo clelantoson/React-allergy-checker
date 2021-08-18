@@ -23,6 +23,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Box from "@material-ui/core/Box";
 // import tick from "./img/tick.png";
+import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -54,7 +55,7 @@ const ProductDetail = () => {
       // height: "100%"
     },
     paperInfoProduct: {
-      padding: "0.5rem",
+      padding: "0.4rem",
       marginTop: "0.5rem",
     },
     table: {
@@ -70,6 +71,27 @@ const ProductDetail = () => {
     // },
     boxImage: {
       position: "relative",
+    },
+    checkIcon: {
+      color: "green",
+      marginRight: "0.5rem",
+    },
+    centerIcons: {
+      display: "flex",
+    },
+    paperCheck: {
+      backgroundColor: theme.palette.success.light,
+      display: "flex",
+      marginLeft: "0.1rem",
+      padding: "0.4rem",
+    },
+    overrideRootCardAction: {
+      padding: "4px",
+    },
+    paperAllergens: {
+      padding: "0.4rem",
+      marginTop: "0.5rem",
+      backgroundColor: theme.palette.warning.main,
     },
   }));
 
@@ -165,13 +187,25 @@ const ProductDetail = () => {
           alt="Icons made by Alfredo Hernandez https://www.alfredocreates.com"
         /> */}
         {/* </div> */}
-        <CardActions disableSpacing>
+        <CardActions
+          classes={{
+            root: classes.overrideRootCardAction,
+          }}
+          disableSpacing
+        >
           <IconButton aria-label="add to favorites">
+            {/* <div className={classes.centerIcons}> */}
             <FavoriteIcon />
+
+            {/* </div> */}
             {/* </IconButton>
           <IconButton aria-label="share">
             <ShareIcon /> */}
           </IconButton>
+          <Paper className={classes.paperCheck}>
+            <CheckCircleRoundedIcon className={classes.checkIcon} />
+            <Typography> No allergens</Typography>
+          </Paper>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -187,22 +221,28 @@ const ProductDetail = () => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Box pb="3rem">
             <CardContent>
-              <Typography paragraph>Brand : {product.brands}</Typography>
-              <Typography>Allergens: {product.allergens}</Typography>
-              <Typography>Traces: {product.traces}</Typography>
+              <Paper className={classes.paperAllergens}>
+                <Typography>Allergens: {product.allergens}</Typography>
+                <Typography>Traces: {product.traces}</Typography>
+              </Paper>
+              <Paper className={classes.paperInfoProduct}>
+                <Typography variant="h4" color="primary">
+                  Brand
+                </Typography>
+
+                <Typography> {product.brands} </Typography>
+              </Paper>
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
                   Nutritional informations
                 </Typography>
                 <Typography variant="h5" color="primary">
-                  <Paper variant="outlined">
-                    <img
-                      src={`https://static.openfoodfacts.org/images/attributes/nutriscore-${product.nutriscore_grade}.svg`}
-                      alt={`nutriscore: ${product.nutriscore_grade}`}
-                    />
-                  </Paper>
+                  <img
+                    src={`https://static.openfoodfacts.org/images/attributes/nutriscore-${product.nutriscore_grade}.svg`}
+                    alt={`nutriscore: ${product.nutriscore_grade}`}
+                  />
                 </Typography>
-                <TableContainer component={Paper}>
+                <TableContainer>
                   <TableContainer
                     className={classes.table}
                     aria-label="simple table"

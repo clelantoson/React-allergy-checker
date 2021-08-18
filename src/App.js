@@ -23,6 +23,7 @@ const theme = createTheme({
     },
     success: {
       main: "#2DD881",
+      light: "#cff6e2",
     },
   },
   typography: { fontFamily: "'Lato', sans-serif" },
