@@ -8,7 +8,7 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
+// import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Paper from "@material-ui/core/Paper";
 import React, { useState, useEffect } from "react";
@@ -22,6 +22,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Box from "@material-ui/core/Box";
+// import tick from "./img/tick.png";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -37,6 +38,7 @@ const ProductDetail = () => {
     media: {
       height: 0,
       paddingTop: "56.25%", // 16:9
+      position: "static",
     },
     expand: {
       transform: "rotate(0deg)",
@@ -57,6 +59,17 @@ const ProductDetail = () => {
     },
     table: {
       width: "100%",
+    },
+    // tick: {
+    //   height: 0,
+    //   paddingTop: "56.25%", // 16:9
+    //   position: "static",
+    //   // zIndex: 10,
+    //   // position: "absolute",
+    //   // height: "20%",
+    // },
+    boxImage: {
+      position: "relative",
     },
   }));
 
@@ -133,17 +146,31 @@ const ProductDetail = () => {
           title={product.generic_name}
           subheader={product.product_name}
         />
+        {/* <div className={classes.boxImage}> */}
         <CardMedia
           className={classes.media}
           image={product.image_front_url}
           title={product.generic_name}
+          alt={product.generic_name}
         />
+        {/* <CardMedia
+          className={classes.tick}
+          title={product.generic_name}
+          image={tick}
+          alt="Icons made by Alfredo Hernandez https://www.alfredocreates.com"
+        /> */}
+        {/* <img
+          className={classes.tick}
+          src={tick}
+          alt="Icons made by Alfredo Hernandez https://www.alfredocreates.com"
+        /> */}
+        {/* </div> */}
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
-          </IconButton>
+            {/* </IconButton>
           <IconButton aria-label="share">
-            <ShareIcon />
+            <ShareIcon /> */}
           </IconButton>
           <IconButton
             className={clsx(classes.expand, {
