@@ -25,6 +25,9 @@ const theme = createTheme({
       main: "#2DD881",
       light: "#cff6e2",
     },
+    danger: {
+      main: "#e31313",
+    },
   },
   typography: { fontFamily: "'Lato', sans-serif" },
 });

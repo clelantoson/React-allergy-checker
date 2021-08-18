@@ -24,6 +24,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Box from "@material-ui/core/Box";
 // import tick from "./img/tick.png";
 import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
+import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -76,11 +77,21 @@ const ProductDetail = () => {
       color: "green",
       marginRight: "0.5rem",
     },
+    warningRoundedIcon: {
+      color: "orange",
+      marginRight: "0.5rem",
+    },
     centerIcons: {
       display: "flex",
     },
     paperCheck: {
       backgroundColor: theme.palette.success.light,
+      display: "flex",
+      marginLeft: "0.1rem",
+      padding: "0.4rem",
+    },
+    paperWarning: {
+      backgroundColor: theme.palette.danger.main,
       display: "flex",
       marginLeft: "0.1rem",
       padding: "0.4rem",
@@ -202,10 +213,21 @@ const ProductDetail = () => {
           <IconButton aria-label="share">
             <ShareIcon /> */}
           </IconButton>
+          {/* {if (foundAllergen) foundAllergen.selected = !foundAllergen.selected
+      return newAllergens }
+
+        { if (allergens === true) {
+            return ( <Paper className={classes.paperWarning}>
+              <WarningRoundedIcon className={classes.warningRoundedIcon} />
+              <Typography> Contains allergens</Typography>
+            </Paper>)
+          }} */}
+          {allergens === true ? <p>c'est vrai</p> : <p>c'est faux</p>}
           <Paper className={classes.paperCheck}>
             <CheckCircleRoundedIcon className={classes.checkIcon} />
             <Typography> No allergens</Typography>
           </Paper>
+
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
