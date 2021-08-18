@@ -7,9 +7,14 @@ import {
   ListItemText,
   makeStyles,
   Grid,
+  // Button,
+  // Link,
+  // Link,
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import {useHistory} from 'react-router-dom';
+// import ProductDetail from "../ProductDetail/ProductDetail";
 
 const useStyles = makeStyles(() => ({
   list: {},
@@ -37,9 +42,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ProductItem = ({ product }) => {
+  const history = useHistory();
+  const handleClick = () => {
+    history.push({
+      pathname: `/product/${product.id}`,
+    });
+  }
   const classes = useStyles();
   return (
-    <ListItem className={classes.listItem} key={product.id} alignItems="center">
+    <ListItem onClick={handleClick} className={classes.listItem} key={product.id} alignItems="center">
       <Paper className={classes.paper} elevation={1}>
         <Grid wrap="nowrap" container>
           <Grid item lg={2} className={classes.centerItem}>
@@ -53,6 +64,9 @@ const ProductItem = ({ product }) => {
               secondary={product.id}
             />
           </Grid>
+        {/* `product/${product.id}` */}
+            {/* <Button variant="contained" >Détail</Button> */}
+
           <Grid item lg={2} className={classes.centerItem}>
             <CheckCircleOutlineIcon className={classes.circleIcon} />
           </Grid>

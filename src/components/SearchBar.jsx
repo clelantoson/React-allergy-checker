@@ -9,8 +9,9 @@ import SearchIcon from "@material-ui/icons/Search";
 // import { shadows } from '@material-ui/system';
 import axios from "axios";
 import ProductItem from "./Product/ProductItem";
+import ProductList from "./Product/ProductList";
 //import ProductList from "./Product/ProductList";
-// import ProductList from "./ProductList/ProductList";
+// import ProductList from "./Product/ProductList";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -107,6 +108,9 @@ const SearchBar = () => {
         {console.log("products to display2", products)}
         {products.map((product) => (
           <ProductItem key={product.id} product={product} />
+        ))}
+        {products.map((product) => (
+          <ProductList key={product.id} product={product} />
         ))}
       </List>
       {/* <ul> */}
