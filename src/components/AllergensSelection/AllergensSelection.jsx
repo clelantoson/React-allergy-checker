@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // import { Link } from "react-router-dom";
 import "./AllergensSelection.css";
 import Button from "@material-ui/core/Button";
+import { ALLERGENS_TAB } from "../../../src/constants";
 
 const useStyles = makeStyles(() => ({
   containerAllergens: {
@@ -25,23 +26,8 @@ const useStyles = makeStyles(() => ({
 
 const AllergensSelection = () => {
   const classes = useStyles();
-  const [allergens, setAllergens] = useState([
-    { name: "Milk", selected: false },
-    { name: "Gluten", selected: false },
-    { name: "Eggs", selected: false },
-    { name: "Soybeans", selected: false },
-    { name: "Nuts", selected: false },
-    { name: "Fish", selected: false },
-    { name: "Mustard", selected: false },
-    { name: "Celery", selected: false },
-    { name: "Sesame seeds", selected: false },
-    { name: "Peanuts", selected: false },
-    { name: "Crustaceans", selected: false },
-    { name: "Molluscs", selected: false },
-    { name: "Avoine", selected: false },
-    { name: "Lupin", selected: false },
-  ]);
-
+  const [allergens, setAllergens] = useState(ALLERGENS_TAB);
+  const [allergensFromUser, setAllergensFromUser] = useState([]);
   const handleSelectAllergen = (event) => {
     console.log("event", event.target.innerText);
     // the best practice is to use a function for the setter to be sure to have the newest state in parameters
@@ -50,11 +36,18 @@ const AllergensSelection = () => {
       const foundAllergen = newAllergens.find(
         (allergen) => allergen.name === event.target.innerText
       );
+      console.log("newAllergens ", newAllergens);
+      console.log("foundAllergen", foundAllergen);
       //we change it only if we found it
       if (foundAllergen) foundAllergen.selected = !foundAllergen.selected;
+      console.log("newAllergens ", newAllergens);
+
+      setAllergensFromUser(newAllergens);
       return newAllergens;
     });
   };
+
+  console.log("allergensFromUser ", allergensFromUser);
 
   return (
     <div className={classes.containerAllergens}>
