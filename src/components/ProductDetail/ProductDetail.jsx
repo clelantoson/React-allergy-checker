@@ -261,7 +261,7 @@ const ProductDetail = () => {
                     alt={`nutriscore: ${product.nutriscore_grade}`}
                   />
                 </Typography>
-                {createRows(rows) && (
+                {rows.length > 0 && (
                   <TableContainer>
                     <TableContainer
                       className={classes.table}
