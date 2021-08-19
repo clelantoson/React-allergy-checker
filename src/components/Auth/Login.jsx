@@ -5,8 +5,6 @@ import {
   Avatar,
   Button,
   TextField,
-  // FormControlLabel,
-  // Checkbox,
   Link,
   Grid,
   Container,
@@ -19,11 +17,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Loading from "./Loading";
 import ErrorMessage from "../ErrorMessage";
 import { GoogleLogin } from "react-google-login";
-import axios from "axios";
+
 
 import { useHistory } from "react-router-dom";
 
 import Icon from "./Icon";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction } from "../../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,55 +46,60 @@ const useStyles = makeStyles((theme) => ({
   MarginTop: {marginTop: theme.spacing(3)},
 }));
 
-const Login = () =>{
-    const classes = useStyles();
-    const history = useHistory();
+const Login = () => {
+  const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch()
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-    
+
+  const userLogin = useSelector(state => state.userLogin);
+  console.log(userLogin);
+  const {loading, error, userInfo } = userLogin;
+
+
 
 
   useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
-
+   
     if (userInfo) {
       history.push("/");
     }
-  }, [history]);
+  }, [history, userInfo]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-     if (email === "" || null || undefined) {
-      setError("Email is required");
-    }
-    if (password === "" || null || undefined) {
-      setError("lastName Name is required");
-    }
+    //  if (email === "" || null || undefined) {
+    //   setError("Email is required");
+    // }
+    // if (password === "" || null || undefined) {
+    //   setError("lastName Name is required");
+    // }
     
-    try {
-      //   const config = {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   };
-      setLoading(true);
+    // try {
+    //   //   const config = {
+    //   //     headers: {
+    //   //       "Content-Type": "application/json",
+    //   //     },
+    //   //   };
+    //   setLoading(true);
 
-      const { data } = await axios.post(
-        "https://api-food-checker.herokuapp.com/user/login",
-        { email, password }
-        // config
-      );
-      // console.log(data);
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      history.push("/");
-      setLoading(false);
-    } catch (error) {
-      setError(error.response.data.message);
-      setLoading(false);
-    }
+    //   const { data } = await axios.post(
+    //     "https://api-food-checker.herokuapp.com/user/login",
+    //     { email, password }
+    //     // config
+    //   );
+    //   // console.log(data);
+    //   localStorage.setItem("userInfo", JSON.stringify(data));
+    //   history.push("/");
+    //   setLoading(false);
+    // } catch (error) {
+    //   setError(error.response.data.message);
+    //   setLoading(false);
+    // }
+
+    dispatch(loginAction(email, password));
   };
 
   const googleSuccess = async (res) => {
@@ -104,8 +109,6 @@ const Login = () =>{
     try {
       console.log(result);
       localStorage.setItem("userInfo", JSON.stringify(result));
-
-      setLoading(false);
 
       history.push("/");
     } catch (error) {
@@ -122,7 +125,7 @@ const Login = () =>{
   return (
     <Container component="main" maxWidth="xs">
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      {loading && <Loading />}
+      {loading && <Loading/>}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />

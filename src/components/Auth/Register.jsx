@@ -1,17 +1,24 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import {Container,Grid, Button, TextField, Link,Avatar } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  Button,
+  TextField,
+  Link,
+  Avatar,
+} from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-// import { IconButton, Tooltip } from "@material-ui/core";
-// import { PhotoCamera } from "@material-ui/icons";
 
 import ErrorMessage from "../ErrorMessage";
-import Loading from "../Auth/Loading";
+import Loading from "./Loading";
 import axios from "axios";
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,25 +46,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = () =>{
+const Register = () => {
   const classes = useStyles();
-  //   const history = useHistory();
+    const history = useHistory();
 
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [passwordConfirm, setPasswordConfirm] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  // const [pic, setPic] = React.useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [pic, setPic] = useState(
+    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+  );
   const [message, setMessage] = useState(null);
-  // const [picMessage, setPicMessage] = useState(null);
+  const [picMessage, setPicMessage] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-     
+
     let emailRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     let PasswordRegex =
@@ -75,8 +83,7 @@ const Register = () =>{
       setMessage("Password is required");
     } else if (passwordConfirm === "" || null || undefined) {
       setMessage("password Confirm is required");
-    }
-    else if (password.match(PasswordRegex)) {
+    } else if (password.match(PasswordRegex)) {
       setMessage(
         "Input Password and Submit [7 to 15 characters which contain only characters, numeric digits, underscore and first character must be a letter"
       );
@@ -90,20 +97,51 @@ const Register = () =>{
         setLoading(true);
 
         const { data } = await axios.post(
-          "https://api-food-checker.herokuapp.com/user/register",
-          { firstName, lastName, email, password /*picµ*/ }
+          "http://localhost:5000/user/register",
+          { firstName, lastName, email, password, pic }
           //   config
         );
+
+        console.log(data);
+        
         setLoading(false);
         localStorage.setItem("userInfo", JSON.stringify(data));
 
         history.push("/");
 
         // console.log(picMessage, setPicMessage("Successfully registered"));
-      } catch (err) {
-        setError(err.response.data.message);
-         setLoading(false);
+      } catch (error) {
+        setError(error.response.data.message);
       }
+    }
+  };
+
+  const postDetails = (pics) => {
+    if (!pics) {
+      return setPicMessage("No image selected");
+    }
+    setPicMessage(null);
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "foodchecker");
+      data.append("cloud_name", "dkatjs6ab");
+      fetch("https://api.cloudinary.com/v1_1/dkatjs6ab/image/upload", {
+        method: "post",
+        body:data
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setPic(data.url);
+          console.log("pic",pic);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    else {
+      setPicMessage("Invalid image");
     }
   };
 
@@ -192,28 +230,15 @@ const Register = () =>{
                 onChange={(e) => setPasswordConfirm(e.target.value)}
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <input
-                accept="image/jpeg"
-                className={classes.input}
-                id="faceImage"
+            {picMessage && <ErrorMessage>{picMessage}</ErrorMessage>}
+            <Grid item xs={12}>
+              <TextField
+                name="upload-photo"
                 type="file"
-                onChange={(e) => setPic(e.target.files[0])}
+                onChange={(e) => postDetails(e.target.files[0])}
+                label="Upload Profile Picture"
               />
-              <Tooltip title="Select Image">
-                <label htmlFor="faceImage">
-                  <IconButton
-                    className={classes.faceImage}
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <PhotoCamera fontSize="large" />
-                  </IconButton>
-                </label>
-              </Tooltip>
-              <label>{pic ? pic.name : "Select Image"}</label>. . .
-            </Grid> */}
+            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -224,7 +249,7 @@ const Register = () =>{
           >
             Sign Up
           </Button>
-         
+
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
@@ -233,10 +258,9 @@ const Register = () =>{
             </Grid>
           </Grid>
         </form>
-
       </div>
     </Container>
   );
-}
+};
 
 export default Register;

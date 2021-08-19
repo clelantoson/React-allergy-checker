@@ -12,7 +12,11 @@ function ProfileUser({ user }) {
       <header className="profile-bg">
         <img
           className="profile-img"
-          src="https://images.unsplash.com/photo-1626193759855-4f03fc744287?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+          src={
+            user?.pic
+              ? user?.pic
+              : "https://images.unsplash.com/photo-1626193759855-4f03fc744287?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+          }
           alt="Mamady"
         />
       </header>
