@@ -7,12 +7,15 @@ import {
   ListItemText,
   makeStyles,
   Grid,
+  // Typography,
+  
   // Button,
   // Link,
   // Link,
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { useHistory } from "react-router-dom";
 // import ProductDetail from "../ProductDetail/ProductDetail";
 
@@ -39,9 +42,19 @@ const useStyles = makeStyles(() => ({
   paper: {
     width: "100%",
   },
+  warningRoundedIcon: {
+    color: "orange",
+    marginRight: "0.5rem",
+  },
+  checkIcon: {
+    color: "green",
+    marginRight: "0.5rem",
+  },
 }));
 
 const ProductItem = ({ product }) => {
+  // console.log(product);
+  // const allergens = true;
   const history = useHistory();
   const handleClick = () => {
     history.push({
@@ -70,14 +83,34 @@ const ProductItem = ({ product }) => {
             />
           </Grid>
           <Grid item lg={2} className={classes.centerItem}>
-            <CheckCircleOutlineIcon className={classes.circleIcon} />
+          {product.allergens ? (
+            <Paper className={classes.paperWarning}>
+              <WarningRoundedIcon className={classes.warningRoundedIcon} />
+              {/* <Typography> Contains </Typography> */}
+            </Paper>
+          ) : (
+            <Paper className={classes.paperCheck}>
+              <CheckCircleOutlineIcon className={classes.checkIcon} />
+              {/* <Typography > No allergens</Typography> */}
+            </Paper>
+          )}
+            {/* {product.allergens} */}
+            {/* <CheckCircleOutlineIcon className={classes.circleIcon} /> */}
+            {/* <HighlightOff /> */}
           </Grid>
         </Grid>
       </Paper>
     </ListItem>
   );
 };
+// 1. Show CheckCircleOutline as the icon with green color if Allergen is false
+// Show HighlightOff as the icon with red color if Allergen is true
 
+// if (allergens) {
+// Show CheckCircleOutline as the icon with green color
+// } else {
+// Show HighlightOff as the icon with red color if Allergen is true
+// }
 export default ProductItem;
 
 // import {
