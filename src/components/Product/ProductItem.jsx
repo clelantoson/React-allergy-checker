@@ -1,20 +1,14 @@
 import React from "react";
 import {
   Avatar,
-  // IconButton,
   ListItem,
   ListItemAvatar,
   ListItemText,
   makeStyles,
   Grid,
-  // Typography,
-  
-  // Button,
-  // Link,
-  // Link,
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { useHistory } from "react-router-dom";
 // import ProductDetail from "../ProductDetail/ProductDetail";
@@ -84,44 +78,19 @@ const ProductItem = ({ product }) => {
           </Grid>
           <Grid item lg={2} className={classes.centerItem}>
           {product.allergens ? (
-            <Paper className={classes.paperWarning}>
               <WarningRoundedIcon className={classes.warningRoundedIcon} />
-              {/* <Typography> Contains </Typography> */}
-            </Paper>
           ) : (
-            <Paper className={classes.paperCheck}>
-              <CheckCircleOutlineIcon className={classes.checkIcon} />
-              {/* <Typography > No allergens</Typography> */}
-            </Paper>
+              <CheckCircleRoundedIcon className={classes.checkIcon} />
           )}
-            {/* {product.allergens} */}
-            {/* <CheckCircleOutlineIcon className={classes.circleIcon} /> */}
-            {/* <HighlightOff /> */}
           </Grid>
         </Grid>
       </Paper>
     </ListItem>
   );
 };
-// 1. Show CheckCircleOutline as the icon with green color if Allergen is false
-// Show HighlightOff as the icon with red color if Allergen is true
 
-// if (allergens) {
-// Show CheckCircleOutline as the icon with green color
-// } else {
-// Show HighlightOff as the icon with red color if Allergen is true
-// }
 export default ProductItem;
 
-// import {
-//   Grid,
-//   InputAdornment,
-//   List,
-//   ListItem,
-//   ListItemAvatar,
-//   Paper,
-//   TextField,
-// } from "@material-ui/core";
 // import Avatar from "@material-ui/core/Avatar";
 // import ListItemText from "@material-ui/core/ListItemText";
 // import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
