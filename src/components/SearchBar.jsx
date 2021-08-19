@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import TextField from "@material-ui/core/TextField";
-// import { List, makeStyles } from "@material-ui/core";
-// import Divider from '@material-ui/core/Divider';
-// import StarIcon from '@material-ui/icons/Star';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
-// import { shadows } from '@material-ui/system';
 import axios from "axios";
-//import ProductItem from "./Product/ProductItem";
 import ProductList from "./Product/ProductList";
 import { makeStyles } from "@material-ui/core";
 
@@ -52,10 +47,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SearchBar = () => {
-  // console.log("in searchbar");
   const [products, setProducts] = useState([]);
   const [productInput, setProductInput] = useState("");
-
   const [debouncedProductInput] = useDebounce(productInput, 700);
 
   useEffect(() => {
@@ -99,19 +92,6 @@ const SearchBar = () => {
         />
       </div>
       <ProductList key={products.id} products={products} />
-
-      {/* <ul> */}
-      {/* {console.log("products to display", products)} */}
-      {/* {products.map((product) => {
-          return <li key={product.id}>{product.generic_name}</li>;
-        })} */}
-      {/* {products.map((product) => ( */}
-
-      {/* <li key={product.id}>{product.generic_name}</li> */}
-
-      {/* ))} */}
-      {/* <ProductList products={products} /> */}
-      {/* </ul> */}
     </div>
   );
 };
