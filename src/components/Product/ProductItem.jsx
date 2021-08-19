@@ -1,18 +1,15 @@
 import React from "react";
 import {
   Avatar,
-  // IconButton,
   ListItem,
   ListItemAvatar,
   ListItemText,
   makeStyles,
   Grid,
-  // Button,
-  // Link,
-  // Link,
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
+import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { useHistory } from "react-router-dom";
 // import ProductDetail from "../ProductDetail/ProductDetail";
 
@@ -39,9 +36,19 @@ const useStyles = makeStyles(() => ({
   paper: {
     width: "100%",
   },
+  warningRoundedIcon: {
+    color: "orange",
+    marginRight: "0.5rem",
+  },
+  checkIcon: {
+    color: "green",
+    marginRight: "0.5rem",
+  },
 }));
 
 const ProductItem = ({ product }) => {
+  // console.log(product);
+  // const allergens = true;
   const history = useHistory();
   const handleClick = () => {
     history.push({
@@ -70,7 +77,11 @@ const ProductItem = ({ product }) => {
             />
           </Grid>
           <Grid item lg={2} className={classes.centerItem}>
-            <CheckCircleOutlineIcon className={classes.circleIcon} />
+          {product.allergens ? (
+              <WarningRoundedIcon className={classes.warningRoundedIcon} />
+          ) : (
+              <CheckCircleRoundedIcon className={classes.checkIcon} />
+          )}
           </Grid>
         </Grid>
       </Paper>
@@ -80,15 +91,6 @@ const ProductItem = ({ product }) => {
 
 export default ProductItem;
 
-// import {
-//   Grid,
-//   InputAdornment,
-//   List,
-//   ListItem,
-//   ListItemAvatar,
-//   Paper,
-//   TextField,
-// } from "@material-ui/core";
 // import Avatar from "@material-ui/core/Avatar";
 // import ListItemText from "@material-ui/core/ListItemText";
 // import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
