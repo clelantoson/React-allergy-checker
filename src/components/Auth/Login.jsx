@@ -23,7 +23,7 @@ import { useHistory } from "react-router-dom";
 
 import Icon from "./Icon";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAction } from "../../actions/userActions";
+import { loginActions } from "../../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,16 +55,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const userLogin = useSelector(state => state.userLogin);
-  console.log(userLogin);
   const {loading, error, userInfo } = userLogin;
-
-
 
 
   useEffect(() => {
    
     if (userInfo) {
-      history.push("/");
+      history.push("/profile");
     }
   }, [history, userInfo]);
 
@@ -99,7 +96,7 @@ const Login = () => {
     //   setLoading(false);
     // }
 
-    dispatch(loginAction(email, password));
+    dispatch(loginActions(email, password));
   };
 
   const googleSuccess = async (res) => {

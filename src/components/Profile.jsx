@@ -10,21 +10,21 @@ import Personalinfo from "./profile/Personalinfo";
 
 import { Button,Link, Grid } from "@material-ui/core";
 
-import { logoutAction } from "../actions/userActions"
+import { logoutActions } from "../actions/userActions";
 
 const Profile = () => {
   const history = useHistory();
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
-    dispatch(logoutAction());
+    dispatch(logoutActions());
     history.push("/");
   };
 
-  useEffect(() => {}, [history,userInfo]);
+  useEffect(() => {}, [userInfo]);
    
   return (
     <div>

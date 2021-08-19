@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Container,
@@ -17,7 +18,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import ErrorMessage from "../ErrorMessage";
 import Loading from "./Loading";
-import axios from "axios";
+import {registerActions} from "../../actions/userActions"; 
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
   const classes = useStyles();
-    const history = useHistory();
+  const history = useHistory();
+  const dispatch = useDispatch()
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,11 +64,20 @@ const Register = () => {
   );
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+
+  const userRegister = useSelector(state => state.userRegister)
+  const { loading, error, userInfo } = userRegister 
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/profile");
+    }
+  }, [history,userInfo])
+      
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
 
     let emailRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -90,31 +103,10 @@ const Register = () => {
     } else if (password !== passwordConfirm) {
       setMessage("Password and Password Confirm does not match");
     } else {
-      setMessage(null);
-      try {
-        // const config = { headers: { "Content-Type": "application/json" } };
-
-        setLoading(true);
-
-        const { data } = await axios.post(
-          "http://localhost:5000/user/register",
-          { firstName, lastName, email, password, pic }
-          //   config
-        );
-
-        console.log(data);
-        
-        setLoading(false);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-
-        history.push("/");
-
-        // console.log(picMessage, setPicMessage("Successfully registered"));
-      } catch (error) {
-        setError(error.response.data.message);
-      }
-    }
-  };
+      dispatch(registerActions(firstName, lastName, email, password, pic));
+     }
+      
+  }
 
   const postDetails = (pics) => {
     if (!pics) {
@@ -132,9 +124,9 @@ const Register = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setPic(data.url);
-          console.log("pic",pic);
+          
         })
         .catch((err) => {
           console.log(err);
