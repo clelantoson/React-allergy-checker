@@ -234,69 +234,66 @@ const ProductDetail = () => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Box pb="3rem">
             <CardContent>
-              {product.allergens || product.traces ? (
+              {(product.allergens || product.traces) && (
                 <Paper className={classes.paperAllergens}>
-                  {product.allergens ? (
+                  {product.allergens && (
                     <Typography>Allergens : {product.allergens}</Typography>
-                  ) : (
-                    []
                   )}
-                  {product.traces ? (
+                  {product.traces && (
                     <Typography>Traces : {product.traces}</Typography>
-                  ) : (
-                    []
                   )}
                 </Paper>
-              ) : (
-                []
               )}
 
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
                   Brand
                 </Typography>
-
                 <Typography> {product.brands} </Typography>
               </Paper>
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
                   Nutritional informations
                 </Typography>
-                <Typography variant="h5" color="primary">
+                <Typography variant="h4" color="primary">
                   <img
                     src={`https://static.openfoodfacts.org/images/attributes/nutriscore-${product.nutriscore_grade}.svg`}
                     alt={`nutriscore: ${product.nutriscore_grade}`}
                   />
                 </Typography>
-                <TableContainer>
-                  <TableContainer
-                    className={classes.table}
-                    aria-label="simple table"
-                  >
-                    <Table>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>Nutritional Informations </TableCell>
-                          <TableCell align="right">For 100g</TableCell>
-                          <TableCell align="right">Per portion (g)</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.map((row) => (
-                          <TableRow key={row.name}>
-                            <TableCell component="th" scope="row">
-                              {row.name}
-                            </TableCell>
-                            <TableCell align="right">{row.data100g}</TableCell>
-                            <TableCell align="right">
-                              {row.dataPerServing}
-                            </TableCell>
+                {createRows(rows) && (
+                  <TableContainer>
+                    <TableContainer
+                      className={classes.table}
+                      aria-label="simple table"
+                    >
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Nutritional Informations </TableCell>
+                            <TableCell align="right">For 100g</TableCell>
+                            <TableCell align="right">Per portion (g)</TableCell>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                        </TableHead>
+                        <TableBody>
+                          {rows.map((row) => (
+                            <TableRow key={row.name}>
+                              <TableCell component="th" scope="row">
+                                {row.name}
+                              </TableCell>
+                              <TableCell align="right">
+                                {row.data100g}
+                              </TableCell>
+                              <TableCell align="right">
+                                {row.dataPerServing}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
                   </TableContainer>
-                </TableContainer>
+                )}
               </Paper>
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
