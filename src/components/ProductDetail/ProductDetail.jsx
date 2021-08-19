@@ -30,6 +30,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
   const { id: productId } = useParams();
+  const allergens = true;
   const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -80,9 +81,6 @@ const ProductDetail = () => {
     warningRoundedIcon: {
       color: "orange",
       marginRight: "0.5rem",
-    },
-    centerIcons: {
-      display: "flex",
     },
     paperCheck: {
       backgroundColor: theme.palette.success.light,
@@ -205,28 +203,22 @@ const ProductDetail = () => {
           disableSpacing
         >
           <IconButton aria-label="add to favorites">
-            {/* <div className={classes.centerIcons}> */}
             <FavoriteIcon />
-
-            {/* </div> */}
             {/* </IconButton>
           <IconButton aria-label="share">
             <ShareIcon /> */}
           </IconButton>
-          {/* {if (foundAllergen) foundAllergen.selected = !foundAllergen.selected
-      return newAllergens }
-
-        { if (allergens === true) {
-            return ( <Paper className={classes.paperWarning}>
+          {allergens === true ? (
+            <Paper className={classes.paperWarning}>
               <WarningRoundedIcon className={classes.warningRoundedIcon} />
               <Typography> Contains allergens</Typography>
-            </Paper>)
-          }} */}
-          {allergens === true ? <p>c'est vrai</p> : <p>c'est faux</p>}
-          <Paper className={classes.paperCheck}>
-            <CheckCircleRoundedIcon className={classes.checkIcon} />
-            <Typography> No allergens</Typography>
-          </Paper>
+            </Paper>
+          ) : (
+            <Paper className={classes.paperCheck}>
+              <CheckCircleRoundedIcon className={classes.checkIcon} />
+              <Typography> No allergens</Typography>
+            </Paper>
+          )}
 
           <IconButton
             className={clsx(classes.expand, {
@@ -239,14 +231,26 @@ const ProductDetail = () => {
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
-
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Box pb="3rem">
             <CardContent>
-              <Paper className={classes.paperAllergens}>
-                <Typography>Allergens: {product.allergens}</Typography>
-                <Typography>Traces: {product.traces}</Typography>
-              </Paper>
+              {product.allergens || product.traces ? (
+                <Paper className={classes.paperAllergens}>
+                  {product.allergens ? (
+                    <Typography>Allergens : {product.allergens}</Typography>
+                  ) : (
+                    []
+                  )}
+                  {product.traces ? (
+                    <Typography>Traces : {product.traces}</Typography>
+                  ) : (
+                    []
+                  )}
+                </Paper>
+              ) : (
+                []
+              )}
+
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
                   Brand
