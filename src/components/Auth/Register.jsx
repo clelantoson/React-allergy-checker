@@ -78,14 +78,8 @@ const Register = () => {
   const { loading, error, userInfo } = userRegister 
 
   useEffect(() => {
-     if (!userInfo) {
-       history.push("/login") || history.push("/register");
-      //  setAvatar('eeee')
-    } 
-    if (userInfo) {
-      history.push("/profile");
-    }
-  }, [history,userInfo])
+    
+  }, [history, userInfo]);
       
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -147,7 +141,7 @@ const Register = () => {
     } else if (form.password !== form.confirmPassword) {
       setMessage("Password and Password Confirm does not match");
     } else {
-      console.log(form);
+      // console.log(form);
       dispatch(registerActions(form));
     }
       

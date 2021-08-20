@@ -45,8 +45,7 @@ const Personalinfo = ({ userInfo }) => {
 
    const [avatar, setAvatar] = useState( userInfo?.pic 
   );
-  
-  console.log('av',avatar);
+
 
    const initialState = {
      firstName: userInfo?.name.split(" ")[0],
@@ -87,8 +86,8 @@ const Personalinfo = ({ userInfo }) => {
         .then((res) => res.json())
         .then((data) => {
            //console.log(data);
-          setAvatar(...avatar, data.url);
-          console.log('data av',avatar);
+          setAvatar(...avatar,data.url.toString());
+          // console.log('data av',avatar);
         })
         .catch((err) => {
           console.log(err);
@@ -109,7 +108,7 @@ const Personalinfo = ({ userInfo }) => {
     
   };
 
-  console.log(form);
+  // console.log(form);
 
   return (
     <div>
@@ -129,6 +128,7 @@ const Personalinfo = ({ userInfo }) => {
               @{userInfo?.name.split(" ")[0]}
             </Paper>
           </Grid>
+          
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}> Email : {userInfo?.email}</Paper>
           </Grid>
@@ -223,7 +223,7 @@ const Personalinfo = ({ userInfo }) => {
                 className="profilePic"
               />
               <FilledInput
-                name="upload-photo"
+                name="pic"
                 type="file"
                 onChange={(e) => postDetails(e.target.files[0])}
                 label="Upload Profile Picture"

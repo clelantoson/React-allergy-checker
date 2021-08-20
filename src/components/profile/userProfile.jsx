@@ -37,17 +37,16 @@ const useStyles = makeStyles((theme) => ({
 const UserProfile = ({userInfo}) => {
 
   const classes = useStyles();
-  // const [firstName, setFirstName] = useState(userInfo?.name.split(" ")[0]);
-  // const [lastName, setLastName] = useState(userInfo?.name.split(" ")[1]);
 
+// console.log(userInfo?.imageUrl);
   return (
     <div className={classes.width}>
       <Card className={classes.root}>
         <Avatar
           alt={userInfo?.name}
           src={
-            userInfo?.pic
-              ? userInfo?.pic
+            userInfo?.pic || userInfo?.imageUrl
+              ? userInfo?.pic || userInfo?.imageUrl
               : "https://images.unsplash.com/photo-1626193759855-4f03fc744287?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
           }
         />
@@ -70,8 +69,6 @@ const UserProfile = ({userInfo}) => {
           </CardContent>
         </CardActionArea>
       </Card>
-
-     
     </div>
   );
 };

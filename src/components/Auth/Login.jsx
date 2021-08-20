@@ -23,6 +23,7 @@ import { GoogleLogin } from "react-google-login";
 import Icon from "./Icon";
 import { useDispatch, useSelector } from "react-redux";
 import { loginActions } from "../../actions/userActions";
+import { USER_LOGIN_SUCCESS } from "../../constants/userConstants";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
+
+
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -62,8 +65,9 @@ const Login = () => {
   useEffect(() => {
     if (userInfo) {
       history.push("/");
+    
     }
-  }, [history, userInfo]);
+  }, [userInfo]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   
@@ -75,13 +79,17 @@ const Login = () => {
 
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
-    //const token = res?.tokenId;
-
+    const token = res?.tokenId;
+    const userInfo = {...result, token}
+    // console.log('user',userInfo);
+    
     try {
-      console.log(result);
-      localStorage.setItem("userInfo", JSON.stringify(result));
+      dispatch({ type: USER_LOGIN_SUCCESS, data: userInfo });
+      
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
 
       history.push("/");
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }

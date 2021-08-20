@@ -20,6 +20,8 @@ export const loginActions = (formData) => async (dispatch) => {
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
+
+    // history.push("/");
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -31,20 +33,6 @@ export const loginActions = (formData) => async (dispatch) => {
   }
 };
 
-export const logoutActions = () => async (dispatch) => {
-  try {
-    localStorage.removeItem("userInfo");
-    dispatch({ type: USER_LOGOUT });
-  } catch (error) {
-    dispatch({
-      type: USER_LOGOUT,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
 
 export const registerActions = (formData) => async (dispatch) => {
   try {
@@ -97,6 +85,23 @@ export const updateProfile = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+
+export const logoutActions = () => async (dispatch) => {
+  try {
+    localStorage.removeItem("userInfo");
+    dispatch({ type: USER_LOGOUT });
+    
+  } catch (error) {
+    dispatch({
+      type: USER_LOGOUT,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
