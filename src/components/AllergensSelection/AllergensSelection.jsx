@@ -71,14 +71,26 @@ const AllergensSelection = () => {
     "en:soybeans",
     "en:milk",
   ];
-  console.log("  allergensFromProduct", allergensFromProduct);
-  console.log("  userAllergens", userAllergens);
-  userAllergens.filter((allergen) => allergen.selected);
-  allergensFromProduct.filter((allergenFromProduct) =>
-    userAllergens.some(
-      (userAllergen) => userAllergen.value === allergenFromProduct
-    )
-  );
+
+  const tracesFromProduct = ["en:gluten", "fr:avoine", "en:nuts", "en:milk"];
+
+  console.log("allergensFromProduct", allergensFromProduct);
+  console.log("userAllergens", userAllergens);
+
+  const findAllergens = (allergensInProduct, userAllergens) => {
+    userAllergens = userAllergens.filter((allergen) => allergen.selected);
+    return allergensInProduct.filter((allergenInProduct) =>
+      userAllergens.some(
+        (userAllergen) => userAllergen.value === allergenInProduct
+      )
+    );
+  };
+
+  const allergensTags = findAllergens(allergensFromProduct, userAllergens);
+  const tracesTags = findAllergens(tracesFromProduct, userAllergens);
+
+  console.log("allergensTags", allergensTags);
+  console.log("tracesTags", tracesTags);
 
   return (
     <div className={classes.containerAllergens}>
