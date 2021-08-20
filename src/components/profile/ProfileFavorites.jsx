@@ -1,5 +1,5 @@
 import React from "react";
-import "./ProfileFavorites.scss";
+
 
   
   const posts = [

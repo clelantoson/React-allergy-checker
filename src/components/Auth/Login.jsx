@@ -18,9 +18,6 @@ import Loading from "./Loading";
 import ErrorMessage from "../ErrorMessage";
 import { GoogleLogin } from "react-google-login";
 
-
-import { useHistory } from "react-router-dom";
-
 import Icon from "./Icon";
 import { useDispatch, useSelector } from "react-redux";
 import { loginActions } from "../../actions/userActions";
@@ -46,22 +43,20 @@ const useStyles = makeStyles((theme) => ({
   MarginTop: {marginTop: theme.spacing(3)},
 }));
 
-const Login = () => {
+const Login = ({history}) => {
   const classes = useStyles();
-  const history = useHistory();
-  const dispatch = useDispatch()
+
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const userLogin = useSelector(state => state.userLogin);
-  const {loading, error, userInfo } = userLogin;
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-   
     if (userInfo) {
-      history.push("/profile");
+      history.push("/");
     }
   }, [history, userInfo]);
 
@@ -73,7 +68,7 @@ const Login = () => {
     // if (password === "" || null || undefined) {
     //   setError("lastName Name is required");
     // }
-    
+
     // try {
     //   //   const config = {
     //   //     headers: {
@@ -115,14 +110,11 @@ const Login = () => {
 
   const googleError = () =>
     alert("Google Sign In was unsuccessful. Try again later");
-  
-   
-    
 
   return (
     <Container component="main" maxWidth="xs">
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      {loading && <Loading/>}
+      {loading && <Loading />}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -202,6 +194,6 @@ const Login = () => {
       </div>
     </Container>
   );
-}
+};
 
 export default Login;

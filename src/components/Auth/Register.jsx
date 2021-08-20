@@ -69,6 +69,9 @@ const Register = () => {
   const { loading, error, userInfo } = userRegister 
 
   useEffect(() => {
+     if (!userInfo) {
+      history.push("/login") || history.push("/register");
+    } 
     if (userInfo) {
       history.push("/profile");
     }
