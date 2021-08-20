@@ -47,7 +47,38 @@ const AllergensSelection = () => {
     });
   };
 
+  const userAllergens = [
+    { name: "Milk", selected: false, value: "en:milk" },
+    { name: "Gluten", selected: false, value: "en:gluten" },
+    { name: "Eggs", selected: false, value: "en:eggs" },
+    { name: "Soybeans", selected: true, value: "en:soybeans" },
+    { name: "Nuts", selected: false, value: "en:nuts" },
+    { name: "Fish", selected: false, value: "en:fish" },
+    { name: "Mustard", selected: false, value: "en:mustard" },
+    { name: "Celery", selected: false, value: "en:celery" },
+    { name: "Sesame seeds", selected: false, value: "en:sesame-seeds" },
+    { name: "Peanuts", selected: true, value: "en:peanuts" },
+    { name: "Crustaceans", selected: false, value: "en:crustaceans" },
+    { name: "Molluscs", selected: false, value: "en:molluscs" },
+    { name: "Oats", selected: true, value: "fr:avoine" },
+    { name: "Lupin", selected: false, value: "en:lupin" },
+  ];
+
   console.log("allergensFromUser ", allergensFromUser);
+  const allergensFromProduct = [
+    "en:gluten",
+    "fr:avoine",
+    "en:soybeans",
+    "en:milk",
+  ];
+  console.log("  allergensFromProduct", allergensFromProduct);
+  console.log("  userAllergens", userAllergens);
+  userAllergens.filter((allergen) => allergen.selected);
+  allergensFromProduct.filter((allergenFromProduct) =>
+    userAllergens.some(
+      (userAllergen) => userAllergen.value === allergenFromProduct
+    )
+  );
 
   return (
     <div className={classes.containerAllergens}>
