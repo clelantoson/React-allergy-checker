@@ -38,27 +38,35 @@ const Personalinfo = ({ userInfo }) => {
    const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [showEdit, setShowEdit] = useState(false);
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-
-  const [pic, setPic] = useState(
-    "https://images.unsplash.com/photo-1626193759855-4f03fc744287?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-  );
-  // const [message, setMessage] = useState(null);
-  const [picMessage, setPicMessage] = useState();
-
   const userUpdate = useSelector((state) => state.userUpdate);
   const { loading, error, success } = userUpdate;
 
+  const [showEdit, setShowEdit] = useState(false);
+
+   const [avatar, setAvatar] = useState( userInfo?.pic 
+  );
+  
+  console.log('av',avatar);
+
+   const initialState = {
+     firstName: userInfo?.name.split(" ")[0],
+     lastName: userInfo?.name.split(" ")[1],
+     email: userInfo?.email,
+     password: "",
+     confirmPassword: "",
+     pic: avatar,
+  };
+  
+  
+
+   const [form, setForm] = useState();
+  // const [message, setMessage] = useState(null);
+  const [picMessage, setPicMessage] = useState();
+
+
   useEffect(() => {
     if (userInfo) {
-      setName(userInfo?.name);
-      setEmail(userInfo?.email);
-      setPic(userInfo?.pic);
+     setForm(initialState);
     }
   }, [userInfo]);
 
@@ -78,8 +86,9 @@ const Personalinfo = ({ userInfo }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data);
-          setPic(data.url);
+           //console.log(data);
+          setAvatar(...avatar, data.url);
+          console.log('data av',avatar);
         })
         .catch((err) => {
           console.log(err);
@@ -89,13 +98,18 @@ const Personalinfo = ({ userInfo }) => {
     }
   };
 
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(updateProfile({ name, email, password, pic }));
+    dispatch(updateProfile(form));
+    console.log('sub',form);
     setShowEdit(false);
+    
   };
 
+  console.log(form);
 
   return (
     <div>
@@ -103,7 +117,7 @@ const Personalinfo = ({ userInfo }) => {
         className={classes.button}
         aria-label="Delete"
         onClick={() => setShowEdit(!showEdit)}
-        style={ showEdit == true ? {display: "none"} : {display: "block"} }
+        style={showEdit == true ? { display: "none" } : { display: "block" }}
       >
         <EditIcon />
       </IconButton>
@@ -134,45 +148,31 @@ const Personalinfo = ({ userInfo }) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="name"
-                name="name"
+                autoComplete="fname"
+                name="firstName"
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
-                label="name"
+                id="firstName"
+                label="First Name"
                 autoFocus
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={form.firstName}
+                onChange={handleChange}
               />
             </Grid>
-            {/* <Grid item xs={12} sm={6}>
-            <TextField
-              autoComplete="fname"
-              name="firstName"
-              variant="outlined"
-              required
-              fullWidth
-              id="firstName"
-              label="First Name"
-              autoFocus
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="lname"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </Grid> */}
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="lname"
+                value={form.lastName}
+                onChange={handleChange}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -182,8 +182,8 @@ const Personalinfo = ({ userInfo }) => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                value={form.email}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -196,8 +196,8 @@ const Personalinfo = ({ userInfo }) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={form.password}
+                onChange={handleChange}
               />
             </Grid>
 
@@ -206,13 +206,13 @@ const Personalinfo = ({ userInfo }) => {
                 variant="outlined"
                 required
                 fullWidth
-                name="passwordConfirm"
-                label="passwordConfirm"
+                name="confirmPassword"
+                label="confirmPassword"
                 type="password"
-                id="passwordConfirm"
+                id="confirmPassword"
                 autoComplete="current-password"
-                value={passwordConfirm}
-                onChange={(e) => setPasswordConfirm(e.target.value)}
+                value={form.confirmPassword}
+                onChange={handleChange}
               />
             </Grid>
             {picMessage && <ErrorMessage>{picMessage}</ErrorMessage>}

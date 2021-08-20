@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 import {
   Avatar,
   Button,
@@ -43,13 +45,16 @@ const useStyles = makeStyles((theme) => ({
   MarginTop: {marginTop: theme.spacing(3)},
 }));
 
-const Login = ({history}) => {
+const Login = () => {
   const classes = useStyles();
-
+  const history = useHistory();
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const initialState = {
+    email: "",
+    password: "",
+  };
+  const [form, setForm] = useState(initialState);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
@@ -60,38 +65,12 @@ const Login = ({history}) => {
     }
   }, [history, userInfo]);
 
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //  if (email === "" || null || undefined) {
-    //   setError("Email is required");
-    // }
-    // if (password === "" || null || undefined) {
-    //   setError("lastName Name is required");
-    // }
-
-    // try {
-    //   //   const config = {
-    //   //     headers: {
-    //   //       "Content-Type": "application/json",
-    //   //     },
-    //   //   };
-    //   setLoading(true);
-
-    //   const { data } = await axios.post(
-    //     "https://api-food-checker.herokuapp.com/user/login",
-    //     { email, password }
-    //     // config
-    //   );
-    //   // console.log(data);
-    //   localStorage.setItem("userInfo", JSON.stringify(data));
-    //   history.push("/");
-    //   setLoading(false);
-    // } catch (error) {
-    //   setError(error.response.data.message);
-    //   setLoading(false);
-    // }
-
-    dispatch(loginActions(email, password));
+    
+    dispatch(loginActions(form));
   };
 
   const googleSuccess = async (res) => {
@@ -133,7 +112,7 @@ const Login = ({history}) => {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -145,7 +124,7 @@ const Login = ({history}) => {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={handleChange}
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

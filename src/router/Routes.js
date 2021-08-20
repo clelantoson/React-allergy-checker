@@ -10,19 +10,23 @@ import AllergensSelection from "../components/AllergensSelection/AllergensSelect
 import  NotFound  from "../components/NotFound";
 
 const Routes = () => {
+
   return (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/product/:id" component={ProductDetail} />
       {/* <Route path="/recents" component={recents}/> */}
-      <Route path="/profile" component={Profile} />
+      <Route path="/profile" component={() => <Profile authorized={true} />} />
       {/*
       <Route path="/profile" component={Favorite}/>
       <Route path="/history" component={History}/>
       <Route path="/product" component={ProductList}/> */}
       <Route path="/allergens" component={AllergensSelection} />
-      <Route path="/login" component={Login} />
-      <Route path="/Register" component={Register} exact />
+      <Route path="/login" component={() => <Login authorized={true} />} />
+      <Route
+        path="/Register"
+        component={() => <Register authorized={true} />}
+      />
       <Route path="/fetch" component={FetchProduct} />
       <Route path="*" component={NotFound} />
     </Switch>

@@ -9,6 +9,7 @@ import {
   TextField,
   Link,
   Avatar,
+  FilledInput,
 } from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -54,14 +55,22 @@ const Register = () => {
   const history = useHistory();
   const dispatch = useDispatch()
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [pic, setPic] = useState(
+  const [avatar, setAvatar] = useState(
     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
   );
+
+  const initialState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    pic: avatar,
+  };
+
+
+   const [form, setForm] = useState(initialState);
+  
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
 
@@ -70,7 +79,8 @@ const Register = () => {
 
   useEffect(() => {
      if (!userInfo) {
-      history.push("/login") || history.push("/register");
+       history.push("/login") || history.push("/register");
+      //  setAvatar('eeee')
     } 
     if (userInfo) {
       history.push("/profile");
@@ -78,6 +88,37 @@ const Register = () => {
   }, [history,userInfo])
       
 
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+ 
+  const postDetails = (pics) => {
+      if (!pics) {
+        return setPicMessage("No image selected");
+      }
+      setPicMessage(null);
+      if (pics.type === "image/jpeg" || pics.type === "image/png") {
+        const data = new FormData();
+        data.append("file", pics);
+        data.append("upload_preset", "foodchecker");
+        data.append("cloud_name", "dkatjs6ab");
+        fetch("https://api.cloudinary.com/v1_1/dkatjs6ab/image/upload", {
+          method: "post",
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            // setAvatar(data.url);
+            setAvatar("eee")
+            console.log("data av", avatar);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        setPicMessage("Invalid image");
+      }
+  };
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -87,58 +128,34 @@ const Register = () => {
     let PasswordRegex =
       /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
 
-    if (firstName === "" || null || undefined) {
+    if (form.firstName === "" || null || undefined) {
       setMessage("First Name is required");
-    } else if (lastName === "" || null || undefined) {
+    } else if (form.lastName === "" || null || undefined) {
       setMessage("lastName Name is required");
-    } else if (email === "" || null || undefined) {
+    } else if (form.email === "" || null || undefined) {
       setMessage("Email is required");
-    } else if (!email.match(emailRegex)) {
+    } else if (!form.email.match(emailRegex)) {
       setMessage("You have entered an invalid email address!");
-    } else if (password === "" || null || undefined) {
+    } else if (form.password === "" || null || undefined) {
       setMessage("Password is required");
-    } else if (passwordConfirm === "" || null || undefined) {
+    } else if (form.confirmPassword === "" || null || undefined) {
       setMessage("password Confirm is required");
-    } else if (password.match(PasswordRegex)) {
+    } else if (form.password.match(PasswordRegex)) {
       setMessage(
         "Input Password and Submit [7 to 15 characters which contain only characters, numeric digits, underscore and first character must be a letter"
       );
-    } else if (password !== passwordConfirm) {
+    } else if (form.password !== form.confirmPassword) {
       setMessage("Password and Password Confirm does not match");
     } else {
-      dispatch(registerActions(firstName, lastName, email, password, pic));
-     }
+      console.log(form);
+      dispatch(registerActions(form));
+    }
       
   }
 
-  const postDetails = (pics) => {
-    if (!pics) {
-      return setPicMessage("No image selected");
-    }
-    setPicMessage(null);
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "foodchecker");
-      data.append("cloud_name", "dkatjs6ab");
-      fetch("https://api.cloudinary.com/v1_1/dkatjs6ab/image/upload", {
-        method: "post",
-        body:data
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data);
-          setPic(data.url);
-          
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    else {
-      setPicMessage("Invalid image");
-    }
-  };
+  
+
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -166,8 +183,8 @@ const Register = () => {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={form.firstName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -179,8 +196,8 @@ const Register = () => {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                value={form.lastName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -192,8 +209,8 @@ const Register = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                value={form.email}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -206,8 +223,8 @@ const Register = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={form.password}
+                onChange={handleChange}
               />
             </Grid>
 
@@ -216,22 +233,25 @@ const Register = () => {
                 variant="outlined"
                 required
                 fullWidth
-                name="passwordConfirm"
-                label="passwordConfirm"
+                name="confirmPassword"
+                label="confirmPassword"
                 type="password"
-                id="passwordConfirm"
+                id="confirmPassword"
                 autoComplete="current-password"
-                value={passwordConfirm}
-                onChange={(e) => setPasswordConfirm(e.target.value)}
+                value={form.confirmPassword}
+                onChange={handleChange}
               />
             </Grid>
             {picMessage && <ErrorMessage>{picMessage}</ErrorMessage>}
             <Grid item xs={12}>
-              <TextField
+              <FilledInput
                 name="upload-photo"
                 type="file"
                 onChange={(e) => postDetails(e.target.files[0])}
                 label="Upload Profile Picture"
+                fullWidth
+                placeholder="Upload Profile Picture"
+                disableUnderline
               />
             </Grid>
           </Grid>
