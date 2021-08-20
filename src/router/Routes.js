@@ -6,6 +6,7 @@ import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
+import Favorite from "../components/Favorite/Favorite";
 
 const Routes = () => {
   return (
@@ -13,8 +14,9 @@ const Routes = () => {
       <Route exact path="/" component={Home} />
       <Route path="/product/:id" component={ProductDetail} />
       <Route path="/profile" component={Profile} />
+      <Route path="/favorite" component={Favorite}/>
       {/*
-      <Route path="/profile" component={Favorite}/>
+
       <Route path="/history" component={History}/>
       <Route path="/product" component={ProductList}/> */}
       <Route path="/allergens" component={AllergensSelection} />
