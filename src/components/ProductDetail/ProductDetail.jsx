@@ -125,15 +125,19 @@ const ProductDetail = () => {
   }, []);
   console.log(product);
 
+  // const createRows = (rows) =>
+  //   rows
+  //     .map((row) => {
+  //       const { data100g, dataPerServing } = row;
+  //       // console.log(typeof row);
+  //       if (data100g && dataPerServing) return row;
+  //       else return null;
+  //     })
+  //     .filter(Boolean);
+
+  // refacto
   const createRows = (rows) =>
-    rows
-      .map((row) => {
-        const { data100g, dataPerServing } = row;
-        // console.log(typeof row);
-        if (data100g && dataPerServing) return row;
-        else return null;
-      })
-      .filter(Boolean);
+    rows.filter((row) => row.data100g && row.dataPerServing);
 
   if (product) {
     console.log("component is mounted");
