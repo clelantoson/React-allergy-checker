@@ -10,6 +10,7 @@ import {
   TextField,
   FilledInput,
   IconButton,
+  Typography,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 
@@ -18,18 +19,23 @@ import Loading from "../Auth/Loading";
 import { updateProfile } from "../../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
-  
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
-  
+  title: {
+    textTransform: "capitalize",
+  },
   media: {
     height: 140,
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  color: {
+    color: theme.palette.secondary.main,
+    fontWeight: "bold",
   },
 }));
 
@@ -37,12 +43,9 @@ const useStyles = makeStyles((theme) => ({
 const Personalinfo = ({ userInfo }) => {
    const classes = useStyles();
   const dispatch = useDispatch();
-
   const userUpdate = useSelector((state) => state.userUpdate);
   const { loading, error, success } = userUpdate;
-
   const [showEdit, setShowEdit] = useState(false);
-
    const [avatar, setAvatar] = useState( userInfo?.pic 
   );
 
@@ -111,24 +114,31 @@ const Personalinfo = ({ userInfo }) => {
   // console.log(form);
 
   return (
-    <div>
+    <div className="Personalinfo">
+      <Typography
+        gutterBottom
+        variant="h4"
+        component="h2"
+        className={classes.color}
+      >
+        personal information
+      </Typography>
+
       <IconButton
         className={classes.button}
         aria-label="Delete"
         onClick={() => setShowEdit(!showEdit)}
-        style={showEdit == true ? { display: "none" } : { display: "block" }}
       >
         <EditIcon />
       </IconButton>
-
       {!showEdit && (
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              @{userInfo?.name.split(" ")[0]}
+            <Paper className={`${classes.paper} ${classes.title}`}>
+              {userInfo?.name}
             </Paper>
           </Grid>
-          
+
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}> Email : {userInfo?.email}</Paper>
           </Grid>
@@ -137,11 +147,9 @@ const Personalinfo = ({ userInfo }) => {
           </Grid>
         </Grid>
       )}
-
       {loading && <Loading />}
       {/* {message && <ErrorMessage>{message}</ErrorMessage>} */}
       {error && <ErrorMessage>{error}</ErrorMessage>}
-
       {success && <Alert severity="success">Upadated Successfully</Alert>}
       {showEdit && (
         <form className={classes.form} noValidate onSubmit={handleSubmit}>

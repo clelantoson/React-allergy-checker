@@ -2,17 +2,27 @@ import React, { useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import "./profile.scss";
+
 import ProfileUser from "./profile/userProfile";
 import Allergens from "../components/AllergensSelection/AllergensSelection";
 // import ProfileFavorites from "./profile/ProfileFavorites";
 import Personalinfo from "./profile/Personalinfo";
 
-import { Button,Link, Grid } from "@material-ui/core";
+import { makeStyles,Button, Link, Grid } from "@material-ui/core";
+
 
 import { logoutActions } from "../actions/userActions";
 
+const useStyles = makeStyles(() => ({
+  containerProfile: {
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+  }
+}));
+
 const Profile = () => {
+  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -33,7 +43,14 @@ const Profile = () => {
   useEffect(() => {}, [userInfo]);
    
   return (
-    <div>
+    <div className={classes.containerProfile}>
+      <ProfileUser userInfo={userInfo} history={history} />
+     
+      <Personalinfo userInfo={userInfo} history={history} />
+      <Allergens userInfo={userInfo} history={history} />
+      <h2>Favorites</h2>
+      {/* <ProfileFavorites userInfo={userInfo} history={history} /> */}
+
       <Grid container>
         {!userInfo && (
           <Grid item xs>
@@ -62,14 +79,6 @@ const Profile = () => {
           </Button>
         )}
       </Grid>
-
-      <ProfileUser userInfo={userInfo} history={history} />
-      <h2>personal information</h2>
-      <Personalinfo userInfo={userInfo} history={history} />
-      <h2>Allergens</h2>
-      <Allergens userInfo={userInfo} history={history} />
-      <h2>Favorites</h2>
-      {/* <ProfileFavorites userInfo={userInfo} history={history} /> */}
     </div>
   );
 };
