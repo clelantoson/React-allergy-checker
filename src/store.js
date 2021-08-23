@@ -7,10 +7,17 @@ import {
   userUpdateReducer,
 } from "./reducers/userReducers";
 
+import {
+  allergenAddReducer,
+  allergenUpdateReducer,
+} from "./reducers/allergenReducers";
+
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
-    userUpdate: userUpdateReducer
+  userUpdate: userUpdateReducer,
+  allergenAdd: allergenAddReducer,
+  allergenUpdate: allergenUpdateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

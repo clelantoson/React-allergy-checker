@@ -77,6 +77,7 @@ export const updateProfile = (formData) => async (dispatch) => {
 
     const { data } = await api.updateUser(formData);
 
+
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });

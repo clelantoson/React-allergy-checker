@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://api-food-checker.herokuapp.com/",
+  baseURL: "http://localhost:5000/",
 });
 
 API.interceptors.request.use((req) => {
@@ -14,14 +14,16 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const fetchPosts = () => API.get("/posts");
-export const createPost = (newPost) => API.post("/posts", newPost);
-export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
-export const updatePost = (id, updatedPost) =>
-  API.patch(`/posts/${id}`, updatedPost);
-export const deletePost = (id) => API.delete(`/posts/${id}`);
 
 
+// user 
 export const login = (formData) => API.post("/user/login", formData);
 export const register = (formData) => API.post("/user/register", formData);
 export const updateUser = (formData) => API.post("/user/profile", formData);
+
+// allergens
+export const getAllergens = () => API.get("/allergen");
+export const addAllergen = (formData) => API.post("/allergen/create", formData);
+export const updateAllergen = (formData) => API.put("/allergen/update", formData); 
+
+
