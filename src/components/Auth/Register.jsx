@@ -55,9 +55,7 @@ const Register = () => {
   const history = useHistory();
   const dispatch = useDispatch()
 
-  const [avatar, setAvatar] = useState(
-    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-  );
+  
 
   const initialState = {
     firstName: "",
@@ -65,7 +63,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    pic: avatar,
+    pic: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
   };
 
 
@@ -100,10 +98,8 @@ const Register = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
-            // setAvatar(data.url);
-            setAvatar("eee")
-            console.log("data av", avatar);
+            // console.log(data);
+            setForm({ ...form, pic: data.url.toString() });
           })
           .catch((err) => {
             console.log(err);

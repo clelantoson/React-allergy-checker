@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
- import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import "./personalinfo.scss"
 import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
@@ -39,36 +39,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const Personalinfo = ({ userInfo }) => {
-   const classes = useStyles();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const userUpdate = useSelector((state) => state.userUpdate);
   const { loading, error, success } = userUpdate;
   const [showEdit, setShowEdit] = useState(false);
-   const [avatar, setAvatar] = useState( userInfo?.pic 
-  );
 
 
-   const initialState = {
-     firstName: userInfo?.name.split(" ")[0],
-     lastName: userInfo?.name.split(" ")[1],
-     email: userInfo?.email,
-     password: "",
-     confirmPassword: "",
-     pic: avatar,
+  const initialState = {
+    firstName: userInfo?.name.split(" ")[0],
+    lastName: userInfo?.name.split(" ")[1],
+    email: userInfo?.email,
+    password: "",
+    confirmPassword: "",
+    pic: userInfo?.pic,
   };
-  
-  
 
-   const [form, setForm] = useState();
+  const [form, setForm] = useState();
   // const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState();
 
-
   useEffect(() => {
     if (userInfo) {
-     setForm(initialState);
+      setForm(initialState);
     }
   }, [userInfo]);
 
@@ -88,9 +82,9 @@ const Personalinfo = ({ userInfo }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-           //console.log(data);
-          setAvatar(...avatar,data.url.toString());
-          // console.log('data av',avatar);
+          // console.log(data);
+          setForm({ ...form, pic: data.url.toString() });
+         
         })
         .catch((err) => {
           console.log(err);
@@ -100,15 +94,15 @@ const Personalinfo = ({ userInfo }) => {
     }
   };
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-  
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     dispatch(updateProfile(form));
-    console.log('sub',form);
+    console.log("sub", form);
     setShowEdit(false);
-    
   };
 
   // console.log(form);
