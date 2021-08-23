@@ -6,7 +6,7 @@ import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
-import ScannerDisplay from "../components/ScannerDisplay";
+import ScannerDisplay from "../components/Scanner/ScannerDisplay";
 
 const Routes = () => {
   return (
