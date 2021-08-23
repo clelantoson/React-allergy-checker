@@ -29,6 +29,11 @@ const Routes = () => {
       <Route path="/profile" component={Favorite}/>
       <Route path="/history" component={History}/>
       <Route path="/product" component={ProductList}/> */}
+      <Route path="/profile" component={Profile} />
+
+      {/* <Route path="/profile" component={Favorite}/> */}
+      <Route path="/history" component={History} />
+      {/* <Route path="/product" component={ProductList}/> */}
       <Route path="/allergens" component={AllergensSelection} />
       <Route
         path="/login"
