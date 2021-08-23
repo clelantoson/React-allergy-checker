@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Scanner from "./Scanner";
 import Button from "@material-ui/core/Button";
+import "./ScannerDisplay.css";
 
 const ScannerDisplay = () => {
   const [scanning, setScanning] = useState(false);
@@ -26,7 +27,7 @@ const ScannerDisplay = () => {
   }, [productEAN]);
 
   return (
-    <div>
+    <div className="scannerContainer">
       <Button
         onClick={() => setScanning(!scanning)}
         variant="contained"
