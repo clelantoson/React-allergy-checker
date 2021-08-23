@@ -1,7 +1,7 @@
 import React from "react";
 import "./NotFound.css";
 
-export default function NotFound() {
+const NotFound = () =>{
   return (
     <div>
       <div id="main">
@@ -12,3 +12,5 @@ export default function NotFound() {
     </div>
   );
 }
+
+export default NotFound

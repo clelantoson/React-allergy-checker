@@ -1,21 +1,58 @@
-import React, { useState} from "react";
+import React, { useEffect} from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import "./profile.scss";
-import ProfileUser from "./profile/ProfileUser";
-import Allergens from "./profile/Allergens";
-import ProfileFavorites from "./profile/ProfileFavorites";
+
+import ProfileUser from "./profile/userProfile";
+import Allergens from "../components/AllergensSelection/AllergensSelection";
+// import ProfileFavorites from "./profile/ProfileFavorites";
 import Personalinfo from "./profile/Personalinfo";
 
-import { Button,Link, Grid } from "@material-ui/core";
+import { makeStyles,Button, Link, Grid } from "@material-ui/core";
+
+
+import { logoutActions } from "../actions/userActions";
+
+const useStyles = makeStyles(() => ({
+  containerProfile: {
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+  }
+}));
 
 const Profile = () => {
+  const classes = useStyles();
   const history = useHistory();
-   const [user] = useState(JSON.parse(localStorage.getItem("userInfo")));
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+   useEffect(() => {
+     if (!userInfo) {
+       history.push("/login");
+     } 
+   }, [history, userInfo]);
+
+  const logoutHandler = () => {
+    dispatch(logoutActions());
+    history.push("/login");
+  };
+
+  useEffect(() => {}, [userInfo]);
+   
   return (
-    <div>
+    <div className={classes.containerProfile}>
+      <ProfileUser userInfo={userInfo} history={history} />
+     
+      <Personalinfo userInfo={userInfo} history={history} />
+      <Allergens userInfo={userInfo} history={history} />
+      <h2>Favorites</h2>
+      {/* <ProfileFavorites userInfo={userInfo} history={history} /> */}
+
       <Grid container>
-        {!user && (
+        {!userInfo && (
           <Grid item xs>
             <Link href="/login" variant="body2">
               login
@@ -23,7 +60,7 @@ const Profile = () => {
           </Grid>
         )}
 
-        {!user && (
+        {!userInfo && (
           <Grid item>
             <Link href="/register" variant="body2">
               register
@@ -31,28 +68,17 @@ const Profile = () => {
           </Grid>
         )}
 
-        {user && (
+        {userInfo && (
           <Button
             fullWidth
             variant="contained"
             color="primary"
-            onClick={() => {
-              localStorage.removeItem("userInfo");
-              history.push("/login");
-            }}
+            onClick={logoutHandler}
           >
             Logout
           </Button>
         )}
       </Grid>
-
-      <ProfileUser user = {user} />
-      <h2>Allergens</h2>
-      <Allergens />
-      <h2>Favorites</h2>
-      <ProfileFavorites />
-      <h2>personal information</h2>
-      <Personalinfo />
     </div>
   );
 };

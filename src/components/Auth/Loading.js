@@ -13,12 +13,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Loading() {
+const Loading = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <CircularProgress  />
+      <CircularProgress />
     </div>
   );
-}
+};
+
+export default Loading;

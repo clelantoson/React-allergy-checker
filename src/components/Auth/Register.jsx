@@ -1,20 +1,28 @@
-import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+import React, { useState,useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  Container,
+  Grid,
+  Button,
+  TextField,
+  Link,
+  Avatar,
+  FilledInput,
+} from "@material-ui/core";
+
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 
-// import { IconButton, Tooltip } from "@material-ui/core";
-// import { PhotoCamera } from "@material-ui/icons";
 
 import ErrorMessage from "../ErrorMessage";
-import Loading from "../Auth/Loading";
-import axios from "axios";
+import Loading from "./Loading";
+import {registerActions} from "../../actions/userActions"; 
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,73 +50,102 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = () =>{
+const Register = () => {
   const classes = useStyles();
-  //   const history = useHistory();
+  const history = useHistory();
+  const dispatch = useDispatch()
 
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [passwordConfirm, setPasswordConfirm] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  // const [pic, setPic] = React.useState();
+  
+
+  const initialState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    pic: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+  };
+
+
+   const [form, setForm] = useState(initialState);
+  
   const [message, setMessage] = useState(null);
-  // const [picMessage, setPicMessage] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [picMessage, setPicMessage] = useState(null);
 
+  const userRegister = useSelector(state => state.userRegister)
+  const { loading, error, userInfo } = userRegister 
 
+  useEffect(() => {
+    
+  }, [history, userInfo]);
+      
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+ 
+  const postDetails = (pics) => {
+      if (!pics) {
+        return setPicMessage("No image selected");
+      }
+      setPicMessage(null);
+      if (pics.type === "image/jpeg" || pics.type === "image/png") {
+        const data = new FormData();
+        data.append("file", pics);
+        data.append("upload_preset", "foodchecker");
+        data.append("cloud_name", "dkatjs6ab");
+        fetch("https://api.cloudinary.com/v1_1/dkatjs6ab/image/upload", {
+          method: "post",
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            // console.log(data);
+            setForm({ ...form, pic: data.url.toString() });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        setPicMessage("Invalid image");
+      }
+  };
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
-     
+
+
     let emailRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     let PasswordRegex =
       /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
 
-    if (firstName === "" || null || undefined) {
+    if (form.firstName === "" || null || undefined) {
       setMessage("First Name is required");
-    } else if (lastName === "" || null || undefined) {
+    } else if (form.lastName === "" || null || undefined) {
       setMessage("lastName Name is required");
-    } else if (email === "" || null || undefined) {
+    } else if (form.email === "" || null || undefined) {
       setMessage("Email is required");
-    } else if (!email.match(emailRegex)) {
+    } else if (!form.email.match(emailRegex)) {
       setMessage("You have entered an invalid email address!");
-    } else if (password === "" || null || undefined) {
+    } else if (form.password === "" || null || undefined) {
       setMessage("Password is required");
-    } else if (passwordConfirm === "" || null || undefined) {
+    } else if (form.confirmPassword === "" || null || undefined) {
       setMessage("password Confirm is required");
-    }
-    else if (password.match(PasswordRegex)) {
+    } else if (form.password.match(PasswordRegex)) {
       setMessage(
         "Input Password and Submit [7 to 15 characters which contain only characters, numeric digits, underscore and first character must be a letter"
       );
-    } else if (password !== passwordConfirm) {
+    } else if (form.password !== form.confirmPassword) {
       setMessage("Password and Password Confirm does not match");
     } else {
-      setMessage(null);
-      try {
-        // const config = { headers: { "Content-Type": "application/json" } };
-
-        setLoading(true);
-
-        const { data } = await axios.post(
-          "https://api-food-checker.herokuapp.com/user/register",
-          { firstName, lastName, email, password /*picµ*/ }
-          //   config
-        );
-        setLoading(false);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-
-        history.push("/");
-
-        // console.log(picMessage, setPicMessage("Successfully registered"));
-      } catch (err) {
-        setError(err.response.data.message);
-         setLoading(false);
-      }
+      // console.log(form);
+      dispatch(registerActions(form));
     }
-  };
+      
+  }
+
+  
+
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -136,8 +173,8 @@ const Register = () =>{
                 id="firstName"
                 label="First Name"
                 autoFocus
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={form.firstName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -149,8 +186,8 @@ const Register = () =>{
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                value={form.lastName}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -162,8 +199,8 @@ const Register = () =>{
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                value={form.email}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -176,8 +213,8 @@ const Register = () =>{
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={form.password}
+                onChange={handleChange}
               />
             </Grid>
 
@@ -186,37 +223,27 @@ const Register = () =>{
                 variant="outlined"
                 required
                 fullWidth
-                name="passwordConfirm"
-                label="passwordConfirm"
+                name="confirmPassword"
+                label="confirmPassword"
                 type="password"
-                id="passwordConfirm"
+                id="confirmPassword"
                 autoComplete="current-password"
-                value={passwordConfirm}
-                onChange={(e) => setPasswordConfirm(e.target.value)}
+                value={form.confirmPassword}
+                onChange={handleChange}
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <input
-                accept="image/jpeg"
-                className={classes.input}
-                id="faceImage"
+            {picMessage && <ErrorMessage>{picMessage}</ErrorMessage>}
+            <Grid item xs={12}>
+              <FilledInput
+                name="upload-photo"
                 type="file"
-                onChange={(e) => setPic(e.target.files[0])}
+                onChange={(e) => postDetails(e.target.files[0])}
+                label="Upload Profile Picture"
+                fullWidth
+                placeholder="Upload Profile Picture"
+                disableUnderline
               />
-              <Tooltip title="Select Image">
-                <label htmlFor="faceImage">
-                  <IconButton
-                    className={classes.faceImage}
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <PhotoCamera fontSize="large" />
-                  </IconButton>
-                </label>
-              </Tooltip>
-              <label>{pic ? pic.name : "Select Image"}</label>. . .
-            </Grid> */}
+            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -227,7 +254,7 @@ const Register = () =>{
           >
             Sign Up
           </Button>
-         
+
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
@@ -236,10 +263,9 @@ const Register = () =>{
             </Grid>
           </Grid>
         </form>
-
       </div>
     </Container>
   );
-}
+};
 
-export default  Register
+export default Register;

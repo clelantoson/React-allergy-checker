@@ -1,25 +1,29 @@
 import dotenv from "dotenv";
 dotenv.config();
 import React, { useState, useEffect } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+import { useHistory } from "react-router-dom";
+
+import {
+  Avatar,
+  Button,
+  TextField,
+  Link,
+  Grid,
+  Container,
+} from "@material-ui/core";
+
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+
 import Loading from "./Loading";
 import ErrorMessage from "../ErrorMessage";
 import { GoogleLogin } from "react-google-login";
-import axios from "axios";
-
-import { useHistory } from "react-router-dom";
 
 import Icon from "./Icon";
+import { useDispatch, useSelector } from "react-redux";
+import { loginActions } from "../../actions/userActions";
+import { USER_LOGIN_SUCCESS } from "../../constants/userConstants";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,70 +43,53 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  MarginTop: {marginTop: theme.spacing(3)},
 }));
 
- const Login = () => {
-    const classes = useStyles();
-    const history = useHistory();
+const Login = () => {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-    
 
+  const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const initialState = {
+    email: "",
+    password: "",
+  };
+  const [form, setForm] = useState(initialState);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
-
     if (userInfo) {
       history.push("/");
+    
     }
-  }, [history]);
+  }, [userInfo]);
 
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
-     if (email === "" || null || undefined) {
-      setError("Email is required");
-    }
-    if (password === "" || null || undefined) {
-      setError("lastName Name is required");
-    }
     
-    try {
-      //   const config = {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   };
-      setLoading(true);
-
-      const { data } = await axios.post(
-        "https://api-food-checker.herokuapp.com/user/login",
-        { email, password }
-        // config
-      );
-      console.log(data);
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      history.push("/");
-      setLoading(false);
-    } catch (error) {
-      setError(error.response.data.message);
-      setLoading(false);
-    }
+    dispatch(loginActions(form));
   };
 
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
-    //const token = res?.tokenId;
-
+    const token = res?.tokenId;
+    const userInfo = {...result, token}
+    // console.log('user',userInfo);
+    
     try {
-      console.log(result);
-      localStorage.setItem("userInfo", JSON.stringify(result));
-
-      setLoading(false);
+      dispatch({ type: USER_LOGIN_SUCCESS, data: userInfo });
+      
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
 
       history.push("/");
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -110,9 +97,6 @@ const useStyles = makeStyles((theme) => ({
 
   const googleError = () =>
     alert("Google Sign In was unsuccessful. Try again later");
-  
-   
-    
 
   return (
     <Container component="main" maxWidth="xs">
@@ -136,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -148,12 +132,12 @@ const useStyles = makeStyles((theme) => ({
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={handleChange}
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
@@ -168,12 +152,11 @@ const useStyles = makeStyles((theme) => ({
             render={(renderProps) => (
               <Button
                 className={classes.googleButton}
-                color="primary"
                 fullWidth
+                variant="outlined"
                 onClick={renderProps.onClick}
                 disabled={renderProps.disabled}
                 startIcon={<Icon />}
-                variant="contained"
               >
                 Google Sign In
               </Button>
@@ -183,12 +166,12 @@ const useStyles = makeStyles((theme) => ({
             cookiePolicy="single_host_origin"
           />
           <Grid container>
-            <Grid item xs>
+            {/* <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
-            <Grid item>
+            </Grid> */}
+            <Grid item className={classes.MarginTop}>
               <Link href="/register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
@@ -196,9 +179,8 @@ const useStyles = makeStyles((theme) => ({
           </Grid>
         </form>
       </div>
-     
     </Container>
   );
-}
+};
 
 export default Login;
