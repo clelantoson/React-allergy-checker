@@ -1,25 +1,23 @@
 import React from "react";
 import SearchBar from "./SearchBar";
-import { makeStyles } from "@material-ui/core";
-
-const useStyles = makeStyles({
-  root: {
-    margin: 0,
-    // height: "100%",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-  },
-});
+// import { fetchProducts } from "../redux/api/testApi";
+// import { connect } from 'react-redux';
 
 const Home = () => {
-  const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <>
+      {/* if allergens.user is empty return <AllergensSelection/> */}
       <SearchBar />
-    </div>
+    </>
   );
 };
 
+// const mapStateToProps = state => ({
+//     produits: state.produits,
+//     // produitsPanier: state.produitsPanier,
+//     // loading: state.loading,
+//     // error: state.error
+//   });
+
 export default Home;
+// export default connect(Home);
