@@ -25,6 +25,7 @@ import Box from "@material-ui/core/Box";
 // import tick from "./img/tick.png";
 import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
+import Chip from "@material-ui/core/Chip";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -100,7 +101,10 @@ const ProductDetail = () => {
     paperAllergens: {
       padding: "0.4rem",
       marginTop: "0.5rem",
-      backgroundColor: theme.palette.warning.main,
+      // backgroundColor: theme.palette.warning.main,
+    },
+    chip: {
+      margin: "0.2rem",
     },
   }));
 
@@ -241,10 +245,30 @@ const ProductDetail = () => {
               {(product.allergens || product.traces) && (
                 <Paper className={classes.paperAllergens}>
                   {product.allergens && (
-                    <Typography>Allergens : {product.allergens}</Typography>
+                    <Typography variant="h4" color="primary">
+                      Allergens
+                      <Typography>
+                        {product.allergens_tags.map((allergen) => (
+                          <Chip
+                            className={classes.chip}
+                            key={allergen}
+                            label={allergen}
+                            color="primary"
+                            size="medium"
+                          />
+                        ))}
+                      </Typography>
+                    </Typography>
                   )}
                   {product.traces && (
-                    <Typography>Traces : {product.traces}</Typography>
+                    <Typography variant="h4" color="primary">
+                      Traces
+                      <Typography>
+                        {product.traces_tags.map((trace) => (
+                          <Chip key={trace} label={trace} />
+                        ))}
+                      </Typography>
+                    </Typography>
                   )}
                 </Paper>
               )}
