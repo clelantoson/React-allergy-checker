@@ -10,6 +10,7 @@ import AllergensSelection from "../components/AllergensSelection/AllergensSelect
 import  NotFound  from "../components/NotFound";
 import { useSelector } from "react-redux";
 import Favorite from "../components/Favorite/Favorite";
+import Historie from "../components/Historie/Historie";
 
 const Routes = () => {
  const userLogin = useSelector((state) => state.userLogin);
@@ -27,10 +28,11 @@ const Routes = () => {
         }
       />
       <Route path="/profile" component={Profile} />
-      <Route path="/favorite" component={Favorite}/>
+      <Route path="/favorite" component={Favorite} />
+      <Route path="/history" component={Historie}/>
       {/*
 
-      <Route path="/history" component={History}/>
+      
       <Route path="/product" component={ProductList}/> */}
       <Route path="/profile" component={Profile} />
 
