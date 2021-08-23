@@ -4,7 +4,12 @@ import SearchBar from "./SearchBar";
 // import { connect } from 'react-redux';
 
 const Home = () => {
-  return <SearchBar />;
+  return (
+    <>
+      {/* if allergens.user is empty return <AllergensSelection/> */}
+      <SearchBar />
+    </>
+  );
 };
 
 // const mapStateToProps = state => ({
