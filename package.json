@@ -19,6 +19,7 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.38.1",
     "use-debounce": "^7.0.0",
+    "use-sound": "^4.0.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

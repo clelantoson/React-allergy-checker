@@ -4,12 +4,15 @@ import axios from "axios";
 import Scanner from "./Scanner";
 // import Button from "@material-ui/core/Button";
 import "./ScannerDisplay.scss";
+import useSound from "use-sound";
+import beepSound from "./beep.mp3";
 
 const ScannerDisplay = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [productEAN, setProductEAN] = useState(null);
   const scannerRef = useRef(null);
   const history = useHistory();
+  const [play] = useSound(beepSound);
 
   useEffect(() => {
     setIsMounted(true);
@@ -47,7 +50,10 @@ const ScannerDisplay = () => {
           <Scanner
             scannerRef={scannerRef}
             // onDetected={(result) => console.log(result)}
-            onDetected={(result) => setProductEAN(result)}
+            onDetected={(result) => {
+              setProductEAN(result);
+              play();
+            }}
           />
         </>
       )}
