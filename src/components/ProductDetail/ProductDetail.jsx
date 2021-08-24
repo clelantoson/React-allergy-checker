@@ -27,11 +27,34 @@ import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import Chip from "@material-ui/core/Chip";
 
+// eslint-disable-next-line no-unused-vars
+const findUserAllergiesFromProduct = (product, allergensFromUser) => {
+  console.log({ product });
+  if (!product) return [];
+  // eslint-disable-next-line no-unused-vars
+  const productAllergensTracesTags = [
+    ...product.allergens_tags,
+    ...product.traces_tags,
+  ];
+  return productAllergensTracesTags.filter((productAllergen) =>
+    allergensFromUser.some(
+      (userAllergen) => userAllergen.value === productAllergen
+    )
+  );
+};
+
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
   const { id: productId } = useParams();
-  const allergens = true;
+  const allergensFromUser =
+    JSON.parse(localStorage.getItem("user_allergens")) || [];
+  // eslint-disable-next-line no-unused-vars
+  const userAllergiesFromProduct = findUserAllergiesFromProduct(
+    product,
+    allergensFromUser
+  );
+  console.log("the user is allergic to", userAllergiesFromProduct);
   const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -216,15 +239,15 @@ const ProductDetail = () => {
           <IconButton aria-label="share">
             <ShareIcon /> */}
           </IconButton>
-          {allergens === true ? (
+          {userAllergiesFromProduct.length > 0 ? (
             <Paper className={classes.paperWarning}>
               <WarningRoundedIcon className={classes.warningRoundedIcon} />
-              <Typography> Contains allergens</Typography>
+              <Typography> You are allergic</Typography>
             </Paper>
           ) : (
             <Paper className={classes.paperCheck}>
               <CheckCircleRoundedIcon className={classes.checkIcon} />
-              <Typography> No allergens</Typography>
+              <Typography> You are not allergic</Typography>
             </Paper>
           )}
 
@@ -242,9 +265,9 @@ const ProductDetail = () => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Box pb="3rem">
             <CardContent>
-              {(product.allergens || product.traces) && (
+              {product.allergens_tags && (
                 <Paper className={classes.paperAllergens}>
-                  {product.allergens && (
+                  {product.allergens_tags.length > 0 && (
                     <Typography variant="h4" color="primary">
                       Allergens
                       <Typography>
@@ -260,7 +283,7 @@ const ProductDetail = () => {
                       </Typography>
                     </Typography>
                   )}
-                  {product.traces && (
+                  {product.traces_tags.length > 0 && (
                     <Typography variant="h4" color="primary">
                       Traces
                       <Typography>
