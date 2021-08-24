@@ -6,8 +6,11 @@ import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
+
 import History from "../components/History/History";
 const Routes = () => {
+  if (!JSON.parse(localStorage.getItem("user_allergens")))
+    return <AllergensSelection />;
   return (
     <Switch>
       <Route exact path="/" component={Home} />
