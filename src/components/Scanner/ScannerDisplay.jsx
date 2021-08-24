@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Scanner from "./Scanner";
 // import Button from "@material-ui/core/Button";
-import "./ScannerDisplay.css";
+import "./ScannerDisplay.scss";
 
 const ScannerDisplay = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -39,39 +39,18 @@ const ScannerDisplay = () => {
   }, [productEAN]);
 
   return (
-    <div className="scannerContainer">
-      {/* <Button
-        onClick={() => setScanning(!scanning)}
-        variant="contained"
-        color="secondary"
-      >
-        {scanning ? "Stop" : "Start"}
-      </Button> */}
-
-      <div
-        ref={scannerRef}
-        style={{ border: "3px solid red", position: "relative" }}
-      >
-        {/* <video style={{ width: window.innerWidth, height: 480, border: '3px solid orange' }}/> */}
-        <canvas
-          className="drawingBuffer"
-          style={{
-            position: "absolute",
-            top: "0px",
-            // left: '0px',
-            // height: '100%',
-            // width: '100%',
-            border: "3px solid green",
-          }}
-        />
-        {isMounted && (
+    <div ref={scannerRef} id="quagga-scanner">
+      <canvas />
+      {isMounted && (
+        <>
+          <hr id="scan-laser" />
           <Scanner
             scannerRef={scannerRef}
             // onDetected={(result) => console.log(result)}
             onDetected={(result) => setProductEAN(result)}
           />
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 };

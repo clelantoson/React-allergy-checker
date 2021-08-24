@@ -18,10 +18,11 @@ function getMedianOfCodeErrors(decodedCodes) {
   const medianOfErrors = getMedian(errors);
   return medianOfErrors;
 }
-
+console.log(parent.innerWidth);
 const defaultConstraints = {
-  width: 640,
-  height: 480,
+  // width: 300,
+  // height: parent.innerWidth > 700 ? 700 : parent.innerWidth,
+  // height: 300,
 };
 
 const defaultLocatorSettings = {
