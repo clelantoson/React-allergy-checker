@@ -8,7 +8,7 @@ import Favorite from "@material-ui/icons/Favorite";
 import History from "@material-ui/icons/History";
 import Profile from "@material-ui/icons/AccountCircle";
 import SearchProduct from "@material-ui/icons/Search";
-// import BareCode from '@material-ui/icons/CropFree';
+import Scanner from "@material-ui/icons/CropFreeRounded";
 import { Link } from "react-router-dom";
 import "./Navigation.css";
 import React from "react";
@@ -49,6 +49,13 @@ const Navigation = () => {
         label="Favorite"
         value="favorite"
         icon={<Favorite />}
+      />
+      <BottomNavigationAction
+        component={Link}
+        to="/scan"
+        label="Scan"
+        value="scan"
+        icon={<Scanner />}
       />
       <BottomNavigationAction
         component={Link}
