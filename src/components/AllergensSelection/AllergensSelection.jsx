@@ -24,10 +24,25 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const userAllergensLoaded =
+  JSON.parse(localStorage.getItem("user_allergens")) || [];
+
+const reloadAllergens = () => {
+  const allergens = [...ALLERGENS_TAB];
+  allergens.forEach((allergen) => {
+    allergen.selected = userAllergensLoaded.some(
+      (userAllergen) => userAllergen.value === allergen.value
+    );
+  });
+  console.log("hello");
+  return allergens;
+};
+
 const AllergensSelection = () => {
   const classes = useStyles();
-  const [allergens, setAllergens] = useState(ALLERGENS_TAB);
-  const [allergensFromUser, setAllergensFromUser] = useState([]);
+  const [allergens, setAllergens] = useState(reloadAllergens);
+  const [allergensFromUser, setAllergensFromUser] =
+    useState(userAllergensLoaded);
   const handleSelectAllergen = (event) => {
     console.log("event", event.target.innerText);
     // the best practice is to use a function for the setter to be sure to have the newest state in parameters
@@ -42,7 +57,9 @@ const AllergensSelection = () => {
       if (foundAllergen) foundAllergen.selected = !foundAllergen.selected;
       console.log("newAllergens ", newAllergens);
 
-      setAllergensFromUser(newAllergens);
+      setAllergensFromUser(
+        newAllergens.filter((allergen) => allergen.selected)
+      );
       return newAllergens;
     });
   };
@@ -78,7 +95,6 @@ const AllergensSelection = () => {
   console.log("userAllergens", userAllergens);
 
   const findAllergens = (allergensInProduct, userAllergens) => {
-    userAllergens = userAllergens.filter((allergen) => allergen.selected);
     return allergensInProduct.filter((allergenInProduct) =>
       userAllergens.some(
         (userAllergen) => userAllergen.value === allergenInProduct
@@ -91,6 +107,10 @@ const AllergensSelection = () => {
 
   console.log("allergensTags", allergensTags);
   console.log("tracesTags", tracesTags);
+
+  const saveAllergens = () => {
+    localStorage.setItem("user_allergens", JSON.stringify(allergensFromUser));
+  };
 
   return (
     <div className={classes.containerAllergens}>
@@ -111,7 +131,12 @@ const AllergensSelection = () => {
         ))}
       </div>
       <div className={classes.containerButton}>
-        <Button variant="contained" color="secondary" href="/">
+        <Button
+          onClick={saveAllergens}
+          variant="contained"
+          color="secondary"
+          href="/"
+        >
           Continue
         </Button>
       </div>
