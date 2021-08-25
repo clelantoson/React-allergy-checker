@@ -9,6 +9,7 @@ import Profile from "../components/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
 import  NotFound  from "../components/NotFound";
 import { useSelector } from "react-redux";
+import Favorite from "../components/Favorite/Favorite";
 
 const Routes = () => {
  const userLogin = useSelector((state) => state.userLogin);
@@ -25,8 +26,10 @@ const Routes = () => {
           userInfo?.token ? <Profile /> : <Redirect to="/login" />
         }
       />
+      <Route path="/profile" component={Profile} />
+      <Route path="/favorite" component={Favorite}/>
       {/*
-      <Route path="/profile" component={Favorite}/>
+
       <Route path="/history" component={History}/>
       <Route path="/product" component={ProductList}/> */}
       <Route path="/profile" component={Profile} />
