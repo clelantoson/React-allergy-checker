@@ -91,6 +91,7 @@ const ProductDetail = () => {
       height: 0,
       paddingTop: "56.25%", // 16:9
       position: "static",
+      backgroundSize: "unset",
     },
     expand: {
       transform: "rotate(0deg)",
@@ -236,7 +237,7 @@ const ProductDetail = () => {
         {/* <div className={classes.boxImage}> */}
         <CardMedia
           className={classes.media}
-          image={product.image_front_url}
+          image={product.image_front_small_url}
           title={product.generic_name}
           alt={product.generic_name}
         />
