@@ -54,6 +54,7 @@ const ProductItem = ({ product }) => {
     history.push({
       pathname: `/product/${product.id}`,
     });
+    localStorage.setItem("historie", JSON.stringify(product))
   };
   const classes = useStyles();
   return (

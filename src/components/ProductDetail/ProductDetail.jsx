@@ -28,6 +28,12 @@ import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import Chip from "@material-ui/core/Chip";
 
+
+import { useDispatch, useSelector } from "react-redux";
+import { likeActions } from '../../actions/favoriteAction'
+import ErrorMessage from "../ErrorMessage";
+import Loading from "../Auth/Loading";
+
 // eslint-disable-next-line no-unused-vars
 const findUserAllergiesFromProduct = (product, allergensFromUser) => {
   console.log({ product });
@@ -70,10 +76,12 @@ const findUserAllergiesFromProduct = (product, allergensFromUser) => {
 //   return allergensFromUser.name;
 
 const ProductDetail = () => {
+  const dispatch = useDispatch()
+   const like = useSelector(state => state.like)
+  const { loading, error } = like 
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
-
-  const [Favorited, setFavorited] = useState(false)
+  const [selectFavorited, setSelectFavorited] = useState(false);
   const { id: productId } = useParams();
   const allergensFromUser =
     JSON.parse(localStorage.getItem("user_allergens")) || [];
@@ -166,6 +174,7 @@ const ProductDetail = () => {
     setExpanded(!expanded);
   };
 
+
   useEffect(() => {
 
     // const favorite = {
@@ -187,16 +196,16 @@ const ProductDetail = () => {
           setProduct(response.data.product);
         }
       })
-    axios.post(`http://localhost:5000/historie/create`)
-      .then(response => {
-          if (response.data.success) {
-              setFavorited(response.data.favorited)
-          } else {
-              console.log('Failed to get Favorite Info')
-          }
-      })
+    // axios.post(`http://localhost:5000/historie/create`)
+    //   .then(response => {
+    //       if (response.data.success) {
+    //           setFavorited(response.data.favorited)
+    //       } else {
+    //           console.log('Failed to get Favorite Info')
+    //       }
+    //   })
 
-      .catch(() => console.log("il y a eu une erreur"));
+    //   .catch(() => console.log("il y a eu une erreur"));
   }, []);
   console.log(product);
 
@@ -239,9 +248,22 @@ const ProductDetail = () => {
       },
     ]);
 
-    // const onClickFavorite =() => {
+    const favorite = {
+       api_id: product.id,
+      image_front_small_url: product.image_front_small_url,
+      generic_name: product.generic_name,
+      // product_name: product.product_name,
+      allergen: false,
+      isFavorite: false
+    }
 
-    // }
+
+    console.log("test JSON:", JSON.stringify(favorite));
+    const clickAddtoFavorite = () => {
+      setSelectFavorited(!selectFavorited)
+
+      dispatch(likeActions((favorite)))
+    }
 
     return (
       <Card className={classes.root}>
@@ -256,9 +278,12 @@ const ProductDetail = () => {
           title={product.generic_name}
           alt={product.generic_name}
         />
+
         <CardActions disableSpacing>
-          <IconButton  aria-label="add to favorites">
-            {Favorited ? <FavoriteBorderIcon /> : <FavoriteIcon />}
+           {error && <ErrorMessage>{error}</ErrorMessage>}
+      {loading && <Loading />}
+          <IconButton aria-label="add to favorites" onClick={clickAddtoFavorite}>
+            {selectFavorited ? <FavoriteIcon color="error"/> : <FavoriteBorderIcon />}
             
           </IconButton>
           <IconButton aria-label="share">
