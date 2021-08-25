@@ -30,18 +30,43 @@ import Chip from "@material-ui/core/Chip";
 // eslint-disable-next-line no-unused-vars
 const findUserAllergiesFromProduct = (product, allergensFromUser) => {
   console.log({ product });
+  console.log("allergensfromuser", allergensFromUser);
   if (!product) return [];
   // eslint-disable-next-line no-unused-vars
   const productAllergensTracesTags = [
     ...product.allergens_tags,
     ...product.traces_tags,
   ];
-  return productAllergensTracesTags.filter((productAllergen) =>
-    allergensFromUser.some(
-      (userAllergen) => userAllergen.value === productAllergen
+  // // eslint-disable-next-line no-debugger
+  // debugger;
+  // return productAllergensTracesTags.filter((productAllergen) =>
+  //   allergensFromUser.some(
+  //     (userAllergen) => userAllergen.value === productAllergen
+  //   )
+  // );
+  return allergensFromUser.filter((userAllergen) =>
+    productAllergensTracesTags.some(
+      (productAllergen) => productAllergen === userAllergen.value
     )
   );
+
+  // allergenFromUser[0] => {value: 'en:milk', name: 'Milk'} (userAllergen)
+  //    productAllergensTracesTags[0] === userAllergen.value
+  //    productAllergensTracesTags[1] === userAllergen.value
+  //    productAllergensTracesTags[3] === userAllergen.value
+  //    si au moins un est vrai, je retourne vrai
+  //    si j'ai retourné vrai, le filter garder ce userAllergen, sinon le garde pas
+  // allergenFromUser[1] => {value: 'en:nuts', name: 'Noisette'} (userAllergen)
+  //    productAllergensTracesTags[0] === userAllergen.value
+  //    productAllergensTracesTags[1] === userAllergen.value
+  //    productAllergensTracesTags[3] === userAllergen.value
+  // ...
 };
+
+//on part des user allergens pour fairecle filter, faut inverser le filter et le some
+
+// if (allergensFromUser.value === productAllergensTracesTags)
+//   return allergensFromUser.name;
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -265,17 +290,17 @@ const ProductDetail = () => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Box pb="3rem">
             <CardContent>
-              {product.allergens_tags && (
+              {product.allergens_tags.length > 0 && (
                 <Paper className={classes.paperAllergens}>
                   {product.allergens_tags.length > 0 && (
                     <Typography variant="h4" color="primary">
-                      Allergens
+                      Your allergens
                       <Typography>
-                        {product.allergens_tags.map((allergen) => (
+                        {userAllergiesFromProduct.map((allergen, index) => (
                           <Chip
                             className={classes.chip}
-                            key={allergen}
-                            label={allergen}
+                            key={index}
+                            label={allergen.name}
                             color="primary"
                             size="medium"
                           />
