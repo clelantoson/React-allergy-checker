@@ -138,7 +138,7 @@ const ProductDetail = () => {
           setProduct(response.data.product);
         }
       })
-    axios.post(`http://localhost:5000/historie/`)
+    axios.post(`http://localhost:5000/historie/create`)
       .then(response => {
           if (response.data.success) {
               setFavorited(response.data.favorited)
