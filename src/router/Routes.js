@@ -13,6 +13,8 @@ import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
 
 const Routes = () => {
+  if (!JSON.parse(localStorage.getItem("user_allergens")))
+    return <AllergensSelection />;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
