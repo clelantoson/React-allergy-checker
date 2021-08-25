@@ -308,7 +308,7 @@ const ProductDetail = () => {
                       </Box>
                     </Typography>
                   )}
-                  {product.traces_tags.length > 0 && (
+                  {/* {product.traces_tags.length > 0 && (
                     <Typography variant="h4" color="primary">
                       Traces
                       <Typography>
@@ -317,7 +317,7 @@ const ProductDetail = () => {
                         ))}
                       </Typography>
                     </Typography>
-                  )}
+                  )} */}
                 </Paper>
               )}
 
