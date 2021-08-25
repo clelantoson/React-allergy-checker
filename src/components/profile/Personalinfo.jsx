@@ -46,7 +46,6 @@ const Personalinfo = ({ userInfo }) => {
   const { loading, error, success } = userUpdate;
   const [showEdit, setShowEdit] = useState(false);
 
-
   const initialState = {
     firstName: userInfo?.name.split(" ")[0],
     lastName: userInfo?.name.split(" ")[1],
@@ -66,7 +65,7 @@ const Personalinfo = ({ userInfo }) => {
     }
   }, [userInfo]);
 
-  console.log('google',userInfo?.googleId);
+  console.log("google", userInfo?.googleId);
 
   const postDetails = (pics) => {
     if (!pics) {
@@ -86,7 +85,6 @@ const Personalinfo = ({ userInfo }) => {
         .then((data) => {
           // console.log(data);
           setForm({ ...form, pic: data.url.toString() });
-         
         })
         .catch((err) => {
           console.log(err);
@@ -115,11 +113,12 @@ const Personalinfo = ({ userInfo }) => {
         gutterBottom
         variant="h4"
         component="h2"
-        className={classes.color}
+        // className={classes.color}
+        color="secondary"
       >
         Personal information
       </Typography>
-      
+
       {!userInfo?.googleId && (
         <IconButton
           className={classes.button}
@@ -130,7 +129,7 @@ const Personalinfo = ({ userInfo }) => {
         </IconButton>
       )}
       {!showEdit && (
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <Paper className={`${classes.paper} ${classes.title}`}>
               {userInfo?.name}
@@ -141,7 +140,7 @@ const Personalinfo = ({ userInfo }) => {
             <Paper className={classes.paper}> Email : {userInfo?.email}</Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>Password : .........</Paper>
+            <Paper className={classes.paper}>Password : *****</Paper>
           </Grid>
         </Grid>
       )}

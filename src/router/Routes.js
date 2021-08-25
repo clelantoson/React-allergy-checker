@@ -5,7 +5,7 @@ import Login from "../components/Auth/Login";
 import Home from "../components/Home";
 import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
-import Profile from "../components/Profile";
+import Profile from "../components/Profile/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
 import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
