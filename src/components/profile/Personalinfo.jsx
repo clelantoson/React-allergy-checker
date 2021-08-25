@@ -66,6 +66,8 @@ const Personalinfo = ({ userInfo }) => {
     }
   }, [userInfo]);
 
+  console.log('google',userInfo?.googleId);
+
   const postDetails = (pics) => {
     if (!pics) {
       return setPicMessage("No image selected");
@@ -115,16 +117,18 @@ const Personalinfo = ({ userInfo }) => {
         component="h2"
         className={classes.color}
       >
-        personal information
+        Personal information
       </Typography>
-
-      <IconButton
-        className={classes.button}
-        aria-label="Delete"
-        onClick={() => setShowEdit(!showEdit)}
-      >
-        <EditIcon />
-      </IconButton>
+      
+      {!userInfo?.googleId && (
+        <IconButton
+          className={classes.button}
+          aria-label="Delete"
+          onClick={() => setShowEdit(!showEdit)}
+        >
+          <EditIcon />
+        </IconButton>
+      )}
       {!showEdit && (
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -145,7 +149,8 @@ const Personalinfo = ({ userInfo }) => {
       {/* {message && <ErrorMessage>{message}</ErrorMessage>} */}
       {error && <ErrorMessage>{error}</ErrorMessage>}
       {success && <Alert severity="success">Upadated Successfully</Alert>}
-      {showEdit && (
+      {}
+      {!userInfo?.googleId && showEdit && (
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
