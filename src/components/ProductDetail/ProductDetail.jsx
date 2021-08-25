@@ -290,12 +290,12 @@ const ProductDetail = () => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Box pb="3rem">
             <CardContent>
-              {product.allergens_tags.length > 0 && (
+              {userAllergiesFromProduct.length > 0 && (
                 <Paper className={classes.paperAllergens}>
-                  {product.allergens_tags.length > 0 && (
+                  {userAllergiesFromProduct.length > 0 && (
                     <Typography variant="h4" color="primary">
                       Your allergens
-                      <Typography>
+                      <Box>
                         {userAllergiesFromProduct.map((allergen, index) => (
                           <Chip
                             className={classes.chip}
@@ -305,7 +305,7 @@ const ProductDetail = () => {
                             size="medium"
                           />
                         ))}
-                      </Typography>
+                      </Box>
                     </Typography>
                   )}
                   {product.traces_tags.length > 0 && (
