@@ -209,6 +209,7 @@ const ProductDetail = () => {
   }, []);
   console.log(product);
 
+
   const createRows = (rows) =>
     rows.filter((row) => row.data100g && row.dataPerServing);
 
