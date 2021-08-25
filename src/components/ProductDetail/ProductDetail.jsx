@@ -8,7 +8,8 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-// import ShareIcon from "@material-ui/icons/Share";
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Paper from "@material-ui/core/Paper";
 import React, { useState, useEffect } from "react";
@@ -30,6 +31,8 @@ import Chip from "@material-ui/core/Chip";
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
+
+  const [Favorited, setFavorited] = useState(false)
   const { id: productId } = useParams();
   const allergens = true;
   const useStyles = makeStyles((theme) => ({
@@ -115,6 +118,16 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
+
+    // const favorite = {
+    //         Allergen: props.Allergen,
+    //         Idapi: props.Idapi,
+    //         generic_name: props.product.generic_name,
+    //         image_front_url: props.product.image_front_url,
+    //         isFavorite: props.isFavorite
+    // }
+    
+
     console.log("will fetch now");
     axios
       .get(`https://world.openfoodfacts.org/api/v0/product/${productId}.json`)
@@ -125,21 +138,19 @@ const ProductDetail = () => {
           setProduct(response.data.product);
         }
       })
+    axios.post(`http://localhost:5000/historie/`)
+      .then(response => {
+          if (response.data.success) {
+              setFavorited(response.data.favorited)
+          } else {
+              console.log('Failed to get Favorite Info')
+          }
+      })
+
       .catch(() => console.log("il y a eu une erreur"));
   }, []);
   console.log(product);
 
-  // const createRows = (rows) =>
-  //   rows
-  //     .map((row) => {
-  //       const { data100g, dataPerServing } = row;
-  //       // console.log(typeof row);
-  //       if (data100g && dataPerServing) return row;
-  //       else return null;
-  //     })
-  //     .filter(Boolean);
-
-  // refacto
   const createRows = (rows) =>
     rows.filter((row) => row.data100g && row.dataPerServing);
 
@@ -179,6 +190,10 @@ const ProductDetail = () => {
       },
     ]);
 
+    // const onClickFavorite =() => {
+
+    // }
+
     return (
       <Card className={classes.root}>
         <CardHeader
@@ -192,29 +207,13 @@ const ProductDetail = () => {
           title={product.generic_name}
           alt={product.generic_name}
         />
-        {/* <CardMedia
-          className={classes.tick}
-          title={product.generic_name}
-          image={tick}
-          alt="Icons made by Alfredo Hernandez https://www.alfredocreates.com"
-        /> */}
-        {/* <img
-          className={classes.tick}
-          src={tick}
-          alt="Icons made by Alfredo Hernandez https://www.alfredocreates.com"
-        /> */}
-        {/* </div> */}
-        <CardActions
-          classes={{
-            root: classes.overrideRootCardAction,
-          }}
-          disableSpacing
-        >
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-            {/* </IconButton>
+        <CardActions disableSpacing>
+          <IconButton  aria-label="add to favorites">
+            {Favorited ? <FavoriteBorderIcon /> : <FavoriteIcon />}
+            
+          </IconButton>
           <IconButton aria-label="share">
-            <ShareIcon /> */}
+            <ShareIcon /> 
           </IconButton>
           {allergens === true ? (
             <Paper className={classes.paperWarning}>
