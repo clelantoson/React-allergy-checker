@@ -117,7 +117,7 @@ const Personalinfo = ({ userInfo }) => {
         component="h2"
         className={classes.color}
       >
-        personal information
+        Personal information
       </Typography>
       
       {!userInfo?.googleId && (
