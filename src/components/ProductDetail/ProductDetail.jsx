@@ -8,6 +8,7 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Paper from "@material-ui/core/Paper";
@@ -26,6 +27,8 @@ import Box from "@material-ui/core/Box";
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
+
+  const [Favorited, setFavorited] = useState(false)
   const { id: productId } = useParams();
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,6 +70,16 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
+
+    // const favorite = {
+    //         Allergen: props.Allergen,
+    //         Idapi: props.Idapi,
+    //         generic_name: props.product.generic_name,
+    //         image_front_url: props.product.image_front_url,
+    //         isFavorite: props.isFavorite
+    // }
+    
+
     console.log("will fetch now");
     axios
       .get(`https://world.openfoodfacts.org/api/v0/product/${productId}.json`)
@@ -77,9 +90,19 @@ const ProductDetail = () => {
           setProduct(response.data.product);
         }
       })
+    axios.post(`http://localhost:5000/historie/`)
+      .then(response => {
+          if (response.data.success) {
+              setFavorited(response.data.favorited)
+          } else {
+              console.log('Failed to get Favorite Info')
+          }
+      })
+
       .catch(() => console.log("il y a eu une erreur"));
   }, []);
   console.log(product);
+
 
   const createRows = (rows) =>
     rows
@@ -127,6 +150,10 @@ const ProductDetail = () => {
       },
     ]);
 
+    // const onClickFavorite =() => {
+
+    // }
+
     return (
       <Card className={classes.root}>
         <CardHeader
@@ -139,8 +166,9 @@ const ProductDetail = () => {
           title={product.generic_name}
         />
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
+          <IconButton  aria-label="add to favorites">
+            {Favorited ? <FavoriteBorderIcon /> : <FavoriteIcon />}
+            
           </IconButton>
           <IconButton aria-label="share">
             <ShareIcon />
