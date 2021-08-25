@@ -28,13 +28,61 @@ import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import Chip from "@material-ui/core/Chip";
 
+// eslint-disable-next-line no-unused-vars
+const findUserAllergiesFromProduct = (product, allergensFromUser) => {
+  console.log({ product });
+  console.log("allergensfromuser", allergensFromUser);
+  if (!product) return [];
+  // eslint-disable-next-line no-unused-vars
+  const productAllergensTracesTags = [
+    ...product.allergens_tags,
+    ...product.traces_tags,
+  ];
+  // // eslint-disable-next-line no-debugger
+  // debugger;
+  // return productAllergensTracesTags.filter((productAllergen) =>
+  //   allergensFromUser.some(
+  //     (userAllergen) => userAllergen.value === productAllergen
+  //   )
+  // );
+  return allergensFromUser.filter((userAllergen) =>
+    productAllergensTracesTags.some(
+      (productAllergen) => productAllergen === userAllergen.value
+    )
+  );
+
+  // allergenFromUser[0] => {value: 'en:milk', name: 'Milk'} (userAllergen)
+  //    productAllergensTracesTags[0] === userAllergen.value
+  //    productAllergensTracesTags[1] === userAllergen.value
+  //    productAllergensTracesTags[3] === userAllergen.value
+  //    si au moins un est vrai, je retourne vrai
+  //    si j'ai retourné vrai, le filter garder ce userAllergen, sinon le garde pas
+  // allergenFromUser[1] => {value: 'en:nuts', name: 'Noisette'} (userAllergen)
+  //    productAllergensTracesTags[0] === userAllergen.value
+  //    productAllergensTracesTags[1] === userAllergen.value
+  //    productAllergensTracesTags[3] === userAllergen.value
+  // ...
+};
+
+//on part des user allergens pour fairecle filter, faut inverser le filter et le some
+
+// if (allergensFromUser.value === productAllergensTracesTags)
+//   return allergensFromUser.name;
+
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
 
   const [Favorited, setFavorited] = useState(false)
   const { id: productId } = useParams();
-  const allergens = true;
+  const allergensFromUser =
+    JSON.parse(localStorage.getItem("user_allergens")) || [];
+  // eslint-disable-next-line no-unused-vars
+  const userAllergiesFromProduct = findUserAllergiesFromProduct(
+    product,
+    allergensFromUser
+  );
+  console.log("the user is allergic to", userAllergiesFromProduct);
   const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -46,6 +94,7 @@ const ProductDetail = () => {
       height: 0,
       paddingTop: "56.25%", // 16:9
       position: "static",
+      backgroundSize: "unset",
     },
     expand: {
       transform: "rotate(0deg)",
@@ -203,7 +252,7 @@ const ProductDetail = () => {
         {/* <div className={classes.boxImage}> */}
         <CardMedia
           className={classes.media}
-          image={product.image_front_url}
+          image={product.image_front_small_url}
           title={product.generic_name}
           alt={product.generic_name}
         />
@@ -215,15 +264,15 @@ const ProductDetail = () => {
           <IconButton aria-label="share">
             <ShareIcon /> 
           </IconButton>
-          {allergens === true ? (
+          {userAllergiesFromProduct.length > 0 ? (
             <Paper className={classes.paperWarning}>
               <WarningRoundedIcon className={classes.warningRoundedIcon} />
-              <Typography> Contains allergens</Typography>
+              <Typography> You are allergic</Typography>
             </Paper>
           ) : (
             <Paper className={classes.paperCheck}>
               <CheckCircleRoundedIcon className={classes.checkIcon} />
-              <Typography> No allergens</Typography>
+              <Typography> You are not allergic</Typography>
             </Paper>
           )}
 
@@ -241,25 +290,25 @@ const ProductDetail = () => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Box pb="3rem">
             <CardContent>
-              {(product.allergens || product.traces) && (
+              {userAllergiesFromProduct.length > 0 && (
                 <Paper className={classes.paperAllergens}>
-                  {product.allergens && (
+                  {userAllergiesFromProduct.length > 0 && (
                     <Typography variant="h4" color="primary">
-                      Allergens
-                      <Typography>
-                        {product.allergens_tags.map((allergen) => (
+                      Your allergens
+                      <Box>
+                        {userAllergiesFromProduct.map((allergen, index) => (
                           <Chip
                             className={classes.chip}
-                            key={allergen}
-                            label={allergen}
+                            key={index}
+                            label={allergen.name}
                             color="primary"
                             size="medium"
                           />
                         ))}
-                      </Typography>
+                      </Box>
                     </Typography>
                   )}
-                  {product.traces && (
+                  {/* {product.traces_tags.length > 0 && (
                     <Typography variant="h4" color="primary">
                       Traces
                       <Typography>
@@ -268,7 +317,7 @@ const ProductDetail = () => {
                         ))}
                       </Typography>
                     </Typography>
-                  )}
+                  )} */}
                 </Paper>
               )}
 

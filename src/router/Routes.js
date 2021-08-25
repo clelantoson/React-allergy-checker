@@ -7,15 +7,17 @@ import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
-import  NotFound  from "../components/NotFound";
+import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
 import Favorite from "../components/Favorite/Favorite";
 import Historie from "../components/Historie/Historie";
 
 const Routes = () => {
- const userLogin = useSelector((state) => state.userLogin);
+  if (!JSON.parse(localStorage.getItem("user_allergens")))
+    return <AllergensSelection />;
+  const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  
+
   return (
     <Switch>
       <Route exact path="/" component={Home} />
