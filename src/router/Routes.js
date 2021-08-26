@@ -7,9 +7,10 @@ import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
+import ScannerDisplay from "../components/Scanner/ScannerDisplay";
+import History from "../components/History/History";
 import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
-import History from "../components/History/History";
 
 const Routes = () => {
   if (!JSON.parse(localStorage.getItem("user_allergens")))
@@ -51,6 +52,7 @@ const Routes = () => {
         }
       />
       <Route path="/fetch" component={FetchProduct} />
+      <Route path="/scan" component={ScannerDisplay} />
       <Route path="*" component={NotFound} />
     </Switch>
   );
