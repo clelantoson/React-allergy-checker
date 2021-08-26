@@ -30,14 +30,14 @@ import Chip from "@material-ui/core/Chip";
 
 
 import { useDispatch, useSelector } from "react-redux";
-import { likeActions } from '../../actions/favoriteAction'
+import { updateHistoryActions } from '../../actions/historyAction'
 import ErrorMessage from "../ErrorMessage";
 import Loading from "../Auth/Loading";
 
 // eslint-disable-next-line no-unused-vars
 const findUserAllergiesFromProduct = (product, allergensFromUser) => {
-  console.log({ product });
-  console.log("allergensfromuser", allergensFromUser);
+  // console.log({ product });
+  // console.log("allergensfromuser", allergensFromUser);
   if (!product) return [];
   // eslint-disable-next-line no-unused-vars
   const productAllergensTracesTags = [
@@ -77,8 +77,8 @@ const findUserAllergiesFromProduct = (product, allergensFromUser) => {
 
 const ProductDetail = () => {
   const dispatch = useDispatch()
-   const like = useSelector(state => state.like)
-  const { loading, error } = like 
+   const history = useSelector(state => state.histories)
+  const { loading, error,userHistories } = history 
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
   const [selectFavorited, setSelectFavorited] = useState(false);
@@ -207,14 +207,14 @@ const ProductDetail = () => {
 
     //   .catch(() => console.log("il y a eu une erreur"));
   }, []);
-  console.log(product);
+  // console.log(product);
 
 
   const createRows = (rows) =>
     rows.filter((row) => row.data100g && row.dataPerServing);
 
   if (product) {
-    console.log("component is mounted");
+    // console.log("component is mounted");
 
     const rows = createRows([
       {
@@ -249,21 +249,26 @@ const ProductDetail = () => {
       },
     ]);
 
-    const favorite = {
+    const favorited = {
        api_id: product.id,
       image_front_small_url: product.image_front_small_url,
       generic_name: product.generic_name,
       // product_name: product.product_name,
       allergen: false,
-      isFavorite: false
+      isFavorite: true
     }
+    console.log('ddd',JSON.stringify(favorited));
 
 
-    console.log("test JSON:", JSON.stringify(favorite));
+    
     const clickAddtoFavorite = () => {
       setSelectFavorited(!selectFavorited)
 
-      dispatch(likeActions((favorite)))
+      console.log('isFavorite',userHistories.isFavorite);
+      const id = userHistories._id
+      console.log(id);
+      dispatch(updateHistoryActions((favorited,id)));
+     
     }
 
     return (
@@ -284,7 +289,7 @@ const ProductDetail = () => {
            {error && <ErrorMessage>{error}</ErrorMessage>}
       {loading && <Loading />}
           <IconButton aria-label="add to favorites" onClick={clickAddtoFavorite}>
-            {selectFavorited ? <FavoriteIcon color="error"/> : <FavoriteBorderIcon />}
+            {!userHistories.isFavorite ? <FavoriteIcon color="error"/> : <FavoriteBorderIcon />}
             
           </IconButton>
           <IconButton aria-label="share">

@@ -13,8 +13,8 @@ import Favorite from "../components/Favorite/Favorite";
 import Historie from "../components/Historie/Historie";
 
 const Routes = () => {
-  if (!JSON.parse(localStorage.getItem("user_allergens")))
-    return <AllergensSelection />;
+  // if (!JSON.parse(localStorage.getItem("user_allergens")))
+  //   return <AllergensSelection />;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 

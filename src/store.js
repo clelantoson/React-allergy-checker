@@ -8,7 +8,7 @@ import {
 }
 from './reducers/userReducers'
 
-import { likeAddReducer } from './reducers/favoriteReducers'
+import { historyAddReducer } from './reducers/historyReducers'
  
 import{ allergenAddReducer,
   allergenUpdateReducer,
@@ -20,14 +20,20 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
   allergenAdd: allergenAddReducer,
   allergenUpdate: allergenUpdateReducer,
-  like: likeAddReducer
+  histories: historyAddReducer
 })
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
+
+  const historieFromStorage = localStorage.getItem("user_histories")
+  ? JSON.parse(localStorage.getItem("user_histories"))
+  : null;
+
 const initialState = {
-    userLogin: { userInfo: userInfoFromStorage },
+  userLogin: { userInfo: userInfoFromStorage },
+  histories: {userHistories: historieFromStorage}
 }
 
 

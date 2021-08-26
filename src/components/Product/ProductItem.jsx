@@ -13,6 +13,11 @@ import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { useHistory } from "react-router-dom";
 // import ProductDetail from "../ProductDetail/ProductDetail";
 
+import { useDispatch, useSelector } from "react-redux";
+import { historyActions } from '../../actions/historyAction'
+import ErrorMessage from "../ErrorMessage";
+import Loading from "../Auth/Loading";
+
 const useStyles = makeStyles(() => ({
   list: {},
   fullWidth: { width: "100%" },
@@ -47,23 +52,43 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ProductItem = ({ product }) => {
+
+ const dispatch = useDispatch()
+   const histories = useSelector(state => state.histories)
+  const { loading, error } = histories 
+ 
   // console.log(product);
   // const allergens = true;
   const history = useHistory();
+
+
   const handleClick = () => {
     history.push({
       pathname: `/product/${product.id}`,
     });
-    localStorage.setItem("historie", JSON.stringify(product))
+   const userHistory = {
+       api_id: product.id,
+      image_front_small_url: product.image_front_small_url,
+      generic_name: product.generic_name,
+      // product_name: product.product_name,
+      allergen: false,
+      isFavorite: false
+    }
+      dispatch(historyActions((userHistory)))
+    
   };
   const classes = useStyles();
   return (
+    
     <ListItem
+      
       onClick={handleClick}
       className={classes.listItem}
       key={product.id}
       alignItems="center"
     >
+       {error && <ErrorMessage>{error}</ErrorMessage>}
+      {loading && <Loading />}
       <Paper className={classes.paper} elevation={1}>
         <Grid wrap="nowrap" container>
           <Grid item lg={2} className={classes.centerItem}>
