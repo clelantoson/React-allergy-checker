@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
 // import { Link } from "react-router-dom";
@@ -15,6 +15,8 @@ import {
 } from "../../actions/allergensActions";
 import Loading from "../Auth/Loading";
 import ErrorMessage from "../ErrorMessage";
+import { useHistory } from "react-router-dom";
+
 
 const useStyles = makeStyles(() => ({
   containerAllergens: {
@@ -39,12 +41,17 @@ const useStyles = makeStyles(() => ({
 
 
 const AllergensSelection = () => {
- 
+ const history = useHistory();
   const [showEdit, setShowEdit] = useState(false);
    const dispatch = useDispatch();
    const userAllergen = useSelector((state) => state.userAllergens);
   const { loading, error, success, allergy } = userAllergen;
-  console.log("ddddddd", allergy);
+
+
+
+  useEffect(() => {
+    userAllergen;
+  }, [userAllergen]);
 
    const userAllergensLoaded = userAllergen?.allergy || [];
   
@@ -130,22 +137,28 @@ const AllergensSelection = () => {
   // console.log("tracesTags", tracesTags);
 
   const saveAllergens = () => {
-    console.log('Seloejjgeg', allergensFromUser);
+    
     
     const allergy = {
       allergy: allergensFromUser,
     };
     
     // console.log("id", userAllergen?._id);
-    const id = 255555;
+    const id = userAllergen?._id;
     // JSON.stringify(id);
-    console.log("id", id);
+   
     // localStorage.setItem("user_allergens", JSON.stringify(allergensFromUser));
     userAllergen?.allergy
-      ? dispatch(updateAllergenAction(allergy))
-      : dispatch(addAllergenAction(userAllergen._id, allergy));
+      ? dispatch(updateAllergenAction(id, allergy))
+      : dispatch(addAllergenAction(allergy));
+    
+    setShowEdit(false);
+    history.push("/profile");
+    
   };
 
+  
+console.log(success);
   return (
     <div className={classes.containerAllergens}>
       <h1>Which allergens do you want to avoid ?</h1>
@@ -153,17 +166,19 @@ const AllergensSelection = () => {
       {error && <ErrorMessage>{error}</ErrorMessage>}
       {loading && <Loading />}
       {success && <Alert severity="success">Upadated Successfully</Alert>}
+      
       <div className={classes.chip}>
-        <IconButton
-          className={classes.button}
-          aria-label="Delete"
-          onClick={() => setShowEdit(!showEdit)}
-        >
-          <EditIcon />
-        </IconButton>
-
+        {!showEdit && (
+          <IconButton
+            className={classes.button}
+            aria-label="Delete"
+            onClick={() => setShowEdit(!showEdit)}
+          >
+            <EditIcon />
+          </IconButton>
+        )}
         {!userAllergen ||
-          (!showEdit &&
+          (showEdit &&
             allergens.map((allergen, index) => (
               <Chip
                 key={index}
@@ -179,7 +194,7 @@ const AllergensSelection = () => {
               />
             )))}
         {userAllergen &&
-          showEdit &&
+          !showEdit &&
           allergy.map((allergen, index) => (
             <Chip
               key={index}
@@ -191,11 +206,13 @@ const AllergensSelection = () => {
             />
           ))}
       </div>
-      <div className={classes.containerButton}>
-        <Button onClick={saveAllergens} variant="contained" color="secondary">
-          Continue
-        </Button>
-      </div>
+      {showEdit && (
+        <div className={classes.containerButton}>
+          <Button onClick={saveAllergens} variant="contained" color="secondary">
+            Continue
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
