@@ -83,7 +83,9 @@ const SearchBar = () => {
     <div className={classes.root}>
       <div
         className={
-          productInput.length === 0 ? classes.downSearchBar : classes.root
+          debouncedProductInput.length === 0
+            ? classes.downSearchBar
+            : classes.root
         }
       >
         <div className={classes.textField}>
