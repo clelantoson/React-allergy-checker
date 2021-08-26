@@ -9,7 +9,8 @@ import {
   Button,
   TextField,
   FilledInput,
-  IconButton,
+  Box,
+  // IconButton,
   Typography,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
@@ -20,9 +21,9 @@ import { updateProfile } from "../../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2.5),
     textAlign: "center",
-    color: theme.palette.text.secondary,
+    marginTop: "0.3rem",
   },
   title: {
     textTransform: "capitalize",
@@ -40,9 +41,25 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     display: "flex",
     justifyContent: "center",
+    marginBottom: "0.5rem",
+    flexDirection: "column",
   },
   personalInfoContainer: {
     marginBottom: "2rem",
+  },
+  button: {
+    borderRadius: "16px",
+  },
+  flexEnd: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  flexEndParent: {
+    display: "flex",
+    flexDirection: "column",
+    marginRight: "1rem",
+    marginLeft: "1rem",
   },
 }));
 
@@ -126,34 +143,41 @@ const Personalinfo = ({ userInfo }) => {
         Personal information
       </Typography>
 
-      {!userInfo?.googleId && (
-        <IconButton
-          className={classes.button}
-          aria-label="Delete"
-          onClick={() => setShowEdit(!showEdit)}
-        >
-          <EditIcon />
-        </IconButton>
-      )}
-      {!showEdit && (
-        <Grid className={classes.grid} container spacing={1}>
-          <Grid item xs={10} sm={6}>
-            <Paper className={`${classes.paper} ${classes.title}`}>
-              {userInfo?.name}
-            </Paper>
-          </Grid>
-          <Grid item xs={10} sm={6}>
-            <Paper className={classes.paper}> Email : {userInfo?.email}</Paper>
-          </Grid>
-          <Grid item xs={10} sm={6}>
-            <Paper className={classes.paper}>Password : *****</Paper>
-          </Grid>
-        </Grid>
-      )}
+      <Box className={classes.flexEndParent}>
+        {!userInfo?.googleId && (
+          <div className={classes.flexEnd}>
+            <Button
+              className={classes.button}
+              aria-label="Delete"
+              variant="contained"
+              color="primary"
+              onClick={() => setShowEdit(!showEdit)}
+              endIcon={<EditIcon>Edit</EditIcon>}
+            >
+              Edit
+            </Button>
+          </div>
+        )}
+        {!showEdit && (
+          <Box className={classes.grid} spacing={1}>
+            <Box>
+              <Paper className={`${classes.paper} ${classes.title}`}>
+                {userInfo?.name}
+              </Paper>
+            </Box>
+            <Box>
+              <Paper className={classes.paper}>Email : {userInfo?.email}</Paper>
+            </Box>
+            <Box>
+              <Paper className={classes.paper}>Password : *****</Paper>
+            </Box>
+          </Box>
+        )}
+      </Box>
       {loading && <Loading />}
       {/* {message && <ErrorMessage>{message}</ErrorMessage>} */}
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      {success && <Alert severity="success">Upadated Successfully</Alert>}
+      {success && <Alert severity="success">Updated Successfully</Alert>}
       {}
       {!userInfo?.googleId && showEdit && (
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
