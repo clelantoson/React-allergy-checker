@@ -25,6 +25,17 @@ h1 {
   color: #426a5a;
 }
 
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedSecondary {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 16px;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 /*
 .App {
   text-align: center;

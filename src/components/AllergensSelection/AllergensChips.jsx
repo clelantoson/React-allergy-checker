@@ -22,6 +22,10 @@ const useStyles = makeStyles(() => ({
   containerButton: {
     // width: "50%",
   },
+  buttonMui: {
+    marginTop: "3rem",
+    borderRadius: "16px",
+  },
 }));
 
 const userAllergensLoaded =
@@ -86,10 +90,11 @@ const AllergensChips = () => {
       </div>
       <div className={classes.containerButton}>
         <Button
+          className={classes.buttonMui}
           onClick={saveAllergens}
           variant="contained"
           color="secondary"
-          href="/"
+          href="/start"
         >
           Continue
         </Button>
