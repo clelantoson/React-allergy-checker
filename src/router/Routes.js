@@ -8,6 +8,8 @@ import ProductFavoris from "../components/Product/ProductFavoris";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
+import ScannerDisplay from "../components/Scanner/ScannerDisplay";
+import History from "../components/History/History";
 import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
 import Favorite from "../components/Favorite/Favorite";
@@ -57,6 +59,7 @@ const Routes = () => {
         }
       />
       <Route path="/fetch" component={FetchProduct} />
+      <Route path="/scan" component={ScannerDisplay} />
       <Route path="*" component={NotFound} />
     </Switch>
   );

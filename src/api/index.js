@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL:"http://localhost:5000"
-  // baseURL: "https://api-allergy-checker.herokuapp.com/",
+  baseURL: "https://api-allergy-checker.herokuapp.com/",
 });
 
 API.interceptors.request.use((req) => {
@@ -15,9 +14,7 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-
-
-// user 
+// user
 export const login = (formData) => API.post("/user/login", formData);
 export const register = (formData) => API.post("/user/register", formData);
 export const updateUser = (formData) => API.post("/user/profile", formData);

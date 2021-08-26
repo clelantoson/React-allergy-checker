@@ -356,19 +356,25 @@ const ProductDetail = () => {
                 <Typography variant="h4" color="primary">
                   Brand
                 </Typography>
-                <Typography> {product.brands} </Typography>
+                {product.brands ? (
+                  <Typography> {product.brands} </Typography>
+                ) : (
+                  <Typography> No informations </Typography>
+                )}
               </Paper>
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
                   Nutritional informations
                 </Typography>
                 <Typography variant="h4" color="primary">
-                  <img
-                    src={`https://static.openfoodfacts.org/images/attributes/nutriscore-${product.nutriscore_grade}.svg`}
-                    alt={`nutriscore: ${product.nutriscore_grade}`}
-                  />
+                  {product.nutriscore_grade && (
+                    <img
+                      src={`https://static.openfoodfacts.org/images/attributes/nutriscore-${product.nutriscore_grade}.svg`}
+                      alt={`nutriscore: ${product.nutriscore_grade}`}
+                    />
+                  )}
                 </Typography>
-                {rows.length > 0 && (
+                {rows.length > 0 ? (
                   <TableContainer>
                     <TableContainer
                       className={classes.table}
@@ -400,15 +406,25 @@ const ProductDetail = () => {
                       </Table>
                     </TableContainer>
                   </TableContainer>
+                ) : (
+                  <Typography className={classes.paperText}>
+                    No informations
+                  </Typography>
                 )}
               </Paper>
               <Paper className={classes.paperInfoProduct}>
                 <Typography variant="h4" color="primary">
                   Ingredients
                 </Typography>
-                <Typography className={classes.paperText}>
-                  {product.ingredients_text}
-                </Typography>
+                {product.ingredients_text ? (
+                  <Typography className={classes.paperText}>
+                    {product.ingredients_text}
+                  </Typography>
+                ) : (
+                  <Typography className={classes.paperText}>
+                    No informations
+                  </Typography>
+                )}
               </Paper>
             </CardContent>
           </Box>
@@ -416,7 +432,7 @@ const ProductDetail = () => {
       </Card>
     );
   } else if (productNotFound) {
-    return <div> not found</div>;
+    return <div> Not found</div>;
   } else {
     console.log("component is mounted");
     return <div>loading</div>;
