@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
     height: "100%",
     overflowY: "auto",
   },
-  down: {
+  downSearchBar: {
     width: "100%",
     height: "100%",
     display: "flex",
@@ -81,7 +81,11 @@ const SearchBar = () => {
 
   return (
     <div className={classes.root}>
-      <div className={productInput.length === 0 ? classes.down : classes.root}>
+      <div
+        className={
+          productInput.length === 0 ? classes.downSearchBar : classes.root
+        }
+      >
         <div className={classes.textField}>
           <TextField
             id="outlined-search"
