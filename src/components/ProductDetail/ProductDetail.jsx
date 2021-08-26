@@ -289,7 +289,7 @@ const ProductDetail = () => {
            {error && <ErrorMessage>{error}</ErrorMessage>}
       {loading && <Loading />}
           <IconButton aria-label="add to favorites" onClick={clickAddtoFavorite}>
-            {!userHistories.isFavorite ? <FavoriteIcon color="error"/> : <FavoriteBorderIcon />}
+            {selectFavorited ? <FavoriteIcon color="error"/> : <FavoriteBorderIcon />}
             
           </IconButton>
           <IconButton aria-label="share">

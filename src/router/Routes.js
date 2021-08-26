@@ -4,6 +4,7 @@ import Register from "../components/Auth/Register";
 import Login from "../components/Auth/Login";
 import Home from "../components/Home";
 import ProductDetail from "../components/ProductDetail/ProductDetail";
+import ProductFavoris from "../components/Product/ProductFavoris";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
@@ -31,7 +32,8 @@ const Routes = () => {
       />
       <Route path="/profile" component={Profile} />
       <Route path="/favorite" component={Favorite} />
-      <Route path="/history" component={Historie}/>
+      <Route path="/history" component={Historie} />
+      <Route path="/productFavoris" component={ProductFavoris} />
       {/*
 
       
