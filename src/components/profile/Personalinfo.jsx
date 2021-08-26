@@ -37,6 +37,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     fontWeight: "bold",
   },
+  grid: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  personalInfoContainer: {
+    marginBottom: "2rem",
+  },
 }));
 
 const Personalinfo = ({ userInfo }) => {
@@ -108,7 +115,7 @@ const Personalinfo = ({ userInfo }) => {
   // console.log(form);
 
   return (
-    <div className="Personalinfo">
+    <div className={classes.personalInfoContainer}>
       <Typography
         gutterBottom
         variant="h4"
@@ -129,17 +136,16 @@ const Personalinfo = ({ userInfo }) => {
         </IconButton>
       )}
       {!showEdit && (
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
+        <Grid className={classes.grid} container spacing={1}>
+          <Grid item xs={10} sm={6}>
             <Paper className={`${classes.paper} ${classes.title}`}>
               {userInfo?.name}
             </Paper>
           </Grid>
-
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={10} sm={6}>
             <Paper className={classes.paper}> Email : {userInfo?.email}</Paper>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={10} sm={6}>
             <Paper className={classes.paper}>Password : *****</Paper>
           </Grid>
         </Grid>

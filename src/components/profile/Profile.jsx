@@ -13,6 +13,9 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
     display: "flex",
     flexDirection: "column",
+    container: {
+      justifyContent: "center",
+    },
   },
 }));
 
@@ -40,7 +43,6 @@ const Profile = () => {
   return (
     <div className={classes.containerProfile}>
       <ProfileUser userInfo={userInfo} history={history} />
-
       <Personalinfo userInfo={userInfo} history={history} />
       <Typography variant="h4" color="secondary" component="h2" gutterBottom>
         Your allergens
@@ -51,7 +53,7 @@ const Profile = () => {
       </Typography>
       {/* <ProfileFavorites userInfo={userInfo} history={history} /> */}
 
-      <Grid container>
+      <Grid>
         {!userInfo && (
           <Grid item xs>
             <Link href="/login" variant="body2">
@@ -69,12 +71,7 @@ const Profile = () => {
         )}
 
         {userInfo && (
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={logoutHandler}
-          >
+          <Button variant="contained" color="primary" onClick={logoutHandler}>
             Logout
           </Button>
         )}
