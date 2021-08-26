@@ -9,11 +9,11 @@ import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
 import ScannerDisplay from "../components/Scanner/ScannerDisplay";
-import History from "../components/History/History";
+// import History from "../components/History/History";
 import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
 import Favorite from "../components/Favorite/Favorite";
-import Historie from "../components/Historie/Historie";
+import History from "../components/History/History";
 
 const Routes = () => {
   // if (!JSON.parse(localStorage.getItem("user_allergens")))
@@ -34,7 +34,7 @@ const Routes = () => {
       />
       <Route path="/profile" component={Profile} />
       <Route path="/favorite" component={Favorite} />
-      <Route path="/history" component={Historie} />
+      <Route path="/history" component={History} />
       <Route path="/productFavoris" component={ProductFavoris} />
       {/*
 
@@ -43,7 +43,7 @@ const Routes = () => {
       <Route path="/profile" component={Profile} />
 
       {/* <Route path="/profile" component={Favorite}/> */}
-      <Route path="/history" component={History} />
+      {/* <Route path="/history" component={History} /> */}
       {/* <Route path="/product" component={ProductList}/> */}
       <Route path="/allergens" component={AllergensSelection} />
       <Route
