@@ -48,9 +48,9 @@ const Profile = () => {
         Your allergens
       </Typography>
       <AllergensChips userInfo={userInfo} history={history} />
-      <Typography variant="h4" color="secondary" component="h2" gutterBottom>
+      {/* <Typography variant="h4" color="secondary" component="h2" gutterBottom>
         Favorites
-      </Typography>
+      </Typography> */}
       {/* <ProfileFavorites userInfo={userInfo} history={history} /> */}
 
       <Grid>
