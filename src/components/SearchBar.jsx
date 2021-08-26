@@ -6,12 +6,20 @@ import SearchIcon from "@material-ui/icons/Search";
 import axios from "axios";
 import ProductList from "./Product/ProductList";
 import { makeStyles } from "@material-ui/core";
+// import classNames from "classnames";
 
 const useStyles = makeStyles(() => ({
   root: {
     width: "100%",
     height: "100%",
     overflowY: "auto",
+  },
+  down: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
   },
   fullWidth: { width: "100%" },
   searchBar: {
@@ -73,25 +81,27 @@ const SearchBar = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.textField}>
-        <TextField
-          id="outlined-search"
-          label="Search a product"
-          onChange={(event) => setProductInput(event.target.value)}
-          value={productInput}
-          type="search"
-          variant="outlined"
-          className={classes.searchBar}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+      <div className={productInput.length === 0 ? classes.down : classes.root}>
+        <div className={classes.textField}>
+          <TextField
+            id="outlined-search"
+            label="Search a product"
+            onChange={(event) => setProductInput(event.target.value)}
+            value={productInput}
+            type="search"
+            variant="outlined"
+            className={classes.searchBar}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </div>
+        <ProductList key={products.id} products={products} />
       </div>
-      <ProductList key={products.id} products={products} />
     </div>
   );
 };
