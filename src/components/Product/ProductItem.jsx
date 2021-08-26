@@ -8,10 +8,9 @@ import {
   Grid,
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
-import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
+import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import { useHistory } from "react-router-dom";
-// import ProductDetail from "../ProductDetail/ProductDetail";
 
 const useStyles = makeStyles(() => ({
   list: {},
@@ -77,11 +76,11 @@ const ProductItem = ({ product }) => {
             />
           </Grid>
           <Grid item lg={2} className={classes.centerItem}>
-          {product.allergens ? (
+            {product.allergens_tags.length || product.traces_tags.length > 0 ? (
               <WarningRoundedIcon className={classes.warningRoundedIcon} />
-          ) : (
+            ) : (
               <CheckCircleRoundedIcon className={classes.checkIcon} />
-          )}
+            )}
           </Grid>
         </Grid>
       </Paper>
@@ -90,52 +89,3 @@ const ProductItem = ({ product }) => {
 };
 
 export default ProductItem;
-
-// import Avatar from "@material-ui/core/Avatar";
-// import ListItemText from "@material-ui/core/ListItemText";
-// import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
-
-// import React from "react";
-
-// const ProductList = (props) => {
-//   return (
-//     <div className={classes.root}>
-//       <TextField
-//         id="outlined-search"
-//         label="Search a product"
-//         onChange={(event) => setProductInput(event.target.value)}
-//         value={productInput}
-//         type="search"
-//         variant="outlined"
-//         className={classes.searchBar}
-//         InputProps={{
-//           endAdornment: (
-//             <InputAdornment position="end">
-//               <SearchIcon />
-//             </InputAdornment>
-//           ),
-//         }}
-//       />
-//       <List className={classes.list}>
-//         {console.log("products to display2", products)}
-//         {products.map((product) => (
-//           <ProductList key={product} />
-//         ))}
-//       </List>
-//       {/* <ul> */}
-//       {/* {console.log("products to display", products)} */}
-//       {/* {products.map((product) => {
-//           return <li key={product.id}>{product.generic_name}</li>;
-//         })} */}
-//       {/* {products.map((product) => ( */}
-
-//       {/* <li key={product.id}>{product.generic_name}</li> */}
-
-//       {/* ))} */}
-//       {/* <ProductList products={products} /> */}
-//       {/* </ul> */}
-//     </div>
-//   );
-// };
-
-// export default ProductList;
