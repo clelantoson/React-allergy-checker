@@ -57,7 +57,7 @@ const Profile = () => {
         {!userInfo && (
           <Grid item xs>
             <Link href="/login" variant="body2">
-              login
+              Login
             </Link>
           </Grid>
         )}
@@ -65,7 +65,7 @@ const Profile = () => {
         {!userInfo && (
           <Grid item>
             <Link href="/register" variant="body2">
-              register
+              Register
             </Link>
           </Grid>
         )}
