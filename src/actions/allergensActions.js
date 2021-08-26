@@ -15,11 +15,13 @@ export const addAllergenAction = (formData) => async (dispatch) => {
     });
 
     const { data } = await api.addAllergen(formData);
+    console.log('dataActopn',data);
 
     dispatch({
       type: ALLERGENS_CREATE_SUCCESS,
       payload: data,
     });
+    localStorage.setItem("user_allergens", JSON.stringify(data));
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -32,13 +34,13 @@ export const addAllergenAction = (formData) => async (dispatch) => {
   }
 };
 
-export const updateNoteAction = (formData) => async (dispatch) => {
+export const updateAllergenAction = (id, formData) => async (dispatch) => {
   try {
     dispatch({
       type: ALLERGENS_UPDATE_REQUEST,
     });
 
-    const { data } = await api.updateUser(formData);
+    const { data } = await api.updateAllergen(id, formData);
 
     dispatch({
       type: ALLERGENS_UPDATE_SUCCESS,

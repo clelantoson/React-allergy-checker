@@ -6,14 +6,14 @@ import Home from "../components/Home";
 import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile";
-import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
+// import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
 import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
 import History from "../components/History/History";
 
 const Routes = () => {
-  if (!JSON.parse(localStorage.getItem("user_allergens")))
-    return <AllergensSelection />;
+  // if (!JSON.parse(localStorage.getItem("user_allergens")))
+  //   return <AllergensSelection />;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -37,7 +37,7 @@ const Routes = () => {
       {/* <Route path="/profile" component={Favorite}/> */}
       <Route path="/history" component={History} />
       {/* <Route path="/product" component={ProductList}/> */}
-      <Route path="/allergens" component={AllergensSelection} />
+      {/* <Route path="/allergens" component={AllergensSelection} /> */}
       <Route
         path="/login"
         component={() =>

@@ -12,7 +12,7 @@ export const allergenAddReducer = (state = {}, action) => {
     case ALLERGENS_CREATE_REQUEST:
       return { loading: true };
     case ALLERGENS_CREATE_SUCCESS:
-      return { loading: false, success: true };
+      return { loading: false, success: true, userAllergens: action.payload };
     case ALLERGENS_CREATE_FAIL:
       return { loading: false, error: action.payload };
 

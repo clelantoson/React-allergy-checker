@@ -16,16 +16,21 @@ const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
   userUpdate: userUpdateReducer,
-  allergenAdd: allergenAddReducer,
+  userAllergens: allergenAddReducer,
   allergenUpdate: allergenUpdateReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
+
+  const allergensFromStorage = localStorage.getItem("user_allergens")
+    ? JSON.parse(localStorage.getItem("user_allergens"))
+    : null;
 const initialState = {
-    userLogin: { userInfo: userInfoFromStorage },
-}
+  userLogin: { userInfo: userInfoFromStorage },
+  userAllergens: allergensFromStorage,
+};
 
 
 const middleware = [thunk]
