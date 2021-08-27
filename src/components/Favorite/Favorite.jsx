@@ -7,8 +7,8 @@ import {
   makeStyles,
   // Grid,
 } from "@material-ui/core";
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
+import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
+// import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 
 import Paper from "@material-ui/core/Paper";
 import React from "react";
@@ -46,13 +46,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const ht = [
+  {id:1,api_id:"3242272346050",image_front_small_url:"https://images.openfoodfacts.org/images/products/324/227/234/6050/front_fr.127.200.jpg",generic_name:"Pizza pâte fine garnie de mozzarella, de chiffonnade de jambon cuit standard et de roquette.",allergen:false,isFavorite:true},
+  { id:2,api_id: "3017620422003", image_front_small_url: "https://images.openfoodfacts.org/images/products/301/762/042/2003/front_en.288.200.jpg", generic_name: "Pâte à tartiner aux noisettes et au cacao", allergen: false, isFavorite: true },
+  { id:3,api_id: "8076800195057", image_front_small_url: "https://images.openfoodfacts.org/images/products/807/680/019/5057/front_en.406.200.jpg", generic_name: "Pasta di semola di _grano_ duro", allergen: false, isFavorite: true },
+  {id:4, api_id: "3256540000698", image_front_small_url: "https://images.openfoodfacts.org/images/products/325/654/000/0698/front_fr.126.200.jpg", generic_name: "Pains au lait au levain", allergen: false, isFavorite: true}
+]
+
 const Favorite = () => {
   const classes = useStyles();
   return (
-    <List className={classes.list}>
+    <div>
+   {ht.map(ht => <List className={classes.list} key={ht.api_id}>
       <ListItem
         className={classes.listItem}
-        // key={product.id}
+        
         alignItems="center"
       >
         {/* {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -62,7 +70,7 @@ const Favorite = () => {
             <Grid item lg={2} className={classes.centerItem}>
               <ListItemAvatar
                 className={classes.listItemAvatar}>
-                <Avatar src="#"/>
+               <Avatar src={ht.image_front_small_url }/>
               </ListItemAvatar>
             </Grid>
             <Grid item lg={8} className={classes.fullWidth}>
@@ -71,19 +79,20 @@ const Favorite = () => {
                 secondary="test2"
               // secondary={product.id}
               />
-              <WarningRoundedIcon className={classes.warningRoundedIcon} />
-              <Typography> You are allergic</Typography>
+              {/* <WarningRoundedIcon className={classes.warningRoundedIcon} /> */}
+             <Typography>{ht.generic_name }</Typography>
 
 
             </Grid>
             
             <Grid item lg={2} className={classes.centerItem}>
-              <FavoriteBorderIcon />
+               <FavoriteIcon color="error"/>
             </Grid>
           </Grid>
         </Paper>
       </ListItem>
-    </List>
+      </List>)}
+      </div>
   );
 };
 

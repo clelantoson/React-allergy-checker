@@ -105,6 +105,7 @@ const ProductItem = ({ product }) => {
               <CheckCircleRoundedIcon className={classes.checkIcon} />
             )}
           </Grid>
+          
         </Grid>
       </Paper>
     </ListItem>
