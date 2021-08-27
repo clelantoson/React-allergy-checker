@@ -71,6 +71,8 @@ const ProductItem = ({ product }) => {
       allergen: false,
       isFavorite: false,
     };
+
+    console.log("History test: ",userHistory);
     dispatch(historyActions(userHistory));
   };
   const classes = useStyles();

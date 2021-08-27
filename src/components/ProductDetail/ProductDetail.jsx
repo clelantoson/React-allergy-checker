@@ -91,6 +91,7 @@ const ProductDetail = () => {
     allergensFromUser
   );
   console.log("the user is allergic to", userAllergiesFromProduct);
+
   const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -177,13 +178,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
 
-    // const favorite = {
-    //         Allergen: props.Allergen,
-    //         Idapi: props.Idapi,
-    //         generic_name: props.product.generic_name,
-    //         image_front_url: props.product.image_front_url,
-    //         isFavorite: props.isFavorite
-    // }
+    
     
 
     console.log("will fetch now");
@@ -257,7 +252,7 @@ const ProductDetail = () => {
       allergen: false,
       isFavorite: true
     }
-    console.log('ddd',JSON.stringify(favorited));
+    console.log('ddd',favorited);
 
 
     
