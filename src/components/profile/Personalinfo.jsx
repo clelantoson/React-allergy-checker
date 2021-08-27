@@ -9,7 +9,8 @@ import {
   Button,
   TextField,
   FilledInput,
-  IconButton,
+  Box,
+  // IconButton,
   Typography,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
@@ -20,9 +21,9 @@ import { updateProfile } from "../../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2.5),
     textAlign: "center",
-    color: theme.palette.text.secondary,
+    marginTop: "0.3rem",
   },
   title: {
     textTransform: "capitalize",
@@ -37,6 +38,29 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     fontWeight: "bold",
   },
+  grid: {
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: "0.5rem",
+    flexDirection: "column",
+  },
+  personalInfoContainer: {
+    marginBottom: "2rem",
+  },
+  button: {
+    borderRadius: "16px",
+  },
+  flexEnd: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  flexEndParent: {
+    display: "flex",
+    flexDirection: "column",
+    marginRight: "1rem",
+    marginLeft: "1rem",
+  },
 }));
 
 const Personalinfo = ({ userInfo }) => {
@@ -45,7 +69,6 @@ const Personalinfo = ({ userInfo }) => {
   const userUpdate = useSelector((state) => state.userUpdate);
   const { loading, error, success } = userUpdate;
   const [showEdit, setShowEdit] = useState(false);
-
 
   const initialState = {
     firstName: userInfo?.name.split(" ")[0],
@@ -66,7 +89,7 @@ const Personalinfo = ({ userInfo }) => {
     }
   }, [userInfo]);
 
-  console.log('google',userInfo?.googleId);
+  console.log("google", userInfo?.googleId);
 
   const postDetails = (pics) => {
     if (!pics) {
@@ -86,7 +109,6 @@ const Personalinfo = ({ userInfo }) => {
         .then((data) => {
           // console.log(data);
           setForm({ ...form, pic: data.url.toString() });
-         
         })
         .catch((err) => {
           console.log(err);
@@ -110,148 +132,155 @@ const Personalinfo = ({ userInfo }) => {
   // console.log(form);
 
   return (
-    <div className="Personalinfo">
+    <div className={classes.personalInfoContainer}>
       <Typography
         gutterBottom
         variant="h4"
         component="h2"
-        className={classes.color}
+        // className={classes.color}
+        color="secondary"
       >
         Personal information
       </Typography>
-      
-      {!userInfo?.googleId && (
-        <IconButton
-          className={classes.button}
-          aria-label="Delete"
-          onClick={() => setShowEdit(!showEdit)}
-        >
-          <EditIcon />
-        </IconButton>
-      )}
-      {!showEdit && (
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={`${classes.paper} ${classes.title}`}>
-              {userInfo?.name}
-            </Paper>
-          </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}> Email : {userInfo?.email}</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>Password : .........</Paper>
-          </Grid>
-        </Grid>
-      )}
+      <Box className={classes.flexEndParent}>
+        {!userInfo?.googleId && (
+          <div className={classes.flexEnd}>
+            <Button
+              className={classes.button}
+              aria-label="Delete"
+              variant="contained"
+              color="primary"
+              onClick={() => setShowEdit(!showEdit)}
+              endIcon={<EditIcon>Edit</EditIcon>}
+            >
+              Edit
+            </Button>
+          </div>
+        )}
+        {!showEdit && (
+          <Box className={classes.grid} spacing={1}>
+            <Box>
+              <Paper className={`${classes.paper} ${classes.title}`}>
+                {userInfo?.name}
+              </Paper>
+            </Box>
+            <Box>
+              <Paper className={classes.paper}>Email : {userInfo?.email}</Paper>
+            </Box>
+            <Box>
+              <Paper className={classes.paper}>Password : *****</Paper>
+            </Box>
+          </Box>
+        )}
+
+        {!userInfo?.googleId && showEdit && (
+          <form noValidate onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  value={form.firstName}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  value={form.lastName}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  value={form.password}
+                  onChange={handleChange}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm password"
+                  type="password"
+                  id="confirmPassword"
+                  autoComplete="current-password"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                />
+              </Grid>
+              {picMessage && <ErrorMessage>{picMessage}</ErrorMessage>}
+              <Grid item xs={12}>
+                <img
+                  src={userInfo?.pic}
+                  alt={userInfo?.name}
+                  className="profilePic"
+                />
+                <FilledInput
+                  name="pic"
+                  type="file"
+                  onChange={(e) => postDetails(e.target.files[0])}
+                  label="Upload Profile Picture"
+                  fullWidth
+                  placeholder="Upload Profile Picture"
+                  disableUnderline
+                />
+              </Grid>
+            </Grid>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Update
+            </Button>
+          </form>
+        )}
+      </Box>
       {loading && <Loading />}
       {/* {message && <ErrorMessage>{message}</ErrorMessage>} */}
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      {success && <Alert severity="success">Upadated Successfully</Alert>}
-      {}
-      {!userInfo?.googleId && showEdit && (
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-                value={form.firstName}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                value={form.lastName}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={form.email}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={form.password}
-                onChange={handleChange}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="confirmPassword"
-                label="confirmPassword"
-                type="password"
-                id="confirmPassword"
-                autoComplete="current-password"
-                value={form.confirmPassword}
-                onChange={handleChange}
-              />
-            </Grid>
-            {picMessage && <ErrorMessage>{picMessage}</ErrorMessage>}
-            <Grid item xs={12}>
-              <img
-                src={userInfo?.pic}
-                alt={userInfo?.name}
-                className="profilePic"
-              />
-              <FilledInput
-                name="pic"
-                type="file"
-                onChange={(e) => postDetails(e.target.files[0])}
-                label="Upload Profile Picture"
-                fullWidth
-                placeholder="Upload Profile Picture"
-                disableUnderline
-              />
-            </Grid>
-          </Grid>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Update
-          </Button>
-        </form>
-      )}
+      {success && <Alert severity="success">Updated Successfully</Alert>}
     </div>
   );
 };

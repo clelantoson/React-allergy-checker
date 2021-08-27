@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,13 +16,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-
 import ErrorMessage from "../ErrorMessage";
 import Loading from "./Loading";
-import {registerActions} from "../../actions/userActions"; 
-
-
-
+import { registerActions } from "../../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -53,9 +49,7 @@ const useStyles = makeStyles((theme) => ({
 const Register = () => {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch()
-
-  
+  const dispatch = useDispatch();
 
   const initialState = {
     firstName: "",
@@ -66,52 +60,48 @@ const Register = () => {
     pic: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
   };
 
+  const [form, setForm] = useState(initialState);
 
-   const [form, setForm] = useState(initialState);
-  
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
 
-  const userRegister = useSelector(state => state.userRegister)
-  const { loading, error, userInfo } = userRegister 
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
-  useEffect(() => {
-    
-  }, [history, userInfo]);
-      
+  useEffect(() => {}, [history, userInfo]);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
- 
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
   const postDetails = (pics) => {
-      if (!pics) {
-        return setPicMessage("No image selected");
-      }
-      setPicMessage(null);
-      if (pics.type === "image/jpeg" || pics.type === "image/png") {
-        const data = new FormData();
-        data.append("file", pics);
-        data.append("upload_preset", "foodchecker");
-        data.append("cloud_name", "dkatjs6ab");
-        fetch("https://api.cloudinary.com/v1_1/dkatjs6ab/image/upload", {
-          method: "post",
-          body: data,
+    if (!pics) {
+      return setPicMessage("No image selected");
+    }
+    setPicMessage(null);
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "foodchecker");
+      data.append("cloud_name", "dkatjs6ab");
+      fetch("https://api.cloudinary.com/v1_1/dkatjs6ab/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data);
+          setForm({ ...form, pic: data.url.toString() });
         })
-          .then((res) => res.json())
-          .then((data) => {
-            // console.log(data);
-            setForm({ ...form, pic: data.url.toString() });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        setPicMessage("Invalid image");
-      }
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setPicMessage("Invalid image");
+    }
   };
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
 
     let emailRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -140,12 +130,7 @@ const Register = () => {
       // console.log(form);
       dispatch(registerActions(form));
     }
-      
-  }
-
-  
-
-  
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -224,7 +209,7 @@ const Register = () => {
                 required
                 fullWidth
                 name="confirmPassword"
-                label="confirmPassword"
+                label="Confirm password"
                 type="password"
                 id="confirmPassword"
                 autoComplete="current-password"
