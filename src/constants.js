@@ -1,0 +1,16 @@
+export const ALLERGENS_TAB = [
+  { name: "Milk", value: "en:milk" },
+  { name: "Gluten", value: "en:gluten" },
+  { name: "Eggs", value: "en:eggs" },
+  { name: "Soybeans", value: "en:soybeans" },
+  { name: "Nuts", value: "en:nuts" },
+  { name: "Fish", value: "en:fish" },
+  { name: "Mustard", value: "en:mustard" },
+  { name: "Celery", value: "en:celery" },
+  { name: "Sesame seeds", value: "en:sesame-seeds" },
+  { name: "Peanuts", value: "en:peanuts" },
+  { name: "Crustaceans", value: "en:crustaceans" },
+  { name: "Molluscs", value: "en:molluscs" },
+  { name: "Oats", value: "fr:avoine" },
+  { name: "Lupin", value: "en:lupin" },
+];

@@ -1,0 +1,12 @@
+.logo {
+  width: 3rem;
+  height: 3rem;
+}
+
+.containerHeader {
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row-reverse;
+  align-items: center;
+}
