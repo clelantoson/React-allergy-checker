@@ -66,7 +66,7 @@ const Personalinfo = ({ userInfo }) => {
     }
   }, [userInfo]);
 
-  console.log('google',userInfo?.googleId);
+ 
 
   const postDetails = (pics) => {
     if (!pics) {
