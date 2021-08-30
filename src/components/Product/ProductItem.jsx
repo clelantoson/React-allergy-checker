@@ -76,7 +76,8 @@ const ProductItem = ({ product }) => {
             />
           </Grid>
           <Grid item lg={2} className={classes.centerItem}>
-            {product.allergens_tags.length || product.traces_tags.length > 0 ? (
+            {product.allergens_tags?.length ||
+            product.traces_tags?.length > 0 ? (
               <WarningRoundedIcon className={classes.warningRoundedIcon} />
             ) : (
               <CheckCircleRoundedIcon className={classes.checkIcon} />
