@@ -2,16 +2,17 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Register from "../components/Auth/Register";
 import Login from "../components/Auth/Login";
-import Home from "../components/Home";
 import ProductDetail from "../components/ProductDetail/ProductDetail";
 import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
 import ScannerDisplay from "../components/Scanner/ScannerDisplay";
 import History from "../components/History/History";
+import Favorite from "../components/Favorite/Favorite";
 import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
 import Start from "../components/Start/Start";
+import SearchBar from "../components/SearchBar";
 
 const Routes = () => {
   if (!JSON.parse(localStorage.getItem("user_allergens")))
@@ -21,7 +22,7 @@ const Routes = () => {
 
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={Start} />
       <Route path="/product/:id" component={ProductDetail} />
       {/* <Route path="/recents" component={recents}/> */}
       <Route
@@ -35,9 +36,10 @@ const Routes = () => {
       <Route path="/history" component={History}/>
       <Route path="/product" component={ProductList}/> */}
       <Route path="/profile" component={Profile} />
-
+      <Route path="/search" component={SearchBar} />
       {/* <Route path="/profile" component={Favorite}/> */}
       <Route path="/history" component={History} />
+      <Route path="/favorite" component={Favorite} />
       {/* <Route path="/product" component={ProductList}/> */}
       <Route path="/allergens" component={AllergensSelection} />
       <Route
@@ -54,7 +56,6 @@ const Routes = () => {
       />
       <Route path="/fetch" component={FetchProduct} />
       <Route path="/scan" component={ScannerDisplay} />
-      <Route path="/start" component={Start} />
       <Route path="*" component={NotFound} />
     </Switch>
   );

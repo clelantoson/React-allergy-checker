@@ -15,8 +15,6 @@ import React from "react";
 
 const useStyles = makeStyles({
   containerNav: {
-    // position: "fixed",
-    // bottom: 0,
     width: "100%",
   },
 });
@@ -38,7 +36,7 @@ const Navigation = () => {
       {/* <BottomNavigationAction label="Barecode" value="barecode" icon={<BareCode />} /> */}
       <BottomNavigationAction
         component={Link}
-        to="/"
+        to="/search"
         label="Search"
         value="search"
         icon={<SearchProduct />}

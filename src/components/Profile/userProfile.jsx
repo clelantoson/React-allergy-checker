@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   width: {
     maxWidth: "100%",
     margin: "2rem auto",
+    marginTop: "15rem",
   },
   large: {
     width: theme.spacing(7),
@@ -30,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
 
 const UserProfile = ({ userInfo }) => {
   const classes = useStyles();
+  const allergensFromUser =
+    JSON.parse(localStorage.getItem("user_allergens")) || [];
+  const favoriteProducts =
+    JSON.parse(localStorage.getItem("favorite_products")) || [];
 
   // console.log(userInfo?.imageUrl);
   return (
@@ -73,7 +78,7 @@ const UserProfile = ({ userInfo }) => {
                 color="textSecondary"
                 component="h5"
               >
-                Allergens : 5
+                Allergens : {allergensFromUser.length}
               </Typography>
             </Grid>
             <Grid item>
@@ -82,7 +87,7 @@ const UserProfile = ({ userInfo }) => {
                 color="textSecondary"
                 component="h5"
               >
-                Favorites : 15
+                Favorites : {favoriteProducts.length}
               </Typography>
             </Grid>
           </Grid>

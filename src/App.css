@@ -19,6 +19,7 @@ body,
   justify-content: space-between;
   max-width: 700px;
   width: 100%;
+  overflow: hidden;
 }
 
 h1 {

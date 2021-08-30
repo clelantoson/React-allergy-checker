@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-// import { useEffect } from "react";
 import ProductList from "../Product/ProductList";
 
-const History = () => {
+const Favorite = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const productHistory =
-      JSON.parse(localStorage.getItem("product_history")) || [];
-    setProducts(productHistory);
+    const productFavorites =
+      JSON.parse(localStorage.getItem("favorite_products")) || [];
+    setProducts(productFavorites);
   }, []);
   return <ProductList products={products} />;
 };
 
-export default History;
+export default Favorite;

@@ -14,12 +14,24 @@ const useStyles = makeStyles(() => ({
     height: "100%",
     overflowY: "auto",
   },
+  moveUp: {
+    // width: "100%",
+    // height: "100%",
+    overflowY: "auto",
+    transform: "translate(0,-5vh)",
+    transition: "transform 500ms ease-in-out",
+    "-webkit-transform": "translate(0,-0.5rem)",
+    "-o-transform": "translate(0,-0.5rem)",
+    "-moz-transform": "translate(0,-0.5rem)",
+  },
   downSearchBar: {
     width: "100%",
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
+    // transform: "translate(0,5vh)",
+    transition: "transform 500ms ease-in-out",
   },
   fullWidth: { width: "100%" },
   searchBar: {
@@ -85,7 +97,7 @@ const SearchBar = () => {
         className={
           debouncedProductInput.length === 0
             ? classes.downSearchBar
-            : classes.root
+            : classes.moveUp
         }
       >
         <div className={classes.textField}>
