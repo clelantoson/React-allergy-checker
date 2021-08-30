@@ -68,6 +68,29 @@ const findUserAllergiesFromProduct = (product, allergensFromUser) => {
 // if (allergensFromUser.value === productAllergensTracesTags)
 //   return allergensFromUser.name;
 
+const addProductToHistory = (product) => {
+  const previousHistory =
+    JSON.parse(localStorage.getItem("product_history")) || [];
+
+  // const newHistory = previousHistory
+
+  const newElement = {
+    id: product.id,
+    image_front_url: product.image_front_url,
+    generic_name: product.generic_name,
+    product_name: product.product_name,
+    allergens_tags: product.allergens_tags,
+    traces_tags: product.traces_tags,
+  };
+
+  // newHistory.push(newElement)
+
+  const newHistory = [...previousHistory, newElement];
+
+  // localStorage.setItem("product_history", JSON.stringify(newHistory));
+  localStorage.setItem("product_history", JSON.stringify(newHistory));
+};
+
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
@@ -75,6 +98,7 @@ const ProductDetail = () => {
   const { id: productId } = useParams();
   const allergensFromUser =
     JSON.parse(localStorage.getItem("user_allergens")) || [];
+
   // eslint-disable-next-line no-unused-vars
   const userAllergiesFromProduct = findUserAllergiesFromProduct(
     product,
@@ -185,6 +209,7 @@ const ProductDetail = () => {
           setProductNotFound(true);
         } else {
           setProduct(response.data.product);
+          addProductToHistory(response.data.product);
           reloadFavorite(response.data.product);
         }
       })
