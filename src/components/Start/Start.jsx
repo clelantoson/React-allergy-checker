@@ -46,7 +46,7 @@ const Start = () => {
             Search a product in our database to know quickly if it contains your
             allergens
           </Typography>
-          <Button variant="contained" color="secondary" href="/">
+          <Button variant="contained" color="secondary" href="/search">
             Search a product
           </Button>
         </Paper>
