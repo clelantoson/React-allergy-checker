@@ -167,6 +167,15 @@ const ProductDetail = () => {
     setExpanded(!expanded);
   };
 
+  const reloadFavorite = (product) => {
+    const favoriteProducts =
+      JSON.parse(localStorage.getItem("favorite_products")) || [];
+    const isFavorite = favoriteProducts.some(
+      (favoriteProduct) => favoriteProduct.id === product.id
+    );
+    setFavorite(isFavorite);
+  };
+
   useEffect(() => {
     console.log("will fetch now");
     axios
@@ -176,12 +185,12 @@ const ProductDetail = () => {
           setProductNotFound(true);
         } else {
           setProduct(response.data.product);
+          reloadFavorite(response.data.product);
         }
       })
       .catch(() => console.log("il y a eu une erreur"));
   }, []);
 
-  // useEffect to load previous favorite
   console.log(product);
 
   // const createRows = (rows) =>
