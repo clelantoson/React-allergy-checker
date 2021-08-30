@@ -94,7 +94,7 @@ const AllergensChips = () => {
           onClick={saveAllergens}
           variant="contained"
           color="secondary"
-          href="/start"
+          href="/"
         >
           Continue
         </Button>
