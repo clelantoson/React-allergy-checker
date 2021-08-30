@@ -75,10 +75,12 @@ const addProductToHistory = (product) => {
   // const newHistory = previousHistory
 
   const newElement = {
-    api_id: product.id,
-    image_front_small_url: product.image_front_small_url,
+    id: product.id,
+    image_front_url: product.image_front_url,
     generic_name: product.generic_name,
     product_name: product.product_name,
+    allergens_tags: product.allergens_tags,
+    traces_tags: product.traces_tags,
   };
 
   // newHistory.push(newElement)
