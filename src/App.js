@@ -41,7 +41,6 @@ function App() {
           <Header />
           <Routes />
           <Navigation />
-          <div style={{ height: "60px" }}></div>
         </BrowserRouter>
       </ThemeProvider>
     </div>

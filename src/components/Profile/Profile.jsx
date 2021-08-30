@@ -21,6 +21,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    overflowY: "auto",
   },
 }));
 

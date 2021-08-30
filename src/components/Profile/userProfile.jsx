@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   width: {
     maxWidth: "100%",
     margin: "2rem auto",
+    marginTop: "15rem",
   },
   large: {
     width: theme.spacing(7),
