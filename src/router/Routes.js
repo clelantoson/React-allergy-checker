@@ -6,7 +6,7 @@ import Home from "../components/Home";
 import ProductDetail from "../components/ProductDetail/ProductDetail";
 import ProductFavoris from "../components/Product/ProductFavoris";
 import FetchProduct from "../components/FetchProduct";
-import Profile from "../components/Profile";
+import Profile from "../components/Profile/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
 import ScannerDisplay from "../components/Scanner/ScannerDisplay";
 // import History from "../components/History/History";
@@ -14,6 +14,7 @@ import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
 import Favorite from "../components/Favorite/Favorite";
 import History from "../components/History/History";
+import Start from "../components/Start/Start";
 
 const Routes = () => {
   // if (!JSON.parse(localStorage.getItem("user_allergens")))
@@ -60,6 +61,7 @@ const Routes = () => {
       />
       <Route path="/fetch" component={FetchProduct} />
       <Route path="/scan" component={ScannerDisplay} />
+      <Route path="/start" component={Start} />
       <Route path="*" component={NotFound} />
     </Switch>
   );

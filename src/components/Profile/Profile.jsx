@@ -1,24 +1,22 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-
-import ProfileUser from "./profile/userProfile";
-import Allergens from "../components/AllergensSelection/AllergensSelection";
+import ProfileUser from "./userProfile";
 // import ProfileFavorites from "./profile/ProfileFavorites";
-import Personalinfo from "./profile/Personalinfo";
-
-import { makeStyles,Button, Link, Grid } from "@material-ui/core";
-
-
-import { logoutActions } from "../actions/userActions";
+import Personalinfo from "./Personalinfo";
+import { makeStyles, Button, Link, Grid, Typography } from "@material-ui/core";
+import { logoutActions } from "../../actions/userActions";
+import AllergensChips from "../AllergensSelection/AllergensChips";
 
 const useStyles = makeStyles(() => ({
   containerProfile: {
     textAlign: "center",
     display: "flex",
     flexDirection: "column",
-  }
+    container: {
+      justifyContent: "center",
+    },
+  },
 }));
 
 const Profile = () => {
@@ -29,11 +27,11 @@ const Profile = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-   useEffect(() => {
-     if (!userInfo) {
-       history.push("/login");
-     } 
-   }, [history, userInfo]);
+  useEffect(() => {
+    if (!userInfo) {
+      history.push("/login");
+    }
+  }, [history, userInfo]);
 
   const logoutHandler = () => {
     dispatch(logoutActions());
@@ -41,21 +39,25 @@ const Profile = () => {
   };
 
   useEffect(() => {}, [userInfo]);
-   
+
   return (
     <div className={classes.containerProfile}>
       <ProfileUser userInfo={userInfo} history={history} />
-     
       <Personalinfo userInfo={userInfo} history={history} />
-      <Allergens userInfo={userInfo} history={history} />
-      <h2>Favorites</h2>
+      <Typography variant="h4" color="secondary" component="h2" gutterBottom>
+        Your allergens
+      </Typography>
+      <AllergensChips userInfo={userInfo} history={history} />
+      {/* <Typography variant="h4" color="secondary" component="h2" gutterBottom>
+        Favorites
+      </Typography> */}
       {/* <ProfileFavorites userInfo={userInfo} history={history} /> */}
 
-      <Grid container>
+      <Grid>
         {!userInfo && (
           <Grid item xs>
             <Link href="/login" variant="body2">
-              login
+              Login
             </Link>
           </Grid>
         )}
@@ -63,18 +65,13 @@ const Profile = () => {
         {!userInfo && (
           <Grid item>
             <Link href="/register" variant="body2">
-              register
+              Register
             </Link>
           </Grid>
         )}
 
         {userInfo && (
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={logoutHandler}
-          >
+          <Button variant="contained" color="primary" onClick={logoutHandler}>
             Logout
           </Button>
         )}

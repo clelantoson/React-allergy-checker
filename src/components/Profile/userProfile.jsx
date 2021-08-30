@@ -8,23 +8,16 @@ import {
   Typography,
 } from "@material-ui/core";
 
-
-
-
-
 // import img from "../../img/profile-bg.jpg";
 
-
-
 const useStyles = makeStyles((theme) => ({
-  
   root: {
     flexGrow: 1,
     marginBottom: theme.spacing(2),
   },
-  title: { 
-   textTransform: 'capitalize'
- },
+  title: {
+    textTransform: "capitalize",
+  },
   width: {
     maxWidth: "100%",
     margin: "2rem auto",
@@ -35,13 +28,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-const UserProfile = ({userInfo}) => {
-
+const UserProfile = ({ userInfo }) => {
   const classes = useStyles();
 
-// console.log(userInfo?.imageUrl);
+  // console.log(userInfo?.imageUrl);
   return (
     <div className={classes.width}>
       <Grid
@@ -63,7 +53,12 @@ const UserProfile = ({userInfo}) => {
           />
         </Grid>
         <Grid item>
-          <Typography gutterBottom variant="h4" component="h2" className={classes.title}>
+          <Typography
+            gutterBottom
+            variant="h4"
+            component="h1"
+            className={classes.title}
+          >
             {userInfo?.name.split(" ")[0]} {userInfo?.name.split(" ")[1]}
           </Typography>
           <Grid
