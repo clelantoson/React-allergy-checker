@@ -15,8 +15,8 @@ import React from "react";
 
 const useStyles = makeStyles({
   containerNav: {
-    // position: "fixed",
-    // bottom: 0,
+    position: "fixed",
+    bottom: 0,
     width: "100%",
   },
 });
