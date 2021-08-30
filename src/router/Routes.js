@@ -8,6 +8,7 @@ import Profile from "../components/Profile/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
 import ScannerDisplay from "../components/Scanner/ScannerDisplay";
 import History from "../components/History/History";
+import Favorite from "../components/Favorite/Favorite";
 import NotFound from "../components/NotFound";
 import { useSelector } from "react-redux";
 import Start from "../components/Start/Start";
@@ -38,6 +39,7 @@ const Routes = () => {
       <Route path="/search" component={SearchBar} />
       {/* <Route path="/profile" component={Favorite}/> */}
       <Route path="/history" component={History} />
+      <Route path="/favorite" component={Favorite} />
       {/* <Route path="/product" component={ProductList}/> */}
       <Route path="/allergens" component={AllergensSelection} />
       <Route
