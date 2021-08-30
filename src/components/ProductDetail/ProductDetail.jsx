@@ -94,6 +94,7 @@ const addProductToHistory = (product) => {
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const { id: productId } = useParams();
   const allergensFromUser =
     JSON.parse(localStorage.getItem("user_allergens")) || [];
@@ -176,6 +177,9 @@ const ProductDetail = () => {
       marginTop: "0.5rem",
       // backgroundColor: theme.palette.warning.main,
     },
+    redFavorite: {
+      color: "red",
+    },
     chip: {
       margin: "0.2rem",
     },
@@ -185,6 +189,15 @@ const ProductDetail = () => {
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const reloadFavorite = (product) => {
+    const favoriteProducts =
+      JSON.parse(localStorage.getItem("favorite_products")) || [];
+    const isFavorite = favoriteProducts.some(
+      (favoriteProduct) => favoriteProduct.id === product.id
+    );
+    setFavorite(isFavorite);
   };
 
   useEffect(() => {
@@ -197,10 +210,12 @@ const ProductDetail = () => {
         } else {
           setProduct(response.data.product);
           addProductToHistory(response.data.product);
+          reloadFavorite(response.data.product);
         }
       })
       .catch(() => console.log("il y a eu une erreur"));
   }, []);
+
   console.log(product);
 
   // const createRows = (rows) =>
@@ -214,6 +229,45 @@ const ProductDetail = () => {
   //     .filter(Boolean);
 
   // refacto
+
+  const handleClickFavorite = () => {
+    const favoriteProducts =
+      JSON.parse(localStorage.getItem("favorite_products")) || [];
+    // find or create
+    // soit je l'ai trouvé dans l'array favoriteProducts, je le supprime
+    // soit je l'ai pas trouvé dans l'array favoriteProducts, je l'ajoute dans cet array
+    const foundProduct = favoriteProducts.find(
+      (favoriteProduct) => favoriteProduct.id === product.id
+    );
+    let newFavoriteProducts;
+    if (foundProduct) {
+      // delete element from array
+      newFavoriteProducts = favoriteProducts.filter(
+        (favoriteProduct) => favoriteProduct.id !== product.id
+      );
+      localStorage.setItem(
+        "favorite_products",
+        JSON.stringify(newFavoriteProducts)
+      );
+    } else {
+      // create element in array
+      const newFavorite = {
+        id: product.id,
+        image_front_url: product.image_front_url,
+        generic_name: product.generic_name,
+        product_name: product.product_name,
+        allergens_tags: product.allergens_tags,
+        traces_tags: product.traces_tags,
+      };
+      newFavoriteProducts = [...favoriteProducts, newFavorite];
+    }
+    localStorage.setItem(
+      "favorite_products",
+      JSON.stringify(newFavoriteProducts)
+    );
+    setFavorite(!favorite);
+  };
+
   const createRows = (rows) =>
     rows.filter((row) => row.data100g && row.dataPerServing);
 
@@ -285,7 +339,11 @@ const ProductDetail = () => {
           disableSpacing
         >
           <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
+            <FavoriteIcon
+              onClick={handleClickFavorite}
+              className={favorite ? classes.redFavorite : null}
+              // color={favorite ? "error" : null}
+            />
             {/* </IconButton>
           <IconButton aria-label="share">
             <ShareIcon /> */}
