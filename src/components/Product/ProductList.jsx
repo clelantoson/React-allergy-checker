@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     marginTop: "1rem",
   },
-  list: {},
+  list: { overflowY: "auto" },
   centerItem: {
     display: "flex",
     flexDirection: "column",
