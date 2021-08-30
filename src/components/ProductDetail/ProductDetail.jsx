@@ -153,6 +153,9 @@ const ProductDetail = () => {
       marginTop: "0.5rem",
       // backgroundColor: theme.palette.warning.main,
     },
+    redFavorite: {
+      color: "red",
+    },
     chip: {
       margin: "0.2rem",
     },
@@ -302,7 +305,11 @@ const ProductDetail = () => {
           disableSpacing
         >
           <IconButton aria-label="add to favorites">
-            <FavoriteIcon onClick={handleClickFavorite} />
+            <FavoriteIcon
+              onClick={handleClickFavorite}
+              className={favorite ? classes.redFavorite : null}
+              // color={favorite ? "error" : null}
+            />
             {/* </IconButton>
           <IconButton aria-label="share">
             <ShareIcon /> */}
