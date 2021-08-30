@@ -33,7 +33,7 @@ const Routes = () => {
           userInfo?.token ? <Profile /> : <Redirect to="/login" />
         }
       />
-      <Route path="/profile" component={Profile} />
+      {/* <Route path="/profile" component={Profile} /> */}
       <Route path="/favorite" component={Favorite} />
       <Route path="/history" component={History} />
       <Route path="/productFavoris" component={ProductFavoris} />
@@ -41,7 +41,7 @@ const Routes = () => {
 
       
       <Route path="/product" component={ProductList}/> */}
-      <Route path="/profile" component={Profile} />
+      {/* <Route path="/profile" component={Profile} /> */}
 
       {/* <Route path="/profile" component={Favorite}/> */}
       {/* <Route path="/history" component={History} /> */}

@@ -26,11 +26,12 @@ export const historyActions = (formData) => async (dispatch) => {
   }
 };
 
-export const updateHistoryActions = (id,formData) => async (dispatch) => {
+export const updateHistoryActions = (formData) => async (dispatch) => {
   try {
     dispatch({ type: HISTORY_REQUEST });
     
-    const { data } = await api.historyUpdate(id,formData);
+    const { data } = await api.historyUpdate(formData);
+    console.log("test action redux :", data);
 
     dispatch({ type: HISTORY_SUCCESS, payload: data });
     localStorage.setItem("user_histories", JSON.stringify(data));

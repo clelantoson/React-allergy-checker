@@ -78,10 +78,15 @@ const findUserAllergiesFromProduct = (product, allergensFromUser) => {
 const ProductDetail = () => {
   const dispatch = useDispatch()
    const history = useSelector(state => state.histories)
-  const { loading, error,userHistories } = history 
+  const { loading, error, userHistories } = history 
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
   const [selectFavorited, setSelectFavorited] = useState(false);
+
+
+    const localFav = JSON.parse(localStorage.getItem("favorited")) || [];
+    const [fav, setFav] = useState(localFav)
+
   const { id: productId } = useParams();
   const allergensFromUser =
     JSON.parse(localStorage.getItem("user_allergens")) || [];
@@ -244,14 +249,19 @@ const ProductDetail = () => {
       },
     ]);
 
-    const favorited = {
+
+
+    
+  
+
+    const favorited =[ {
        api_id: product.id,
       image_front_small_url: product.image_front_small_url,
       generic_name: product.generic_name,
       // product_name: product.product_name,
-      allergen: false,
-      isFavorite: true
-    }
+      isFavorite: !selectFavorited
+    }]
+      setFav(...favorited)
     console.log('ddd',favorited);
 
 
@@ -259,10 +269,17 @@ const ProductDetail = () => {
     const clickAddtoFavorite = () => {
       setSelectFavorited(!selectFavorited)
 
-      console.log('isFavorite',userHistories.isFavorite);
-      const id = userHistories._id
-      console.log(id);
-      dispatch(updateHistoryActions((favorited,id)));
+      console.log('isFavorite',userHistories);
+      const id = userHistories;
+      console.log("test api_id", id);
+      
+      localStorage.setItem("favorited", JSON.stringify(fav))
+       
+      
+      const faux = false
+
+      if(faux){  dispatch(updateHistoryActions((favorited)));}
+    
      
     }
 

@@ -25,6 +25,6 @@ export const addAllergen = (formData) => API.post("/allergen/create", formData);
 export const updateAllergen = (formData) => API.put("/allergen/update", formData);
 
 export const historyAdd = (formData) => API.post("/histories/create", formData)
-export const historyUpdate = (id,formData) => API.put(`/histories/updated/${id}`,formData)
+export const historyUpdate = (formData) => API.put(`/histories/updated`,formData)
 
 
