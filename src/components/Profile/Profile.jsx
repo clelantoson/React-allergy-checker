@@ -4,7 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import ProfileUser from "./userProfile";
 // import ProfileFavorites from "./profile/ProfileFavorites";
 import Personalinfo from "./Personalinfo";
-import { makeStyles, Button, Link, Grid, Typography } from "@material-ui/core";
+import {
+  makeStyles,
+  Button,
+  Link,
+  Grid,
+  Typography,
+  Box,
+} from "@material-ui/core";
 import { logoutActions } from "../../actions/userActions";
 import AllergensChips from "../AllergensSelection/AllergensChips";
 
@@ -13,9 +20,7 @@ const useStyles = makeStyles(() => ({
     textAlign: "center",
     display: "flex",
     flexDirection: "column",
-    container: {
-      justifyContent: "center",
-    },
+    justifyContent: "center",
   },
 }));
 
@@ -41,7 +46,7 @@ const Profile = () => {
   useEffect(() => {}, [userInfo]);
 
   return (
-    <div className={classes.containerProfile}>
+    <Box className={classes.containerProfile}>
       <ProfileUser userInfo={userInfo} history={history} />
       <Personalinfo userInfo={userInfo} history={history} />
       <Typography variant="h4" color="secondary" component="h2" gutterBottom>
@@ -76,7 +81,7 @@ const Profile = () => {
           </Button>
         )}
       </Grid>
-    </div>
+    </Box>
   );
 };
 
