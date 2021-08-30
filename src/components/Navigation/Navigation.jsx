@@ -38,7 +38,7 @@ const Navigation = () => {
       {/* <BottomNavigationAction label="Barecode" value="barecode" icon={<BareCode />} /> */}
       <BottomNavigationAction
         component={Link}
-        to="/"
+        to="/search"
         label="Search"
         value="search"
         icon={<SearchProduct />}
