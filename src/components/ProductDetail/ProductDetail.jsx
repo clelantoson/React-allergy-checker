@@ -68,12 +68,34 @@ const findUserAllergiesFromProduct = (product, allergensFromUser) => {
 // if (allergensFromUser.value === productAllergensTracesTags)
 //   return allergensFromUser.name;
 
+const addProductToHistory = (product) => {
+  const previousHistory =
+    JSON.parse(localStorage.getItem("product_history")) || [];
+
+  // const newHistory = previousHistory
+
+  const newElement = {
+    api_id: product.id,
+    image_front_small_url: product.image_front_small_url,
+    generic_name: product.generic_name,
+    product_name: product.product_name,
+  };
+
+  // newHistory.push(newElement)
+
+  const newHistory = [...previousHistory, newElement];
+
+  // localStorage.setItem("product_history", JSON.stringify(newHistory));
+  localStorage.setItem("product_history", JSON.stringify(newHistory));
+};
+
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
   const { id: productId } = useParams();
   const allergensFromUser =
     JSON.parse(localStorage.getItem("user_allergens")) || [];
+
   // eslint-disable-next-line no-unused-vars
   const userAllergiesFromProduct = findUserAllergiesFromProduct(
     product,
@@ -172,6 +194,7 @@ const ProductDetail = () => {
           setProductNotFound(true);
         } else {
           setProduct(response.data.product);
+          addProductToHistory(response.data.product);
         }
       })
       .catch(() => console.log("il y a eu une erreur"));
