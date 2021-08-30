@@ -26,6 +26,7 @@ import Box from "@material-ui/core/Box";
 import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import Chip from "@material-ui/core/Chip";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 // eslint-disable-next-line no-unused-vars
 const findUserAllergiesFromProduct = (product, allergensFromUser) => {
@@ -69,6 +70,9 @@ const findUserAllergiesFromProduct = (product, allergensFromUser) => {
 //   return allergensFromUser.name;
 
 const ProductDetail = () => {
+  const [selectFavorited, setSelectFavorited] = useState(false);
+  const [userHistories, setUserHistories] = useState([]);
+  const [newHistories, setNewHistories] = useState();
   const [product, setProduct] = useState(null);
   const [productNotFound, setProductNotFound] = useState(false);
   const { id: productId } = useParams();
@@ -159,6 +163,7 @@ const ProductDetail = () => {
 
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -191,6 +196,42 @@ const ProductDetail = () => {
   // refacto
   const createRows = (rows) =>
     rows.filter((row) => row.data100g && row.dataPerServing);
+
+  const clickAddtoFavorite = (event) => {
+   
+  };
+
+  const PushHistory = (event) => {
+    setSelectFavorited(!selectFavorited);
+
+    const historiersData = [
+      {
+        api_id: product.id,
+        image_front_small_url: product.image_front_small_url,
+        generic_name: product.generic_name,
+        product_name: product.product_name,
+        isFavorite: !selectFavorited,
+      },
+    ];
+    const userHistories = JSON.parse(localStorage.getItem("user_histories"));
+
+    // add loccal storage historiersData to userHistories
+
+    const newUserHistories = [ ...historiersData];
+    setUserHistories(newUserHistories);
+   localStorage.setItem("user_histories", JSON.stringify(newUserHistories));
+      
+
+
+    //  event.preventDefault();
+
+    // const newUserHistories = [...userHistories];
+    // //  newUserHistories.push({ ...historiersData });
+    // setUserHistories([...historiersData]);
+    // console.log("histories", userHistories);
+
+    // localStorage.setItem("userHistories", JSON.stringify(newUserHistories));
+  };
 
   if (product) {
     console.log("component is mounted");
@@ -281,7 +322,7 @@ const ProductDetail = () => {
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
             })}
-            onClick={handleExpandClick}
+            onClick={() => { handleExpandClick(), PushHistory() }}
             aria-expanded={expanded}
             aria-label="show more"
           >
