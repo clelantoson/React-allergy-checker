@@ -2,7 +2,7 @@
 
 An easy to use Progressive Web App to help you check allergens in your food.
 
-# Built with React, Material-UI, Mongo-db, Express 
+### Built with React, Material-UI, Mongo-db, Express 
 
 ## Test our app quickly !
 https://allergy-checker.netlify.app/
