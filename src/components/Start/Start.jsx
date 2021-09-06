@@ -23,6 +23,7 @@ const useStyles = makeStyles(() => ({
   },
   paper: {
     padding: "1rem",
+    width: "100%",
   },
 }));
 
