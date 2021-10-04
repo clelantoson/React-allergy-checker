@@ -8,7 +8,6 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-// import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Paper from "@material-ui/core/Paper";
 import React, { useState, useEffect } from "react";
@@ -22,28 +21,21 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Box from "@material-ui/core/Box";
-// import tick from "./img/tick.png";
 import CheckCircleRoundedIcon from "@material-ui/icons/CheckCircleRounded";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import Chip from "@material-ui/core/Chip";
 
-// eslint-disable-next-line no-unused-vars
 const findUserAllergiesFromProduct = (product, allergensFromUser) => {
   console.log({ product });
   console.log("allergensfromuser", allergensFromUser);
   if (!product) return [];
-  // eslint-disable-next-line no-unused-vars
+
   const productAllergensTracesTags = [
     ...product.allergens_tags,
     ...product.traces_tags,
   ];
-  // // eslint-disable-next-line no-debugger
-  // debugger;
-  // return productAllergensTracesTags.filter((productAllergen) =>
-  //   allergensFromUser.some(
-  //     (userAllergen) => userAllergen.value === productAllergen
-  //   )
-  // );
+
+  // retourne les allergens du produit dont l'utilisateur est allergique
   return allergensFromUser.filter((userAllergen) =>
     productAllergensTracesTags.some(
       (productAllergen) => productAllergen === userAllergen.value
@@ -63,16 +55,11 @@ const findUserAllergiesFromProduct = (product, allergensFromUser) => {
   // ...
 };
 
-//on part des user allergens pour fairecle filter, faut inverser le filter et le some
-
-// if (allergensFromUser.value === productAllergensTracesTags)
-//   return allergensFromUser.name;
+//on part des user allergens pour faire le filter, faut inverser le filter et le some
 
 const addProductToHistory = (product) => {
   const previousHistory =
     JSON.parse(localStorage.getItem("product_history")) || [];
-
-  // const newHistory = previousHistory
 
   const newElement = {
     id: product.id,
@@ -83,11 +70,9 @@ const addProductToHistory = (product) => {
     traces_tags: product.traces_tags,
   };
 
-  // newHistory.push(newElement)
-
+  // ou newHistory.push(newElement)
   const newHistory = [...previousHistory, newElement];
 
-  // localStorage.setItem("product_history", JSON.stringify(newHistory));
   localStorage.setItem("product_history", JSON.stringify(newHistory));
 };
 
@@ -99,12 +84,12 @@ const ProductDetail = () => {
   const allergensFromUser =
     JSON.parse(localStorage.getItem("user_allergens")) || [];
 
-  // eslint-disable-next-line no-unused-vars
   const userAllergiesFromProduct = findUserAllergiesFromProduct(
     product,
     allergensFromUser
   );
-  console.log("the user is allergic to", userAllergiesFromProduct);
+  // console.log("the user is allergic to", userAllergiesFromProduct);
+
   const useStyles = makeStyles((theme) => ({
     root: {
       width: "100%",
@@ -128,9 +113,6 @@ const ProductDetail = () => {
     expandOpen: {
       transform: "rotate(180deg)",
     },
-    content: {
-      // height: "100%"
-    },
     paperInfoProduct: {
       padding: "0.4rem",
       marginTop: "0.5rem",
@@ -138,14 +120,7 @@ const ProductDetail = () => {
     table: {
       width: "100%",
     },
-    // tick: {
-    //   height: 0,
-    //   paddingTop: "56.25%", // 16:9
-    //   position: "static",
-    //   // zIndex: 10,
-    //   // position: "absolute",
-    //   // height: "20%",
-    // },
+
     boxImage: {
       position: "relative",
     },
@@ -175,7 +150,6 @@ const ProductDetail = () => {
     paperAllergens: {
       padding: "0.4rem",
       marginTop: "0.5rem",
-      // backgroundColor: theme.palette.warning.main,
     },
     redFavorite: {
       color: "red",
@@ -201,7 +175,6 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    console.log("will fetch now");
     axios
       .get(`https://world.openfoodfacts.org/api/v0/product/${productId}.json`)
       .then((response) => {
@@ -215,20 +188,6 @@ const ProductDetail = () => {
       })
       .catch(() => console.log("il y a eu une erreur"));
   }, []);
-
-  console.log(product);
-
-  // const createRows = (rows) =>
-  //   rows
-  //     .map((row) => {
-  //       const { data100g, dataPerServing } = row;
-  //       // console.log(typeof row);
-  //       if (data100g && dataPerServing) return row;
-  //       else return null;
-  //     })
-  //     .filter(Boolean);
-
-  // refacto
 
   const handleClickFavorite = () => {
     const favoriteProducts =
@@ -272,8 +231,6 @@ const ProductDetail = () => {
     rows.filter((row) => row.data100g && row.dataPerServing);
 
   if (product) {
-    console.log("component is mounted");
-
     const rows = createRows([
       {
         name: "Energy",
@@ -313,25 +270,12 @@ const ProductDetail = () => {
           title={product.generic_name}
           subheader={product.product_name}
         />
-        {/* <div className={classes.boxImage}> */}
         <CardMedia
           className={classes.media}
           image={product.image_front_small_url}
           title={product.generic_name}
           alt={product.generic_name}
         />
-        {/* <CardMedia
-          className={classes.tick}
-          title={product.generic_name}
-          image={tick}
-          alt="Icons made by Alfredo Hernandez https://www.alfredocreates.com"
-        /> */}
-        {/* <img
-          className={classes.tick}
-          src={tick}
-          alt="Icons made by Alfredo Hernandez https://www.alfredocreates.com"
-        /> */}
-        {/* </div> */}
         <CardActions
           classes={{
             root: classes.overrideRootCardAction,
@@ -342,11 +286,7 @@ const ProductDetail = () => {
             <FavoriteIcon
               onClick={handleClickFavorite}
               className={favorite ? classes.redFavorite : null}
-              // color={favorite ? "error" : null}
             />
-            {/* </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon /> */}
           </IconButton>
           {userAllergiesFromProduct.length > 0 ? (
             <Paper className={classes.paperWarning}>
@@ -392,16 +332,6 @@ const ProductDetail = () => {
                       </Box>
                     </Typography>
                   )}
-                  {/* {product.traces_tags.length > 0 && (
-                    <Typography variant="h4" color="primary">
-                      Traces
-                      <Typography>
-                        {product.traces_tags.map((trace) => (
-                          <Chip key={trace} label={trace} />
-                        ))}
-                      </Typography>
-                    </Typography>
-                  )} */}
                 </Paper>
               )}
 

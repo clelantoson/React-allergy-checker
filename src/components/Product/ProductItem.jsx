@@ -46,8 +46,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ProductItem = ({ product }) => {
-  // console.log(product);
-  // const allergens = true;
   const history = useHistory();
   const handleClick = () => {
     history.push({
