@@ -6,7 +6,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import axios from "axios";
 import ProductList from "./Product/ProductList";
 import { makeStyles } from "@material-ui/core";
-// import classNames from "classnames";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -15,8 +14,6 @@ const useStyles = makeStyles(() => ({
     overflowY: "auto",
   },
   moveUp: {
-    // width: "100%",
-    // height: "100%",
     overflowY: "auto",
     transform: "translate(0,-5vh)",
     transition: "transform 500ms ease-in-out",
@@ -30,7 +27,6 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    // transform: "translate(0,5vh)",
     transition: "transform 500ms ease-in-out",
   },
   fullWidth: { width: "100%" },
