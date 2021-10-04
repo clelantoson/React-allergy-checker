@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import "./personalinfo.scss"
 import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import {
@@ -10,7 +9,6 @@ import {
   TextField,
   FilledInput,
   Box,
-  // IconButton,
   Typography,
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
@@ -278,7 +276,6 @@ const Personalinfo = ({ userInfo }) => {
         )}
       </Box>
       {loading && <Loading />}
-      {/* {message && <ErrorMessage>{message}</ErrorMessage>} */}
       {error && <ErrorMessage>{error}</ErrorMessage>}
       {success && <Alert severity="success">Updated Successfully</Alert>}
     </div>

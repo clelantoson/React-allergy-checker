@@ -3,7 +3,6 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Register from "../components/Auth/Register";
 import Login from "../components/Auth/Login";
 import ProductDetail from "../components/ProductDetail/ProductDetail";
-import FetchProduct from "../components/FetchProduct";
 import Profile from "../components/Profile/Profile";
 import AllergensSelection from "../components/AllergensSelection/AllergensSelection";
 import ScannerDisplay from "../components/Scanner/ScannerDisplay";
@@ -24,23 +23,16 @@ const Routes = () => {
     <Switch>
       <Route exact path="/" component={Start} />
       <Route path="/product/:id" component={ProductDetail} />
-      {/* <Route path="/recents" component={recents}/> */}
       <Route
         path="/profile"
         component={() =>
           userInfo?.token ? <Profile /> : <Redirect to="/login" />
         }
       />
-      {/*
-      <Route path="/profile" component={Favorite}/>
-      <Route path="/history" component={History}/>
-      <Route path="/product" component={ProductList}/> */}
       <Route path="/profile" component={Profile} />
       <Route path="/search" component={SearchBar} />
-      {/* <Route path="/profile" component={Favorite}/> */}
       <Route path="/history" component={History} />
       <Route path="/favorite" component={Favorite} />
-      {/* <Route path="/product" component={ProductList}/> */}
       <Route path="/allergens" component={AllergensSelection} />
       <Route
         path="/login"
@@ -54,7 +46,6 @@ const Routes = () => {
           !userInfo?.token ? <Register /> : <Redirect to="/profile" />
         }
       />
-      <Route path="/fetch" component={FetchProduct} />
       <Route path="/scan" component={ScannerDisplay} />
       <Route path="*" component={NotFound} />
     </Switch>

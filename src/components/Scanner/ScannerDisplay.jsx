@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Scanner from "./Scanner";
-// import Button from "@material-ui/core/Button";
 import "./ScannerDisplay.scss";
 import useSound from "use-sound";
 import beepSound from "./beep.mp3";
@@ -18,14 +17,6 @@ const ScannerDisplay = () => {
     setIsMounted(true);
     console.log("is now mounted");
   }, []);
-
-  // useEffect(
-  //   () => () => {
-  //     isMounted.current = false;
-  //     console.log("will unmount");
-  //   },
-  //   []
-  // );
 
   useEffect(() => {
     console.log("will fetch now");

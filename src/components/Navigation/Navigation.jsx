@@ -3,7 +3,6 @@ import {
   BottomNavigationAction,
   makeStyles,
 } from "@material-ui/core";
-// import Store from '@material-ui/icons/Store';
 import Favorite from "@material-ui/icons/Favorite";
 import History from "@material-ui/icons/History";
 import Profile from "@material-ui/icons/AccountCircle";
@@ -33,7 +32,6 @@ const Navigation = () => {
       onChange={handleChange}
       className={classes.containerNav}
     >
-      {/* <BottomNavigationAction label="Barecode" value="barecode" icon={<BareCode />} /> */}
       <BottomNavigationAction
         component={Link}
         to="/search"
@@ -72,13 +70,5 @@ const Navigation = () => {
     </BottomNavigation>
   );
 };
-// const Navigation = (props) => {
-//     return (
-//         <nav>
-//             <BottomNavigation />
-//             <BottomNavigationAction />
-//         </nav>
-//     );
-// }
 
 export default Navigation;

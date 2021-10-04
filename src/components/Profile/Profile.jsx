@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileUser from "./userProfile";
-// import ProfileFavorites from "./profile/ProfileFavorites";
 import Personalinfo from "./Personalinfo";
 import {
   makeStyles,
@@ -54,10 +53,6 @@ const Profile = () => {
         Your allergens
       </Typography>
       <AllergensChips userInfo={userInfo} history={history} />
-      {/* <Typography variant="h4" color="secondary" component="h2" gutterBottom>
-        Favorites
-      </Typography> */}
-      {/* <ProfileFavorites userInfo={userInfo} history={history} /> */}
 
       <Grid>
         {!userInfo && (

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { useEffect } from "react";
 import ProductList from "../Product/ProductList";
 
 const History = () => {
